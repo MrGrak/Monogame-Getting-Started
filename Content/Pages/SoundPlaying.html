@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Playing Sounds</h1>
+
+<p>In this article, we will play background music and a sound effect. <br>
+This article assumes that you have completed the  <a href="SoundAdding.html" target="display">Adding Sounds</a> tutorial.<br>
+Let's get started.</p>
+<br>
+
+
+<h3>Update Game1 to Load and Play the Sound Files</h3>
+<p>
+Replace Game1's code with the code below.
+</p>
+
+<textarea rows="60" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+using Microsoft.Xna.Framework.Audio;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        SoundEffect music;
+        SoundEffect bark;
+        SoundEffectInstance musicInstance;
+        SoundEffectInstance barkInstance;
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        protected override void Initialize() { base.Initialize(); }
+
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            music = Content.Load<SoundEffect>("IotaPart1");
+            musicInstance = music.CreateInstance();
+            musicInstance.IsLooped = true;
+            musicInstance.Play();
+
+            bark = Content.Load<SoundEffect>("8bitBark");
+            barkInstance = bark.CreateInstance();
+        }
+
+        protected override void UnloadContent() { }
+
+        protected override void Update(GameTime gameTime)
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)) { barkInstance.Play(); }
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            base.Draw(gameTime);
+        }
+    }
+}
+</textarea>	
+
+
+<br><br><br>
+<p>
+There shouldn't be any errors in your project.<br>
+Build the project. You should see a window like below.<br>
+Music will start playing.<br>
+If you press the spacebar keyboard button, a sound resembling a bark will play.<br>
+You can hold down the keyboard button to continuously play the barking sound.<br>
+</p>
+<br><br>
+<center><img src="../Assets/runningGame1.jpg"></center>
+<br><br>
+
+
+
+
+<h3>Inspect Game1.cs</h3>
+<p>
+Lets inspect the changes we made to Game1.cs.<br>
+First, since we are using sound files, we need to tell Game1.cs where to find Monogame's sound classes.<br>
+This is done by the code below, which essentially 'imports' the audio classes defined in the Xna Framework.<br>
+Recall that Monogame is based on XNA.<br>
+</p>
+<textarea rows="5" readonly>
+using Microsoft.Xna.Framework.Audio;
+</textarea>		
+
+
+
+
+<br><br><br><br>
+<h3>SoundEffect and SoundEffectInstance</h3>
+
+<p>
+A SoundEffect loads a sound file. <br>
+A SoundEffectInstance plays, loops, pauses, stops, and restarts a sound loaded via SoundEffect.<br>
+You can have multiple SoundEffectInstances playing the same SoundEffect.<br>
+<br>
+You can load and play a soundfile using just a SoundEffect, but that's all you can do - 
+you can't loop it, stop it, pause it, or restart it. <br>
+It's suggested that <b>you should always create a SoundEffectInstance to control a sound in your game.</b><br>
+Inside Game1.cs we create two SoundEffects and two SoundEffectInstances.<br>
+</p>
+<textarea rows="7" readonly>
+SoundEffect music;
+SoundEffect bark;
+SoundEffectInstance musicInstance;
+SoundEffectInstance barkInstance;
+</textarea>	
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspect LoadContent()</h3>
+<p>
+In the LoadContent method we actually load the sound XNBs into our ContentManager, called Content.<br>
+We set the SoundEffect variables to equal our loaded content.<br>
+Then we create the SoundEffectInstances that will play and control our loaded sound files.<br>
+Note that we set our musicInstance to loop, with the line <i>musicInstance.IsLooped = true;</i>.<br>
+Also note that we begin playing the game's music with the line <i>musicInstance.Play();</i>.<br>
+</p>
+<textarea rows="15" readonly>
+protected override void LoadContent()
+{
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+
+	music = Content.Load<SoundEffect>("IotaPart1");
+	musicInstance = music.CreateInstance();
+	musicInstance.IsLooped = true;
+	musicInstance.Play();
+
+	bark = Content.Load<SoundEffect>("8bitBark");
+	barkInstance = bark.CreateInstance();
+}
+</textarea>	
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspect Update()</h3>
+<p>
+Finally, we modified Update() to play the bark sound if the user has pressed the spacebar.<br>
+Note that we are only checking to see if the spacebar is being held down.<br>
+This means that <i>SoundEffectInstance.Play()</i> will be called every frame that spacebar is held down.<br>
+A SoundEffectInstance can only Play() if it's state is Paused or Stopped.<br>
+This means that bark will only play again once the sound has reached it's end.
+</p>
+<textarea rows="8" readonly>
+protected override void Update(GameTime gameTime)
+{
+	if (Keyboard.GetState().IsKeyDown(Keys.Space)) { barkInstance.Play(); }
+	base.Update(gameTime);
+}
+</textarea>	
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+Your sound assets are now playing in your game.<br>
+The next step is to modify their volume, pause, stop, play, and loop your sounds.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

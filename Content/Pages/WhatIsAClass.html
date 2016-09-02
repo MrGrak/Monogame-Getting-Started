@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>What is A Class?</h1>
+
+
+<p>In this article, we will discuss the properties of a <b>Class</b>.<br>
+This article assumes that you have already <a href="BuildingFirstProject.html" target="display">Built A MonoGame Project</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<h3>Classes Defined</h3>
+<p>
+A class is a collection of variables and functions that you define, like a blueprint.<br>
+The variables and functions of a class are called <b>members</b> of the class.<br>
+When you define a function in a class, that function can be referred to as a <b>method</b>.<br>
+<br>
+Objects are <b>instances of a class</b>.<br>
+So when you call a classes function, you are accessing an object's method.<br>
+This is done using the dot (.) operator.<br>
+<br>
+Inspect the code below.<br>
+This is a compacted version of Game1.cs.<br>
+You should be familiar with Game1.cs.
+</p>
+
+
+
+
+
+
+
+<textarea rows="30" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this); Content.RootDirectory = "Content";
+        }
+        protected override void Initialize() { base.Initialize(); }
+        protected override void LoadContent() { spriteBatch = new SpriteBatch(GraphicsDevice); }
+        protected override void UnloadContent() {}
+        protected override void Update(GameTime gameTime) { base.Update(gameTime); }
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue); base.Draw(gameTime);
+        }
+    }
+}
+</textarea>	
+<p>
+This code defines a class called Game1.<br>
+<br>
+Inside Game1 we see there are two variables defined, <b>graphics</b> and <b>spriteBatch</b>.<br>
+Each of these variables has a type, <b>GraphicsDeviceManager</b> and <b>SpriteBatch</b>.<br>
+The variable <b>graphics</b> is an <b>instance</b> of the class <b>GraphicsDeviceManager</b>.<br>
+The variable <b>spriteBatch</b> is an <b>instance</b> of the class <b>SpriteBatch</b>.<br>
+<br>
+These two variables are <b>members</b> of the Game1 class.<br>
+You would access these variables with the following syntax: <b>Game1.graphics</b> and <b>Game1.spriteBatch</b>.<br>
+<br>
+Now let's look at Game1's functions, also called Game1's <b>methods</b>.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Methods Defined</h3>
+<textarea rows="15" readonly>
+public Game1() {}
+
+protected override void Initialize() {}
+
+protected override void LoadContent() {}
+
+protected override void UnloadContent() {}
+
+protected override void Update(GameTime gameTime) {}
+
+protected override void Draw(GameTime gameTime) {}
+</textarea>	
+<p>
+The Game1 class defines 6 methods: <b>Game1(), Initialize(), LoadContent(), UnloadContent(), Update(), and Draw()</b>.<br>
+These methods are also known as class members - they belong to the class of Game1.<br>
+You would access these variables with the following syntax: <b>Game1.LoadContent(), Game1.Update(),</b> etc...<br>
+Note the Game1() method in the code above. This method is known as a <b>Constructor</b>.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>The Constructor Method</h3>
+<p>
+The Constructor method is called when an instance of the class is created.<br>
+Inspect the code below.<br>
+</p>
+<textarea rows="5" readonly>
+var game = new Game1();
+</textarea>	
+<p>
+Here we are creating a variable called <b>game</b>.<br>
+Then we define <b>game</b> to be an instance of the class <b>Game1</b>.<br>
+The object <b>game</b> is created, and the Constructor method - <b>game.Game1()</b> - is called automatically.<br>
+<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Methods That Take Parameters</h3>
+<p>
+Note the method defined below, Update().<br>
+</p>
+<textarea rows="5" readonly>
+protected override void Update(GameTime gameTime) {}
+</textarea>	
+<p>
+You can see that Update has an object in it's parentheses called <b>GameTime gameTime</b>.<br>
+<b>GameTime</b> defines the type. <b>gameTime</b> is the name of the object.<br>
+We could change the name of the object to something different, for example: <b>GameTime updateTime</b>.<br>
+<br>
+An object in a function or method's parentheses is known as a <b>parameter</b>.<br>
+We would describe the Update method as <b>taking one parameter</b>, an object of the GameTime type.<br>
+This parameter would be available inside Update's scope, which is defined by <b>curly brackets {}</b>.<br>
+</p>
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Scope Defined</h3>
+<p>
+Note the <b>curly brackets {}</b> below in Update().<br>
+</p>
+<textarea rows="8" readonly>
+protected override void Update(GameTime gameTime) 
+{
+	//gameTime can be used here
+}
+//gameTime cannot be used here
+</textarea>	
+<p>
+These curly brackets define the scope of the Update() method.<br>
+Parameters that are passed to a method become available <b>inside a method's scope</b>.<br>
+However, a method's parameters cannot be used outside of the method's scope.<br>
+<br>
+This is true for members of a class too.<br>
+Members defined inside a classes scope cannot be used outside of the class.<br>
+A classes members are accessed using the dot (.) operator.<br>
+</p>
+<textarea rows="5" readonly>
+var game = new Game1();
+
+Update(); //cannot be accessed like this
+game.Update(); //can be accessed like this
+</textarea>	
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You should now have a basic understanding of what a class is.<br>
+<br>
+You should know what class members and methods are.<br>
+You should understand the differences between a class and an object.<br>
+You should understand what an instance is.<br>
+<br>
+You should know how to access a member of a class - using the dot (.) operator.<br>
+You should understand how scope is defined - using curly brackets {}.<br>
+You should understand what a Constructor method is and when it is called.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

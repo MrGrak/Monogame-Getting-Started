@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Layering Sounds</h1>
+
+<p>In this article, we will layer 3 sound files together to create dynamic game music. <br>
+This article assumes that you have completed all the other Sound tutorials.<br>
+This article starts with a new MonoGame project, created in the article 
+<a href="BuildingFirstProject.html" target="display">Building A MonoGame Project</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<br>
+<h3>Download the Sound Files</h3>
+<p>
+First, you'll need to download the three sound files below.<br>
+Each sound file represents a part of the complete song "Iota".<br>
+<br>
+IotaPart1 represents the main progression of the song.<br>
+IotaPart2 represents a melody played over the main progression, with a different instrument.<br>
+IotaPart3 is a drum track that matches the tempo of the progression and melody parts.<br>
+<br>
+Right click each link and choose 'Save As...' then save it to your project's Content folder.<br>
+Make sure the sounds have the .WAV file extension.<br>
+</p>
+<br><br>
+<center><a href="../Assets/IotaPart1.wav" >IotaPart1.wav</a></center><br>
+<center><a href="../Assets/IotaPart2.wav" >IotaPart2.wav</a></center><br>
+<center><a href="../Assets/IotaPart3.wav" >IotaPart3.wav</a></center>
+<br><br>
+
+
+
+<br><br><br><br>
+<h3>Add the Music Tracks to Your Project Using the Pipeline Tool</h3>
+<p>
+Locate the .WAV files, add them to the pipeline tool, and build the pipeline project.<br>
+Your Content folder and pipeline project should look like the image below.<br>
+Refer to the <a href="SoundAdding.html" target="display">Adding Sounds</a> article if you are unfamiliar with how to add project assets.
+</p>
+<br><br>
+<center><img src="../Assets/layerSound1.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Update Game1.cs</h3>
+<p>
+Replace Game1's code with the code below.
+</p>
+<textarea rows="100" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+using Microsoft.Xna.Framework.Audio;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        SoundEffect IotaPart1;
+        SoundEffect IotaPart2;
+        SoundEffect IotaPart3;
+
+        SoundEffectInstance IotaPart1Instance;
+        SoundEffectInstance IotaPart2Instance;
+        SoundEffectInstance IotaPart3Instance;
+
+        bool playPart1 = true;
+        bool playPart2 = true;
+        bool playPart3 = true;
+
+        float fadeSpeed = 0.01f;
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        protected override void Initialize() { base.Initialize(); }
+
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            IotaPart1 = Content.Load<SoundEffect>("IotaPart1");
+            IotaPart2 = Content.Load<SoundEffect>("IotaPart2");
+            IotaPart3 = Content.Load<SoundEffect>("IotaPart3");
+
+            IotaPart1Instance = IotaPart1.CreateInstance();
+            IotaPart2Instance = IotaPart2.CreateInstance();
+            IotaPart3Instance = IotaPart3.CreateInstance();
+
+            IotaPart1Instance.IsLooped = true;
+            IotaPart2Instance.IsLooped = true;
+            IotaPart3Instance.IsLooped = true;
+
+            IotaPart1Instance.Play();
+            IotaPart2Instance.Play();
+            IotaPart3Instance.Play();
+        }
+
+        protected override void UnloadContent() { }
+
+        public void FadeTrack(bool TrackState, SoundEffectInstance MusicTrack)
+        {
+            if (TrackState) //the music track should be heard
+            { if (MusicTrack.Volume < 1.0f) { MusicTrack.Volume += fadeSpeed; } }
+            else //the music track should not be heard
+            { if (MusicTrack.Volume > 0.01f) { MusicTrack.Volume -= fadeSpeed; } }
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            //qwe keys play parts 123
+            if (Keyboard.GetState().IsKeyDown(Keys.Q)) { playPart1 = true; }
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) { playPart2 = true; }
+            if (Keyboard.GetState().IsKeyDown(Keys.E)) { playPart3 = true; }
+
+            //asd keys mute parts 123
+            if (Keyboard.GetState().IsKeyDown(Keys.A)) { playPart1 = false; }
+            if (Keyboard.GetState().IsKeyDown(Keys.S)) { playPart2 = false; }
+            if (Keyboard.GetState().IsKeyDown(Keys.D)) { playPart3 = false; }
+
+            FadeTrack(playPart1, IotaPart1Instance);
+            FadeTrack(playPart2, IotaPart2Instance);
+            FadeTrack(playPart3, IotaPart3Instance);
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            base.Draw(gameTime);
+        }
+    }
+}
+</textarea>	
+
+
+
+<br>
+<p>
+There shouldn't be any errors in your project.<br>
+Build the project. You should see a blue screen.<br>
+Music will start playing.<br>
+<br>
+If you press the A key, track 1 will fade out.<br>
+If you press the S key, track 2 will fade out.<br>
+If you press the D key, track 3 will fade out.<br>
+<br>
+If you press the Q key, track 1 will fade in.<br>
+If you press the W key, track 2 will fade in.<br>
+If you press the E key, track 3 will fade in.<br>
+<br>
+Play around with these controls, listening to the tracks fade in and out.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspect Game1.cs</h3>
+<p>
+Lets inspect the changes we made to Game1.cs.<br>
+First, since we are using sound files, we need to tell Game1.cs where to find Monogame's sound classes.<br>
+This is done by the code below, which essentially 'imports' the audio classes defined in the Xna Framework.<br>
+Recall that Monogame is based on XNA.<br>
+</p>
+<textarea rows="5" readonly>
+using Microsoft.Xna.Framework.Audio;
+</textarea>		
+
+
+
+
+
+
+<br><br><br><br>
+<h3>SoundEffects, SoundEffectInstances, and Control Booleans</h3>
+<p>
+Recall that a SoundEffect loads a sound file, and a SoundEffectInstance controls a sound file.<br>
+Inside Game1.cs we create three SoundEffects and three SoundEffectInstances.<br>
+We also create three booleans to control if a SoundEffectInstance should be heard or should be muted.<br>
+Finally, we create a float value to control how quickly the game should fade a sound in or out.
+</p>
+<textarea rows="15" readonly>
+SoundEffect IotaPart1;
+SoundEffect IotaPart2;
+SoundEffect IotaPart3;
+
+SoundEffectInstance IotaPart1Instance;
+SoundEffectInstance IotaPart2Instance;
+SoundEffectInstance IotaPart3Instance;
+
+bool playPart1 = true;
+bool playPart2 = true;
+bool playPart3 = true;
+
+float fadeSpeed = 0.01f;
+</textarea>	
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspect LoadContent()</h3>
+<p>
+In the LoadContent method we load the song parts into our ContentManager.<br>
+We set the SoundEffect variables to equal our loaded content.<br>
+Then we create the SoundEffectInstances that will control our sound files.<br>
+<br>
+Note that we set each song part to loop. <br>
+This ensures the song parts always stay synchronized with each other.<br>
+Part1 is 8 bars long, while Part3 is 16 bars long. Part3 is 1 bar long.<br>
+<br>
+Also note that we start playing all the song parts at the same time.<br>
+</p>
+<textarea rows="25" readonly>
+protected override void LoadContent()
+{
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+
+	IotaPart1 = Content.Load<SoundEffect>("IotaPart1");
+	IotaPart2 = Content.Load<SoundEffect>("IotaPart2");
+	IotaPart3 = Content.Load<SoundEffect>("IotaPart3");
+	
+	IotaPart1Instance = IotaPart1.CreateInstance();
+	IotaPart2Instance = IotaPart2.CreateInstance();
+	IotaPart3Instance = IotaPart3.CreateInstance();
+
+	IotaPart1Instance.IsLooped = true;
+	IotaPart2Instance.IsLooped = true;
+	IotaPart3Instance.IsLooped = true;
+
+	IotaPart1Instance.Play();
+	IotaPart2Instance.Play();
+	IotaPart3Instance.Play();
+}
+</textarea>	
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspect the New Method FadeTrack()</h3>
+<p>
+Here we have created a new method for Game1.cs called FadeTrack().<br>
+Inside of FadeTrack's parentheses we see there are two variables. <br>
+This means the method we have created accepts two parameters, a Boolean and a SoundEffectInstance.<br>
+<br>
+The Boolean value is named TrackState.<br>
+The SoundEffectInstance is named MusicTrack.<br>
+We use these two variables to determine if the we should fade the MusicTrack's volume up or down.<br>
+<br>
+If TrackState equals true, we fade the MusicTrack's volume up to 1.0.<br>
+If TrackState equals false, we fade the MusicTrack's volume down to 0.01.<br>
+We pass our musical parts to this method, where they will be faded based on the boolean value we pass.
+</p>
+<textarea rows="10" readonly>
+public void FadeTrack(bool TrackState, SoundEffectInstance MusicTrack)
+{
+	if (TrackState) //the music track should be heard
+	{ if (MusicTrack.Volume < 1.0f) { MusicTrack.Volume += fadeSpeed; } }
+	else //the music track should not be heard
+	{ if (MusicTrack.Volume > 0.01f) { MusicTrack.Volume -= fadeSpeed; } }
+}
+</textarea>	
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspect Update()</h3>
+<p>
+Finally, we modified Update() to check the keyboard for user input.<br>
+Based on the keys the user presses, we flip our control booleans on or off.<br>
+Remember, these booleans represent if a part should be playing or muted.<br>
+<br>
+Once we have set our boolean values, we then pass each boolean to our FadeTrack() method.<br>
+We also pass the corresponding SoundEffectInstance representing that musical part.<br>
+</p>
+<textarea rows="20" readonly>
+protected override void Update(GameTime gameTime)
+{
+	//qwe keys play parts 123
+	if (Keyboard.GetState().IsKeyDown(Keys.Q)) { playPart1 = true; }
+	if (Keyboard.GetState().IsKeyDown(Keys.W)) { playPart2 = true; }
+	if (Keyboard.GetState().IsKeyDown(Keys.E)) { playPart3 = true; }
+
+	//asd keys mute parts 123
+	if (Keyboard.GetState().IsKeyDown(Keys.A)) { playPart1 = false; }
+	if (Keyboard.GetState().IsKeyDown(Keys.S)) { playPart2 = false; }
+	if (Keyboard.GetState().IsKeyDown(Keys.D)) { playPart3 = false; }
+
+	FadeTrack(playPart1, IotaPart1Instance);
+	FadeTrack(playPart2, IotaPart2Instance);
+	FadeTrack(playPart3, IotaPart3Instance);
+
+	base.Update(gameTime);
+}
+</textarea>	
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You can now control what song parts are playing with the keyboard.<br>
+You should have an understanding of how to handle multiple SoundEffectInstances playing in sync with each other.<br>
+Using this basic approach, you can expand the code to adapt to conditions in your game.<br>
+<br>
+For example, imagine the Hero in your game sees enemies approaching - you could fade the drums in.<br>
+Or you could fade in a different musical part of the song - a different melody or bassline.<br>
+When the enemies are defeated, you could fade the drums out and change back to the prior melody or bassline.<br>
+<br>
+When a new level loads, you could load different musical parts - then fade between them based on level conditions.<br>
+This concept can even be applied to non-musical sounds.<br>
+Perhaps the level starts raining - you could then trigger the rain sound to fade in and loop.<br>
+<br>
+<b>Note</b> - musical parts that share a tempo should start playing at the same time.<br>
+Stopping or Pausing a musical part will cause it to fall out of sync with the other musical parts.<br>
+Unless you are tracking a part's duration, it is difficult to determine when to re-sync musical parts.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

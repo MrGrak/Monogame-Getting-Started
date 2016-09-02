@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Modifying a Texture</h1>
+
+
+<p>In this article, we will modify the appearance of our texture.<br>
+This article assumes you have completed <a href="TextureDrawing.html" target="display">Drawing a Texture</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<h3>Understanding a Texture's Origin</h3>
+<p>
+First, let's discuss what a texture's origin is.<br>
+<br>
+The origin of a texture can be thought of as the texture's pivot point.
+If we were to change the rotation of the texture, it would rotate around the texture's (0,0) point.
+This is because the origin is at (0,0).
+If we centered the origin to the texture, then the texture would rotate "in place" around that center point.<br>
+<br>
+But wait, there's more.
+The origin also determines how the position value is applied to the texture.
+The texture will be drawn at the position, but with the origin's offset.
+Think of it like this: texturePosition = position - origin.
+In order to better understand this, let's set the origin to the center of the texture in LoadContent().
+</p>
+<textarea rows="10" readonly>
+protected override void LoadContent()
+{
+	this.IsMouseVisible = true;
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+	texture = Content.Load<Texture2D>(@"monogamelogo46px");
+	drawRec = new Rectangle(0, 0, texture.Width, texture.Height);
+	position = new Vector2(0,0);
+	origin = new Vector2(texture.Width/2, texture.Height/2);
+}
+</textarea>	
+<p>
+Now if you build the project, you'll see that the texture is being drawn centered to the position value of (0,0).
+</p>
+<br><br>
+<center><img src="../Assets/modifyTex1.jpg"></center>
+<br><br>
+<p>
+That looks pretty bad, so let's change it. 
+Update your LoadContent() method to center the texture to the game's window.
+</p>
+<textarea rows="10" readonly>
+protected override void LoadContent()
+{
+	this.IsMouseVisible = true;
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+	texture = Content.Load<Texture2D>(@"monogamelogo46px");
+	drawRec = new Rectangle(0, 0, texture.Width, texture.Height);
+	position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+	origin = new Vector2(texture.Width/2, texture.Height/2);
+}
+</textarea>	
+<p>
+<b>graphics.PreferredBackBufferWidth</b> refers to the width of the game's window.<br>
+<b>graphics.PreferredBackBufferHeight</b> refers to the height of the game's window.<br>
+You can also get the game's window size from <b>Game.Window.ClientBounds.Width</b> and <b>Game.Window.ClientBounds.Height</b>.<br>
+We simply divide these values in half to calculate the center point of the game window.<br>
+Now build your game. Your window should look like the image below.
+</p>
+<br><br>
+<center><img src="../Assets/modifyTex2.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Texture's Rotation</h3>
+<textarea rows="4" readonly>
+float rotation = 1.0f;
+</textarea>	
+<p>
+Here we changed the rotation value from 0.0 to 1.0.
+This float value represents the amount of Radians to apply to the texture.
+A positive value is clockwise. A negative value is counter-clockwise.
+The image below shows the results of modifying this rotation value.
+</p>
+<br><br>
+<center><img src="../Assets/modifyTex3.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Texture's Opacity</h3>
+<textarea rows="4" readonly>
+float alpha = 0.5f;
+</textarea>	
+<p>
+Here we change the alpha value from 1.0 to 0.5.
+This means our texture will draw at 50% opacity, making it semi-transparent.
+The image below shows the results of modifying this alpha value. 
+</p>
+<br><br>
+<center><img src="../Assets/modifyTex4.jpg"></center>
+<br><br>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Texture's Scale</h3>
+<textarea rows="4" readonly>
+float scale = 2.0f;
+</textarea>	
+<p>
+Here we change the scale value from 1.0 to 2.0.
+This means our texture will draw at 200% size.
+A value less than 1.0 would scale the texture down.
+Note that this scale is applied from the origin point, so our texture stays centered to the game window
+The image below shows the results of modifying this scale value. 
+</p>
+<br><br>
+<center><img src="../Assets/modifyTex5.jpg"></center>
+<br><br>
+
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Texture's SpriteEffect</h3>
+<textarea rows="4" readonly>
+SpriteEffects spriteEffect = SpriteEffects.FlipHorizontally;
+</textarea>	
+<p>
+Here we change the spriteEffect enumerator value from SpriteEffects.None to SpriteEffects.FlipHorizontally.
+This means our texture will be drawn horizontally flipped, or mirrored.
+We could also change SpriteEffects.None to SpriteEffects.FlipVertically.
+That would draw our texture flipped vertically.
+The image below shows the results of modifying the SpriteEffects value. 
+</p>
+<br><br>
+<center><img src="../Assets/modifyTex6.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+<h3>Summary</h3>
+<p>
+You should now understand a texture's origin, position, rotation, alpha, scale, and SpriteEffects values.
+We did not discuss changing a texture's zDepth in this article, because there wouldn't be any visual change if we modified this value.
+zDepth will be discussed in a later article, when we need to manage objects on different layers.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

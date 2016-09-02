@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Adding InputHelper to Game</h1>
+
+
+<p>In this article, we will add our InputHelper class to our Game class and check that it's working.<br>
+This article assumes that you have already <a href="InputHelperCreate.html" target="display">Created InputHelper.cs</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<br><br><br><br>
+<h3>Update Game1.cs</h3>
+<p>
+Open Game1.cs in the editor and replace it's code with the code below.<br>
+</p>
+<textarea rows="70" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        InputHelper inputHelper;
+
+        public Game1()
+        { graphics = new GraphicsDeviceManager(this); Content.RootDirectory = "Content"; }
+
+        protected override void Initialize() { base.Initialize(); }
+
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            inputHelper = new InputHelper();
+        }
+
+        protected override void UnloadContent() { }
+
+        protected override void Update(GameTime gameTime)
+        {
+            inputHelper.Update();
+
+            if (inputHelper.IsNewKeyPress(Keys.Escape)) { Exit(); }
+
+            //check keyboard for press, hold, release
+            if (inputHelper.IsNewKeyPress(Keys.Space))
+            { System.Diagnostics.Debug.WriteLine("Spacebar pressed."); }
+
+            if (inputHelper.IsKeyDown(Keys.Space))
+            { System.Diagnostics.Debug.WriteLine("Spacebar held down."); }
+
+            if (inputHelper.IsNewKeyRelease(Keys.Space))
+            { System.Diagnostics.Debug.WriteLine("Spacebar released."); }
+
+            //check mouse for press, hold, release
+            if (inputHelper.IsNewMouseButtonPress(MouseButtons.LeftButton))
+            { System.Diagnostics.Debug.WriteLine("Left Mouse Button pressed."); }
+
+            if (inputHelper.IsMouseButtonDown(MouseButtons.LeftButton))
+            { System.Diagnostics.Debug.WriteLine("Left Mouse Button held down."); }
+
+            if (inputHelper.IsNewMouseButtonRelease(MouseButtons.LeftButton))
+            { System.Diagnostics.Debug.WriteLine("Left Mouse Button released."); }
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            base.Draw(gameTime);
+        }
+    }
+}
+</textarea>	
+
+
+<p>
+Press F5 to build and run your game.<br>
+If you press the Escape key your game will close.<br>
+If you press the SpaceBar key, the output window will display the key's state, such as pressed, held down, and released.<br>
+If you press the Left MouseButton, the output window will display that button's state as well.<br>
+Your output window should look like the images below.
+</p>
+<br><br>
+<center><img src="../Assets/inputHelperAdd1.jpg"></center>
+<br><br>
+<p>
+You are successfully tracking three states of keys and buttons: pressed, down, and released.<br>
+Notice that the output window has reported the <b>held down</b> state multiple times for both key and mouse button.<br>
+This is because InputHelper is checking the mouse state and keyboard state each frame.<br>
+Note that the <b>pressed</b> and <b>released</b> state was only reported once.<br>
+This is because the change occurred on that frame.<br>
+<br>
+Imagine that you have a save button that saves your game.<br>
+Now imagine you were checking to see if the user clicked on that save button.<br>
+Would you check to see if the user clicked on the button? <br>
+Or would you check to see if the user is pressing the button down?<br>
+<br>
+If you checked to see if the save button is down, your game would save <b>each frame</b> the button is down!<br>
+That's unnecessary. We only need to check and see if the user clicked on the button once.<br>
+We can do this using <b>inputHelper.IsNewMouseButtonPress(MouseButtons.LeftButton)</b>.<br>
+That way your game only saves once, instead of saving every frame.<br>
+
+</p>
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspecting Game1.cs</h3>
+<p>
+Inside Game1.cs we define the instance of our inputHelper class.
+</p>
+<textarea rows="5" readonly>
+InputHelper inputHelper;
+</textarea>	
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspecting LoadContent()</h3>
+<p>
+Inside Game1.LoadContent(), we create our inputHelper instance.
+</p>
+<textarea rows="8" readonly>
+protected override void LoadContent()
+{
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+	inputHelper = new InputHelper();
+}
+</textarea>	
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspecting Update()</h3>
+<p>
+Inside Game1.Update(), we use inputHelper to check various types of user input.<br>
+First, we check to see if the user pressed the Escape key.<br>
+This allows our game to close, or call Game1's Exit() method.
+</p>
+<textarea rows="5" readonly>
+if (inputHelper.IsNewKeyPress(Keys.Escape)) { Exit(); }
+</textarea>	
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Checking Keyboard Input</h3>
+<p>
+Continuing on inspecting Game1.Update(), we see a set of if statements that test inputHelper's functionality.<br>
+In these statements, we check to see if the user has pressed, is holding down, or has released the Spacebar key.<br>
+We could change the Spacebar key to a different key, such as the Enter key, or any other key we want.<br>
+We report on inputHelper's functionality using <b>System.Diagnostics.Debug.WriteLine()</b>.
+</p>
+<textarea rows="12" readonly>
+//check keyboard for press, hold, release
+if (inputHelper.IsNewKeyPress(Keys.Space))
+{ System.Diagnostics.Debug.WriteLine("Spacebar pressed."); }
+
+if (inputHelper.IsKeyDown(Keys.Space))
+{ System.Diagnostics.Debug.WriteLine("Spacebar held down."); }
+
+if (inputHelper.IsNewKeyRelease(Keys.Space))
+{ System.Diagnostics.Debug.WriteLine("Spacebar released."); }
+</textarea>	
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Checking Mouse Input</h3>
+<p>
+Continuing on inspecting Game1.Update(), we see more if statements that test inputHelper's functionality.<br>
+In these statements, we check to see if the user has pressed, is holding down, or has released the Left Mouse Button.<br>
+We could change the Left Mouse Button to the Right Mouse Button if we want to.<br>
+</p>
+<textarea rows="12" readonly>
+//check mouse for press, hold, release
+if (inputHelper.IsNewMouseButtonPress(MouseButtons.LeftButton))
+{ System.Diagnostics.Debug.WriteLine("Left Mouse Button pressed."); }
+
+if (inputHelper.IsMouseButtonDown(MouseButtons.LeftButton))
+{ System.Diagnostics.Debug.WriteLine("Left Mouse Button held down."); }
+
+if (inputHelper.IsNewMouseButtonRelease(MouseButtons.LeftButton))
+{ System.Diagnostics.Debug.WriteLine("Left Mouse Button released."); }
+</textarea>	
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Using InputHelper</h3>
+<p>
+You can manage a variety of input states using clicks, holds, and releases.<br>
+<br>
+For example, imagine you made a game with an inventory screen.<br>
+You want the user to be able to equip a new sword from their inventory.<br>
+You decide that the user should be able to drag the sword in inventory onto their character.<br>
+<br>
+You can check to see if the user clicked on the sword using inputHelper.IsNewMouseButtonPress().<br>
+Then you can check to see if the user is dragging using inputHelper.IsMouseButtonDown().<br>
+Finally, you can check to see if the user dropped the sword on their character using inputHelper.IsNewMouseButtonRelease().<br>
+<br>
+Remember that this also applies to keyboard input.<br>
+If your game's hero attacks via the Spacebar, then you may want to check to see if the Spacebar is down.<br>
+That way, the user can continually attack by holding the Spacebar down.<br>
+Or maybe you only want the hero to attack once each time the user presses the Spacebar button.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You added an instance of InputHelper.cs to Game1.cs.<br>
+You added code to test InputHelper's methods.<br>
+You then tested InputHelper's methods to make sure they were working correctly.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

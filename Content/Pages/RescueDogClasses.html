@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>RescueDog's Classes</h1>
+
+<p>
+In this article, we will inspect the classes that compose RescueDog's codebase.<br>
+Let's get started.
+</p>
+<br>
+
+
+<h3>Index of Classes</h3>
+<p>
+A significant amount of information is presented on this page.<br>
+We will begin by providing a brief summary of what each class does.<br>
+Think of this summary as a class's responsibility.<br>
+<br>
+<b><a href="#Actor">Actor.cs</a></b> - represents an animated, mobile character in the game.<br>
+<b><a href="#BootScreen">BootScreen.cs</a></b> - initial screen displayed upon running, draws MonoGame logo.<br>
+<b><a href="#Button">Button.cs</a></b> - a clickable UI button with text.<br>
+<b><a href="#Camera2D">Camera2D.cs</a></b> - a moveable, zoomable camera limited to X and Y axis.<br>
+<b><a href="#Editor">Editor.cs</a></b> - allows developer input via a menubar drawn at the top of the viewport.<br>
+<b><a href="#Game1">Game1.cs</a></b> - the game's main class.<br>
+<b><a href="#GameManager">GameManager.cs</a></b> - handles various game data necessary for winning and losing.<br>
+<b><a href="#GameObject">GameObject.cs</a></b> - an animated, immobile object in the game.<br>
+<b><a href="#GameScreen">GameScreen.cs</a></b> - the game's main screen where the player controls the dog.<br>
+<b><a href="#InputHelper">InputHelper.cs</a></b> - maps input from keyboard, mouse, and gamepad into inputState representation.<br>
+<b><a href="#Level">Level.cs</a></b> - contains all level data, sorts and draws level data.<br>
+<b><a href="#LevelGenerator">LevelGenerator.cs</a></b> - generates a level based on a difficulty setting.<br>
+<b><a href="#Program">Program.cs</a></b> - the starting point for the game, this calls Game1.<br>
+<b><a href="#Room">Room.cs</a></b> - represents a room in a level.<br>
+<b><a href="#SaveLoadLevel">SaveLoadLevel.cs</a></b> - saves and loads level data via XML serialization.<br>
+<b><a href="#Screen">Screen.cs</a></b> - defines what a screen is and it's base methods.<br>
+<b><a href="#ScreenManager">ScreenManager.cs</a></b> - handles loading, unloading, updating, and drawing of screens.<br>
+<b><a href="#SoundManager">SoundManager.cs</a></b> - handles loading, fading, and playing of all game sounds.<br>
+<b><a href="#Sprite">Sprite.cs</a></b> - draws a section of a texture with opacity, rotation, and scale at a certain layer.<br>
+<b><a href="#Text">Text.cs</a></b> - draws a string of text with opacity, rotation, and scale at a certain layer.<br>
+<b><a href="#TitleWidget">TitleWidget.cs</a></b> - displays the game's logo and player feedback text.<br>
+<b><a href="#Wall">Wall.cs</a></b> - represents a stationary, immobile, unpassable wall object.<br>
+<b><a href="#WonScreen">WonScreen.cs</a></b> - displayed when player beats the game, draws thanks text and animated dog sprite.<br>
+</p>
+
+
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 >Class Definitions</h3>
+<p>
+In the sections below, each class is described in detail.<br>
+To better navigate this amount of data, please use the links in the Index section above.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Actor">Actor.cs</h3>
+<p>
+The Actor class represents an animated, mobile entity in the game.<br>
+<br>
+Each Actor checks their collision rectangle against the level's walls, ensuring they stay within level bounds.<br>
+Actors have collision rectangle offsets, which allows an actor's collision rec to be positioned lower or higher than the sprite.<br>
+This allows actors to walk closer to walls, or even under some walls, giving the illusion of depth.<br>
+<br>
+Actors have animations, which are lists of Points that correspond to frames in the game's sprite sheet.<br>
+This animation list approach allows an actor to have different frames easily play in sequence.<br>
+Actors can have several idle animations, bringing some life to the character instead of just standing still.<br>
+<br>
+Actors are defined by their Type enumerator. This is in contrast to seperating actors into their own classes.<br>
+They could be seperated into their own classes, and should be if there were going to be many actors.<br>
+Because there are only 3 actors, I decided to just keep them all in one class to keep it simple.<br>
+<br>
+An actor accepts an InputState in their HandleInput() method.<br>
+InputHelper maps player input to an InputState, then passes this state to the Dog Actor.<br>
+This allows the user to control the dog. GameManager also passes an InputState to the Human and Spiders.<br>
+This means the game's AI is simulating controller/keyboard input to move and control the NPCs.<br>
+This makes it easy to swap human and computer control, and makes actor input generalized to an InputState.<br>
+This allows InputHelper to map keyboard/controller input to an InputState, instead of passing keyboard or gamepad state.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="BootScreen">BootScreen.cs</h3>
+<p>
+BootScreen is the first screen that is displayed when the game is launched in release mode.<br>
+Release mode can be set in Game1.cs.<br>
+<br>
+BootScreen loads and displays a centered MonoGame logo, then fades out and loads a GameScreen.<br>
+BootScreen uses an enumerator to track screen state. <br>
+This allows the screen to know when it's opening, opened, closing, and closed.<br>
+The screen performs different functions during each state.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Button">Button.cs</h3>
+<p>
+A Button has a background rectangle and a foreground text object.<br>
+This represents a user interface button that the user could hover over and click on.<br>
+Buttons are used in the Editor to allow developer input.<br>
+<br>
+Button uses an enumerator to track it's state.<br>
+A Button can have the states of Up, Over, and Down - depending on the cursor and user's input.<br>
+Buttons can also be selected or unselected.<br>
+Based on a button's state and selected boolean, the background rectangle will draw at different colors.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Camera2D">Camera2D.cs</h3>
+<p>
+Camera2D represents a 2 dimensional camera that can pan on the X and Y axis.<br>
+The camera isn't constructed to handle any movement on the Z axis, but it can zoom in and out.<br>
+This allows the camera to get closer or further away from the game world.<br>
+<br>
+The camera has a position and a target position.<br>
+The camera will move towards the target position quickly, but will slow down as it gets closer.<br>
+This allows the camera to have a panning movement that is smooth and natural.<br>
+The camera also has functions for converting a point in screen space to a point in world space, and vice verse.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Editor">Editor.cs</h3>
+<p>
+Editor allows Developer input for the game via Buttons displayed in a menu bar anchored to the top of the viewport.<br>
+Editor can be hidden or disabled, based the game's release boolean. This locks out players from developer options.<br>
+<br>
+We can simulate release mode via the PlayTest button. We can end PlayTest mode by pressing the Enter key.<br>
+We can draw the collision rectangles of all actors and objects via the DrawDebug button.<br>
+We can save and load level data via the Save and Load buttons.<br>
+We can generate a new cave level via the New button.<br>
+Finally, we can unlocko the camera from the hero dog via the Roam button.<br>
+When the camera is unlocked we can pan the camera by holding down the spacebar and click-dragging the cursor.<br>
+We can also zoom in and out using Ctrl and + or - keys.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Game1">Game1.cs</h3>
+<p>
+Game1 is our main game class, and is used primarily as a location for assets that all screens can use.<br>
+It is also the entry point for our game, after program.cs. <br>
+This is where we assign the first screen the game will use.<br>
+<br>
+In release mode, Game1 assigns a BootScreen first.<br>
+In developer mode, Game1 assigns a GameScreen first.<br>
+This is done so we as developers dont have to sit through a boot screen just to test the game.<br>
+<br>
+Game1 also defines some colors specific to the game, along with loading some textures and fonts.<br>
+Every screen will use these textures and fonts, so it doesn't make sense to reload this assets per screen.<br>
+Instead they are loaded once when the game runs, then screens reference these assets when they need to.<br>
+<br>
+Game1 also creates an instance of SoundManager, which loads all the game's sounds.<br>
+This makes SoundManager and the game's sounds function in parallel to any screen being displayed.<br>
+This allows music to continue playing even when a screen is exiting or loading.<br>
+This also allows screens to interact with the game's sounds easily, and removes a screens need to load any sounds.<br>
+<br>
+Finally, Game1 creates an instance of ScreenManager, which handles all Loading, Unloading, Updating, and Drawing of screens.<br>
+This is how we manage the game's state.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="GameManager">GameManager.cs</h3>
+<p>
+GameManager handles aspects of the game that don't necessarily fit into other classes.<br>
+This class can be thought of as a collection of methods that ensure the game functions correctly.<br>
+It's best described as the game's AI, even though theres nothing intelligent about it.<br>
+<br>
+GameManager handles the Human and Spider's movements and actions.<br>
+GM checks to see if the player has beaten the level, or if the player has lost the game.<br>
+GM also manages the dog's bark recangle, and checks for collisions between spiders and the bark rectangle.<br>
+This check is what causes the spiders to jump away from the dog when the dog barks.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="GameObject">GameObject.cs</h3>
+<p>
+The GameObject class represents immobile, animated objects that exist in a level.<br>
+For example, the animated fire is a game object. But the fire's torch is also a game object.<br>
+In addition, the exit is a game object - along with the holes in the walls.<br>
+<br>
+A game object has a collision rectangle, and can be used in collision checking.<br>
+This is how GameManager knows if a Human has reached the level's exit.<br>
+The GM can check the human's collision rectangle to see if it intersects with the exit's collision recangle.<br>
+<br>
+Game Objects are similar to Actors in that they both have animation lists.<br>
+But a Game Object only has 1 animation list, and it continually loops.<br>
+If a Game Object doens't have an animation, then there is only 1 frame in the animation list.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="GameScreen">GameScreen.cs</h3>
+<p>
+The GameScreen is the screen that displays the cave level, the hero dog and human, and the game's logo.<br>
+This is where the user inputs commands from the keyboard and controller to actually play the game.<br>
+Because GameScreen is where all input, updates, and draws happen - it can be a little complicated.<br>
+<br>
+Most of the game functionality is split into classes that each have their own responsibility.<br>
+GameScreen is where all these classes live together in harmony, communicating with each other through GameScreen.<br>
+In this way, GameScreen is like a connection between each class.<br>
+Instead of storing connections to all the other classes, a class only needs to store a connection to GameScreen.<br>
+Then that class can communicate with all the other classes by using the GameScreen reference.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="InputHelper">InputHelper.cs</h3>
+<p>
+InputHelper maps Mouse, Keyboard, and Controller input to an InputState that is then passed to other classes.<br>
+This means we could add additional controllers later on, and map those controllers to an InputState.<br>
+Because all input is mapped to an InputState, we don't need to pass keyboard or controller specific states to other classes.<br>
+Classes only need to know about InputState.<br>
+<br>
+InputHelper also has several functions to make it easier to check button or key states.<br>
+There are functions to see if a key/button was pressed this frame, released this frame, or is being held down this frame.<br>
+Theres also a method to investigate a connected controller's functionality to see if it's compatible.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Level">Level.cs</h3>
+<p>
+The Level class contains all the data that describes a level.<br>
+This is composed of 5 lists: floor sprites, debris sprites, wall objects, game objects, and actors.<br>
+There is also a rooms list, but it's not really used for anything.<br>
+<br>
+The Level class has a method for sorting the level, which assigns a layer to each sprite based on it's Y position.<br>
+This allows some walls to be displayed behind actors, while other walls are displayed in front of actors.<br>
+<br>
+The Level class also contains a method for culling sprites based on a rectangle.<br>
+GameScreen passes the camera's view rectangle to this method.<br>
+Using this rectangle, the method hides level sprites that fall outside of the viewing area.<br>
+Level also has the standard Update and Draw methods.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="LevelGenerator">LevelGenerator.cs</h3>
+<p>
+Level Generator is responsible for creating cave levels that are solvable.<br>
+Solvable is defined as traversable from the spawn to the exit via 1 or more critical paths.<br>
+A floor fill algorithm is used to ensure each level is solvable.<br>
+<br>
+Level Generator contains several methods that work together to create an interesting maze-like level.<br>
+This is accomplished using a tile list, and many rectangles.<br>
+To check that LevelGenerator is working correctly, you can enable it's Draw() method.<br>
+<br>
+Functions worth mentioning include the BuildWalls() method.<br>
+This method creates and places walls around tiles based on the tile's neighbors.<br>
+This method allows LevelGenerator to seperate connecting tiles and building walls.<br>
+Once enough tiles have been connected together, then walls are built.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Program">Program.cs</h3>
+<p>
+Program.cs is where the game starts. <br>
+Program.cs creates an instance of Game1 and starts running it.<br>
+There's not much to say about Program.cs.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Room">Room.cs</h3>
+<p>
+The Room class describes a room in the level.<br>
+Rooms are only used by LevelGenerator, and their only used to group fill tiles.<br>
+<br>
+The Room class was originally designed so each room could have a purpose.<br>
+You can see the start of this idea with Room's Type enumerator.<br>
+Rooms can be of Type Spawn, Exit, or None - but this could be extended to support Bosses or anything else.<br>
+<br>
+However, this Room Type enumerator isn't used anywhere in the game.<br>
+Instead Spawns and Exits are created in LevelGenerator based on individual tiles.<br>
+I left the Room class in this state because I wanted to show how rooms could be used.<br>
+<br>
+In your game, you may want to place a boss or treasure in a specific room.<br>
+The Room Type enumerator could be used to tag a room for such a purpose.<br>
+Then later on you could locate the room with the tag and place the boss inside.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="SaveLoadLevel">SaveLoadLevel.cs</h3>
+<p>
+The SaveLoadLevel class saves and loads level data.<br>
+This is done using the SaveData class, which is a serializable list of tiles.<br>
+The Tile class is defined in LevelGenerator.cs.<br>
+<br>
+The SaveLevel method copies LevelGenerator's tileList to SaveData's tileList, then serializes it to an XML file.<br>
+The LoadLevel method does the inverse, deserializing an XML file to a SaveData instance.<br>
+Then the SaveData instance's tileList is copied to LevelGenerator's tileList.<br>
+Finally, LevelGenerator methods are called to finish building the level from just tileList data.<br>
+<br>
+Note that we are not saving the locations or types of walls, gameobjects, exits or spawns.<br>
+These will be randomized everytime, but the overall layout of the maze will remain the same.<br>
+If you wanted to save all of a level's data, you would need to serialize sprites, walls, gameobjects and actors.<br>
+This would considerably complicate the save and load methods, and increase the XML file size.<br>
+For this getting started example game, I decided that would be too difficult to understand and explain.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Screen">Screen.cs</h3>
+<p>
+The Screen class describes the base class that all other screens inherit from.<br>
+Screens have 5 basic methods that allow them to function: LoadContent, UnloadContent, HandleInput, Update, and Draw.<br>
+Each of these methods serves a particular purpose.<br>
+<br>
+LoadContent and UnloadContent should be self explanatory - this is where content is managed.<br>
+HandleInput is where user Input is checked for key presses, button presses, and mouse movement.<br>
+Update is where the screen should perform any logic on the data it contains.<br>
+Finally, Draw is where the screen draws it's visual elements to the viewport.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="ScreenManager">ScreenManager.cs</h3>
+<p>
+The ScreenManager class works in conjunction with the Screen class to manage game state.<br>
+ScreenManager handles the loading, unloading, input, update, and draw methods of every screen added to the screens list.<br>
+Game1.cs creates a ScreenManager instance and passes it's Update and Draw methods to ScreenManager.<br>
+In turn, ScreenManager passes those Update and Draw calls to screens on the screen list.<br>
+<br>
+ScreenManager also creates an InputHelper instance, allowing ScreenManager to pass input to each screen.<br>
+Finally, ScreenManager has methods for adding, removing, and exiting screens, which can be called by screens. <br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="SoundManager">SoundManager.cs</h3>
+<p>
+The SoundManager class loads and controls all the sounds and music used in the game.<br>
+Game1 creates an instance of the SoundManager class alongside an instance of the ScreenManager class.<br>
+This allows sound to play seperate from any screen that is loading, displaying, unloading, or exiting.<br>
+<br>
+SoundManager also has methods for playing and fading of music tracks.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Sprite">Sprite.cs</h3>
+<p>
+The Sprite class represents a section of a texture that is drawn with a scale and opacity on a specific layer.<br>
+Sprites have additional fields, like rotation and position as well.<br>
+The Sprite class was created to make it easier to draw and animate sections of a texture.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Text">Text.cs</h3>
+<p>
+The Text class represents a string that is drawn to the viewport with a scale and opacity on a specific layer.<br>
+The Text class is very similar to the Sprite class, except that it displays text instead of a texture.<br>
+The Text class was created to make it easier to draw text to the viewport.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="TitleWidget">TitleWidget.cs</h3>
+<p>
+The TitleWidget class displays the game's logo and any information text the user should know.<br>
+By information text, I'm referring to the text that displays "Level 1" or "Try Again?" or "You Won".<br>
+Conveniently, all text displayed in game is displayed through this widget.<br>
+In addition, all text displayed in game is located in a single sprite sheet.<br>
+This makes translating the game to different languages easier, because we only need to change a spritesheet.<br>
+<br>
+The TitleWidget class also accepts user input, if the TitleWidget is in the Won or Lost state.<br>
+The Won state leads to the WonScree, while the Lost state generates a new level to explore.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="Wall">Wall.cs</h3>
+<p>
+The Wall class represents an impassable, stationary object that resembles a cave wall.<br>
+There are many types of walls, as described by the WallType enumerator.<br>
+Walls are only created in one function, the LevelGenerator.BuildWalls() method.<br>
+</p>
+
+<br><br><br><br>
+<br><br><br><br>
+<h3 id="WonScreen">WonScreen.cs</h3>
+<p>
+The WonScreen displays the dog hero and the text "Thanks for Playing!".<br>
+The dog sprite animates a few times, then the screen fades out and loads the BootScreen.<br>
+The WonScreen represents the "end" of the game, afterwards the game essentially restarts.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+In this article we explored the classes of RescueDog.<br>
+You should have an understanding of each class.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Designing Classes</h1>
+
+
+<p>In this article, we will discuss the discipline of <b>Class Design</b>.<br>
+This article assumes that you have already completed the other <b>Class</b> tutorials.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+<br>
+<h3>What is Class Design?</h3>
+<p>
+Class Design refers to the decisions you make regarding what a class represents and how it functions.<br>
+In MonoGame/XNA, classes should be thought of as objects - a cohesive bundle of data and functionality.<br>
+<br>
+This means a class should be responsible for an aspect of the program, and only that aspect.<br>
+For example, a class that is responsible for handling game input shouldn't draw anything to the screen.<br>
+Drawing something to the screen would be beyond the responsibilities of that game input class.<br>
+<br>
+Seperating classes into objects with specific responsibilities makes it easier to understand and manage classes.<br>
+As your game gets larger, you will likely create more classes, and possibly add more functionality to them.<br>
+It is important to keep a class as simple as possible, so it is easy to understand and reason about it.<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>Object Oriented Programming</h3>
+<p>
+Object Oriented Programming is a programming paradigm.<br>
+This means OOP is a mental framework for thinking about and designing programs where data is treated like objects.<br>
+Note that there are many different programming paradigms and one is not superior to another.<br>
+<br>
+It's necessary to understand the concepts of OOP in order to understand MonoGame.<br>
+This is because XNA was written with OOP principles in mind, and MonoGame builds on what XNA established.<br>
+In other words, XNA and MonoGame classes were designed based on OOP principles.<br>
+You are free to use whatever programming paradigm you want to in your game.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>The Pillars of Object Oriented Programming</h3>
+<p>
+There is much to be said about OOP, many books have been written about it.<br>
+There is much contention regarding it's use and misuse.<br>
+Regardless of your personal feelings about OOP, it is necessary to understand it.<br>
+There are 4 basic concepts, or pillars, of Object Oriented Programming:<br>
+<br>
+</p>
+
+
+<br><br><br><br>
+<h3>1. Abstraction</h3>
+<p>
+Abstraction can then be thought of as <b>making something as simple as possible</b>.<br>
+But what does this mean? When we design a class, we can include any number of variables and methods.<br>
+Abstraction is then <b>the discipline of only including variables and methods that are relevant</b>.<br>
+<br>
+By reducing what is included in a class, it becomes easier to understand and interact with the class.<br>
+As programs grow, their complexity grows as well.<br>
+By keeping classes simple, we reduce complexity.<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>2. Encapsulation</h3>
+<p>
+Encapsulation can be thought of as <b>the responsibilities of a class</b>.<br>
+Encapsulation can also be thought of as <b>what a class is responsible for</b>.<br>
+In order to explain Encapsulation, we must first explain two basic access modifiers in C#:<br>
+<br>
+<b>The Private Access Modifier</b><br>
+Some variables defined in a class should only be accessed by that class.<br>
+These variables are known as private variables. Only the class can use them.<br>
+<br>
+<b>The Public Access Modifier</b><br>
+Some variables defined in a class should be available to any class.<br>
+These variable are known as public variables. Any class can use them.<br>
+<br>
+Encapsulation is then <b>the discipline of designing a class's responsibility through accessibility</b>.<br>
+By encapsulating a class, a programmer hides unnecessary data and exposes relevant data.<br>
+Encapsulation restricts access to certain members in order to better define a class's responsibilities.<br>
+<br>
+For example, a class that handles input may want to restrict access to the Keyboard State.<br>
+This is because the Keyboard State is the responsibility of the Input Class. The Keyboard State is private.<br>
+The Input Class may then expose a public method such as IsKeyDown(), to provide access to the Keyboard State.<br>
+The Game doesn't need to know about the Keyboard State, the Game only needs to know when a key is down.<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>3. Inheritance</h3>
+<p>
+Inheritance can be thought of as <b>sharing responsibilities between classes</b>.<br>
+Inheritance lets a programmer define a class, then re-use that class in other classes.<br>
+<br>
+For example, inside the MonoGame framework the Game class is defined.<br>
+One of Game's methods is the Run() method.<br>
+In a new MonoGame project, your Game1 class inherits from the base class of Game.<br>
+This Run() method is called after Program.cs creates your Game1 class.<br>
+This inheritance allows Game1 to be treated as a Game class.<br>
+This inheritance allows your Game1 to be Run().<br>
+If Program.cs didn't treat Game1 like a class of Game, then your Game1 wouldn't Run().<br>
+You then overwrite the members of the Game class, creating your own members in Game1.<br>
+This process of inheriting and overwriting class members is known as <b>Polymorphism</b>.<br>
+<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>4. Polymorphism</h3>
+<p>
+Polymorphism can be thought of as <b>extending or changing the responsibilities of a class</b>.<br>
+Polymorphism lets a programmer inherit a class's members, then redefine them to function differently.<br>
+<br>
+For example, in a new MonoGame project your Game1 class inherits from the base class of Game.<br>
+However, Game1 overrides the Initialize, LoadContent, UnloadContent, Update, and Draw methods.<br>
+Overriding these methods allows you to change the functionality of Game1.cs to meet your needs.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You should now understand the basics of designing classes.<br>
+You should know what Object Oriented Programming is, and be familiar with it's 4 pillars.<br>
+You should have an understanding of C#'s <b>private</b> and <b>public</b> access modifiers.<br>
+<br>
+Finally, you should have an understanding of how XNA / MonoGame defines the Game class and how your game starts.<br>
+<b>Keep in mind that this is only an introduction article</b> - there is much more to be understood regarding OOP.<br>
+The concepts and examples presented here are purposefully simplified to aid in intial understanding.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Managing Game State</h1>
+
+
+<p>In this article, we will explore the concept of game state, and how to manage a game's state.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<h3>What is Game State?</h3>
+<p>
+In the simplest terms, Game State refers to a description of the game's data at a given point in time.<br>
+The game's data includes information about your hero, the level, enemies, items, etc...<br>
+When you save a game's data, you are saving a specific state of the game at a specific point in time.<br>
+Think of this like a photograph of the game - this is what the game looked like at that particular moment.<br>
+</p>
+
+
+<br><br><br><br>
+<h3>Managing Game State</h3>
+<p>
+Managing a Game's State can be tricky - your game likely has a title or logo animation, with a menu.<br>
+From that menu the player could choose to load a game or start a new game or change the game's options.<br>
+Then once the player is in game, they could pause the game or open an inventory menu.<br>
+How do you manage all these menus and aspects of the game? There are several approaches to this.<br>
+<br>
+For this getting started guide, I'm only going to explain one approach, which I believe to be the best.<br>
+This approach uses <b>Screens</b> and a <b>ScreenManager</b> to handle a game's various states.<br>
+A screen can be thought of as a section of the game. ScreenManager then loads and unloads these sections.<br>
+<br>
+For example, in the game RescueDog there are 3 screens: a Boot screen, a Game screen, and a Won screen.<br>
+The Boot screen displays the MonoGame logo, then fades out and loads the Game screen.<br>
+The Game screen is where the player controls the dog, explores the level, and beats the game.<br>
+When the player beats the game, the Won screen is loaded.<br>
+The Won screen displays a simple message, then loads the Boot screen - resetting the game.<br>
+</p>
+
+
+
+<br><br><br><br>
+<h3>Notes on Screens and ScreenManager</h3>
+<p>
+Using this approach offers several advantages over other ways of managing a game's state.<br>
+Each screen can load and unload it's own content, making it easier to manage how much memory the game requires.<br>
+Each screen can perform intro and outro animations, allowing the screen to transition onto or off of other screens.<br>
+<br>
+Screens can be stacked on top of each other, and input can be limited to one screen or several.<br>
+A screen's Update() method can be blocked, or ignored, easily 'pausing' that screen.<br>
+Screens can load other screens through ScreenManager, and remove themselves at any time.<br>
+Best of all, you can change how Screens and ScreenManager function to meet your specific requirements.<Br>
+</p>
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+In this article we discussed GameState and Managing GameState.<br>
+We explored one approach to managing game state using Screens and ScreenManager.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

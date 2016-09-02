@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Adding Sounds</h1>
+
+
+<p>In this article, we will add background music and a sound effect to your game's pipeline tool, and build the assets into a XNBs. <br>
+This article assumes that you have already <a href="BuildingFirstProject.html" target="display">Built A MonoGame Project</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+<h3>Copy the Sound Assets</h3>
+<p>
+First, you'll need to download the two sound files below.<br>
+The first sound "IotaPart1.wav" is a track of music that we will use as looping background music.<br>
+The second sound "8bitBark.wav" is a sound effect that we will play when the spacebar is pressed.<br>
+Right click each link and choose 'Save As...' then save it to your project's Content folder.<br>
+Make sure the sounds have the .WAV file extension.<br>
+</p>
+
+
+<br><br>
+<center><a href="../Assets/IotaPart1.wav" >IotaPart1.wav</a></center><br>
+<center><a href="../Assets/8bitBark.wav" >8bitBark.wav</a></center>
+<br><br>
+
+
+
+
+
+<h3>Launch the Pipeline Tool</h3>
+<p>
+Navigate to your project's Content folder and double click on Content.mgcb.
+</p>
+<br><br>
+<center><img src="../Assets/addSound1.jpg"></center>
+<br><br>
+
+<p>
+The pipeline tool will open. <br>
+Note that you have opened your game's .mgcb file, which is linked to your game project.<br>
+You will start with an empty pipeline window like below.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addTex2.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Add the Sound Assets</h3>
+<p>
+Now we will add our downloaded sound files to the pipeline tool.<br>
+Click Edit > Add > Existing Item...
+</p>
+<br><br>
+<center><img src="../Assets/addTex3.jpg"></center>
+<br><br>
+
+<p>
+Locate the downloaded sounds in the file browser.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addSound2.jpg"></center>
+<br><br>
+
+<p>
+Select both sound files, then click the 'open' button.<br>
+Now your content pipeline window should look like below.<br>
+These sound files will default to being imported as SoundEffects.<br>
+This information can be found in the lower left hand corner of the pipeline window.<br>
+Note the Build Action, Importer, Processor, and Quality settings.
+</p>
+<br><br>
+<center><img src="../Assets/addSound3.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Build the Pipeline Assets</h3>
+<p>
+Now let's build our sounds to XNB files.<br>
+Click Build > Build, or press F6.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addSound4.jpg"></center>
+<br><br>
+
+<p>
+The results of building should look like below.
+</p>
+<br><br>
+<center><img src="../Assets/addSound5.jpg"></center>
+<br><br>
+
+<p>
+Note that two additional folders have been added to your Content folder, <b>bin</b> and <b>obj</b>.
+Don't worry too much about understanding why these folders exist right now.
+You do need to know that the XNBs that were built exist in the <b>bin</b> folder.
+My project is a Windows OpenGL project, so my XNBs are located at <b>/bin/DesktopGL</b>.
+Navigate to your XNB files and inspect their properties. 
+You can see that the WAV files were transformed into XNBs with the same name.
+</p>
+<br><br>
+<center><img src="../Assets/addSound6.jpg"></center>
+<br><br>
+
+<h3>Summary</h3>
+<p>
+Your sound assets are now ready to be loaded into your game and played.
+We'll cover this in the next article <a href="SoundPlaying.html" target="display">Playing Sounds</a>.
+</p>
+
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

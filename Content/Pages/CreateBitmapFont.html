@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Creating a Bitmap SpriteFont</h1>
+
+
+<p>In this article, we will create a Bitmap SpriteFont from a TrueType Font using a tool called "TTF2BMP".<br>
+This article assumes you have completed the <b>Textures</b> and <b>Fonts</b> tutorials.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+
+
+
+
+
+<h3>Download the TTF2BMP Tool</h3>
+<p>
+TTF2BMP is a free program that converts True Type Fonts to a Bitmap Font file that Monogame can compile and use.<br>
+Click the link below to download an archive containing TTF2BMP.
+</p>
+<br><br>
+<center><a href="../Assets/ttf2bmp.rar" >ttf2bmp.rar</a></center>
+<br><br>
+
+
+
+
+
+
+<br><br><br><br>
+
+<h3>Using TTF2BMP</h3>
+<p>
+First you'll need to unpack the rar archive. <br>
+Use WinRar or whatever tool you have available.<br>
+Then locate the application (.exe) and double-click it.
+</p>
+<br><br>
+<center><img src="../Assets/bmpFont1.jpg"></center>
+<br><br>
+
+<p>
+The program launches, and looks like the image below.
+</p>
+<br><br>
+<center><img src="../Assets/bmpFont2.jpg"></center>
+<br><br>
+
+
+
+
+
+<p>
+Choose the font you want to export from the list of fonts installed on your system.<br>
+Set the font weight and point size.<br>
+If you require certain characters to be available, you may need to change the min/max character values.<br>
+The default values will export uppercase + lowercase letters, numbers, and basic punctuation and brackets.<br>
+You can toggle anti-aliasing on and off.<br>
+When you have setup your export options, click the export button.<br>
+</p>
+<br><br>
+<center><img src="../Assets/bmpFont3.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+<p>
+Locate the directory you want to save the exported BMP font to.<br>
+<b>It is important that you name the font appropriately</b>, so you or someone else can tell what the font is at a glance.<br>
+For example, I named the exported font "<b>Arial_Bold_8pt</b>" so I know the font, weight, and size.<br><br>
+You can name it anything you want, but reconsider names like "<b>TotallySweetFont</b>" or "<b>GameFont</b>".<br>
+It's likely you won't remember the font, weight, or size, in a month.<br>
+Click the save button once you've decided on a name.
+</p>
+<br><br>
+<center><img src="../Assets/bmpFont4.jpg"></center>
+<br><br>
+
+
+
+<p>
+Finally, navigate to the directory you exported the Bitmap to.<br>
+It's easy to find the font bitmap because it will have a weird neon pink background.<br>
+</p>
+<br><br>
+<center><img src="../Assets/bmpFont5.jpg"></center>
+<br><br>
+
+
+<br><br><br><br>
+<h3>You're done!</h3>
+<p>
+At this point, the Bitmap SpriteFont is ready to be added to your project's pipeline.<br>
+See the article <a href="FontAddingSpritefont.html" target="display">Adding a Bitmap SpriteFont</a> for a tutorial on how to do so.<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+
+<h3>Inspecting the Bitmap SpriteFont</h3>
+<p>
+If you're curious about what this Bitmap Spritefont visually contains, open the BMP file in an image editor, like Photoshop.<br>
+</p>
+<br><br>
+<center><img src="../Assets/bmpFont6.jpg"></center>
+<br><br>
+
+<p>
+Each letter is seperated by a pure magenta color.<br>
+The alpha channel is used to specify which areas should be solid or transparent.<br>
+The alpha in the magenta border region must be set to fully opaque.<br>
+You can create your own fonts if you follow the pattern of characters presented in these bitmap images.<br>
+</p>
+
+<br><br>
+<center><img src="../Assets/bmpFont7.jpg"></center>
+<br><br>
+
+
+
+
+
+<h3>Summary</h3>
+<p>
+You should now understand how to use TTF2BMP to export Bitmap SpriteFont files for use with Monogame.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

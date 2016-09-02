@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Adding a Texture</h1>
+
+
+<p>In this article, we will add a texture asset to your game's pipeline tool, and build the asset into a XNB. <br>
+This article assumes that you have already <a href="BuildingFirstProject.html" target="display">Built A MonoGame Project</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+<h3>Copy the Image Asset</h3>
+<p>
+First, you'll need to download the image below. <br>
+Right click the image and choose 'Save As...' then save it to your project's Content folder.<br>
+Note that this image is a PNG file and has transparent pixels.<br>
+</p>
+<br><br>
+<center><img src="../Assets/monogamelogo46px.png"></center>
+<br><br>
+
+
+
+
+
+<h3>Launch the Pipeline Tool</h3>
+<p>
+Navigate to your project's Content folder and double click on Content.mgcb.
+</p>
+<br><br>
+<center><img src="../Assets/addTex1.jpg"></center>
+<br><br>
+
+<p>
+The pipeline tool will open. <br>
+Note that you have opened your game's .mgcb file, which is linked to your game project.<br>
+You will start with an empty pipeline window like below.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addTex2.jpg"></center>
+<br><br>
+
+
+
+
+
+
+<h3>Add the Image Asset</h3>
+<p>
+Now we will add our downloaded image to the pipeline tool.<br>
+Click Edit > Add > Existing Item...
+</p>
+<br><br>
+<center><img src="../Assets/addTex3.jpg"></center>
+<br><br>
+
+<p>
+Locate the downloaded image in the file browser.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addTex4.jpg"></center>
+<br><br>
+
+<p>
+Double click the image, or click the 'open' button.<br>
+Now your content pipeline window should look like below.
+</p>
+<br><br>
+<center><img src="../Assets/addTex5.jpg"></center>
+<br><br>
+
+
+
+
+
+<h3>Build the Pipeline Assets</h3>
+<p>
+Note the 'Build Action' in the 'Settings' section. <br>
+This tells the pipeline tool how to build your game asset. <br>
+This should default to 'Build' and the Importer setting should default to 'Texture'.<br>
+Now let's build our texture to a XNB file.<br>
+Click Build > Build, or press F6.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addTex6.jpg"></center>
+<br><br>
+
+<p>
+The results of building should look like below.
+</p>
+<br><br>
+<center><img src="../Assets/addTex7.jpg"></center>
+<br><br>
+
+<p>
+Note that two additional folders have been added to your Content folder, <b>bin</b> and <b>obj</b>.
+Don't worry too much about understanding why these folders exist right now.
+You do need to know that the XNB that was built exists in the <b>bin</b> folder.
+My project is a Windows OpenGL project, so my XNB is located at <b>/bin/DesktopGL</b>.
+Navigate to your XNB file and inspect it's properties. 
+You can see that the PNG was transformed into a XNB with the same name.
+</p>
+<br><br>
+<center><img src="../Assets/addTex8.jpg"></center>
+<br><br>
+
+<h3>Summary</h3>
+<p>
+Your texture asset is now ready to be loaded into your game and drawn to the screen.
+We'll cover this in the next article <a href="TextureDrawing.html" target="display">Drawing a Texture</a>.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

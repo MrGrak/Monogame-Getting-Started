@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Supported Controllers</h1>
+
+
+<p>In this article, we will examine what types of controllers are supported by MonoGame.<br>
+We will also create a function to inspect a connected controller's properties.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<br><br><br><br>
+<h3>What is a Gamepad?</h3>
+<p>
+A Gamepad is a controller. In MonoGame controllers are referred to as gamepads.<br>
+Because MonoGame was built upon XNA, MonoGame supports Xbox360 controllers by default.<br>
+MonoGame also supports other types of controllers, but there is no official list of supported controllers.<br>
+<br>
+However, you can check to see if MonoGame supports your controller through code.<br>
+Below we create a function called <b>InspectGamePad()</b>.<br>
+Add this function to InputHelper.cs.
+</p>
+<textarea rows="40" readonly>
+public void InspectGamePad(int playerNum)
+{
+	GamePadCapabilities gpc = GamePad.GetCapabilities(playerNum);
+
+	System.Diagnostics.Debug.WriteLine("inspecting gamepad #" + playerNum);
+	System.Diagnostics.Debug.WriteLine("\t type: " + gpc.GamePadType);
+
+	System.Diagnostics.Debug.WriteLine("\t has left X joystick: " + gpc.HasLeftXThumbStick);
+	System.Diagnostics.Debug.WriteLine("\t has left Y joystick: " + gpc.HasLeftYThumbStick);
+
+	System.Diagnostics.Debug.WriteLine("\t has A button: " + gpc.HasAButton);
+	System.Diagnostics.Debug.WriteLine("\t has B button: " + gpc.HasBButton);
+	System.Diagnostics.Debug.WriteLine("\t has X button: " + gpc.HasXButton);
+	System.Diagnostics.Debug.WriteLine("\t has Y button: " + gpc.HasYButton);
+
+	System.Diagnostics.Debug.WriteLine("\t has back button: " + gpc.HasBackButton);
+	System.Diagnostics.Debug.WriteLine("\t has big button: " + gpc.HasBigButton);
+	System.Diagnostics.Debug.WriteLine("\t has start button: " + gpc.HasStartButton);
+
+	System.Diagnostics.Debug.WriteLine("\t has Dpad Down button: " + gpc.HasDPadDownButton);
+	System.Diagnostics.Debug.WriteLine("\t has Dpad Left button: " + gpc.HasDPadLeftButton);
+	System.Diagnostics.Debug.WriteLine("\t has Dpad Right button: " + gpc.HasDPadRightButton);
+	System.Diagnostics.Debug.WriteLine("\t has Dpad Up button: " + gpc.HasDPadUpButton);
+
+	System.Diagnostics.Debug.WriteLine("\t has Left Shoulder button: " + gpc.HasLeftShoulderButton);
+	System.Diagnostics.Debug.WriteLine("\t has Left Trigger button: " + gpc.HasLeftTrigger);
+	System.Diagnostics.Debug.WriteLine("\t has Left Stick button: " + gpc.HasLeftStickButton);
+	System.Diagnostics.Debug.WriteLine("\t has Left vibration motor: " + gpc.HasLeftVibrationMotor);
+
+	System.Diagnostics.Debug.WriteLine("\t has Right Shoulder button: " + gpc.HasRightShoulderButton);
+	System.Diagnostics.Debug.WriteLine("\t has Right Trigger button: " + gpc.HasRightTrigger);
+	System.Diagnostics.Debug.WriteLine("\t has Right Stick button: " + gpc.HasRightStickButton);
+	System.Diagnostics.Debug.WriteLine("\t has Right vibration motor: " + gpc.HasRightVibrationMotor);
+}
+</textarea>	
+<p>
+The above function InspectGamePad() uses MonoGame's GamePad.GetCapabilities() method.<br>
+This collects all the available information about an attached controller.<br>
+Then we report on what kind of capabilities the controller has.<br>
+<br>
+You could use this in your game to make sure an attached controller has the buttons your game requires.<br>
+Perhaps your game only requires the A button and a joystick?<br>
+Using the above method you can check for an A button and joystick, or alert the user their controller is unsupported.<br>
+<br>
+If MonoGame doesn't recognize your controller, there's not much you can do.<br>
+This is likely due to the computer missing the controller's drivers.<br>
+The best thing you can do as a developer is to alert the player that their controller is unsupported.
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>Using InspectGamePad()</h3>
+<p>
+Now that we've added a function to inspect an attached gamepad, let's update Game1.cs to check our controller.<br>
+Add the code below to Game1.Update(), near the end of the method.<br>
+<br>
+Note that we are passing a value of 1 to the InspectGamePad() method.<br>
+This means InspectGamePad() is checking Player1's controller, but you may have multiple controllers attached.<br>
+Simply change the passed value to 1, 2, 3, or 4 to check different Player's controllers.
+</p>
+<textarea rows="5" readonly>
+if (inputHelper.IsNewKeyPress(Keys.Enter)) { inputHelper.InspectGamePad(1); }
+</textarea>	
+<p>
+Run your game by pressing F5, then press the Enter key.<br>
+You should see output similar to the image below.<br>
+</p>
+<br><br>
+<center><img src="../Assets/gamepadSupported.jpg"></center>
+<br><br>
+<p>
+If your controller is unsupported your output will probably look like this.<br>
+</p>
+<br><br>
+<center><img src="../Assets/gamepadUnsupported.jpg"></center>
+<br><br>
+<p>
+If the controller is unsupported, the best thing you can do is alert the player.
+</p>
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You created a method in InputHelper to inspect a controller's capabilities.<br>
+You then added code to Game1.cs to inspect an attached controller.<br>
+Finally, you learned about how to inspect different attached controllers.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

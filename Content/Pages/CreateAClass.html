@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Creating a New Class</h1>
+<p>In this article, we will examine how to create a new class in your project.<br>
+This article assumes that you have already <a href="BuildingFirstProject.html" target="display">Built A MonoGame Project</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+
+
+<h3>Adding a New Item</h3>
+<p>
+Right-click Game1 in your solution explorer.<br>
+Navigate to Add > New Item... and click.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addClass1.jpg"></center>
+<br><br>
+
+
+
+
+
+<p>
+A new window appears.<br>
+Here is where you choose what type of new item you want to add to your project.<br>
+Choose the <b>Class item type</b>, change the Name property to <b>MyClass.cs</b>, then click Add.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addClass2.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Editing Your New Class</h3>
+<p>
+In your solution explorer window, a new class named MyClass.cs has been added.<br>
+Select it by double-clicking on the MyClass.cs name.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addClass3.jpg"></center>
+<br><br>
+
+
+
+
+<p>
+Your new class MyClass.cs appears in the Editor window.<br>
+</p>
+
+<br><br>
+<center><img src="../Assets/addClass4.jpg"></center>
+<br><br>
+
+
+
+<p>
+Let's edit MyClass to have a variable and a method.<br>
+Copy and paste the code below into MyClass.cs<br>
+</p>
+<textarea rows="25" readonly>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Game1
+{
+    public class MyClass
+    {
+        public string name;
+
+        public MyClass()
+        { name = "My First Class"; }
+
+        public void ChangeName(string newName)
+        { name = newName; }
+    }
+}
+</textarea>	
+<p>
+We have added a string variable called <b>name</b> to MyClass.cs.<br>
+We have created a constructor method called <b>MyClass()</b> which sets the variable <b>name</b> to "My First Class".<br>
+Finally, we have created a method called <b>ChangeName()</b> which accepts a string parameter.<br>
+The passed string parameter is used to set the <b>name</b> variable.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Adding Your New Class to Game1</h3>
+<p>
+Now let's add our new class MyClass.cs to Game1.<br>
+Double-click Game1.cs in the solution explorer to open it in the Editor.<br>
+Replace Game1's source code with the code below.<br>
+</p>
+<textarea rows="40" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        MyClass myNewClass;
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this); Content.RootDirectory = "Content";
+        }
+        protected override void Initialize() { base.Initialize(); }
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            myNewClass = new MyClass();
+            System.Diagnostics.Debug.WriteLine("My Class name is: " + myNewClass.name);
+
+            myNewClass.ChangeName("Bob");
+            System.Diagnostics.Debug.WriteLine("My Class name is: " + myNewClass.name);
+        }
+        protected override void UnloadContent() {}
+        protected override void Update(GameTime gameTime) { base.Update(gameTime); }
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue); base.Draw(gameTime);
+        }
+    }
+}
+</textarea>	
+
+
+<p>
+Run your game by pressing F5.
+Locate the output window and inspect it.
+Your output window should look like below.
+</p>
+<br><br>
+<center><img src="../Assets/createClass1.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+
+<h3>Inspect Game1.cs</h3>
+<p>
+In Game1, we defined a new instance of MyClass, named <b>myNewClass</b>.<br>
+Then we modified the LoadContent() method to actually create myNewClass.<br>
+As soon as we make the call to create myNewClass, it's constructor method is called.<br>
+<br>
+We check that the constructor method has been called by writing the class member name to the output window.<br>
+This is done by using the command <b>System.Diagnostics.Debug.WriteLine()</b>.<br>
+We pass a string to this command, along with our class member name.<br>
+The result of this command is the output "My Class name is: My First Class".<br>
+<br>
+Next, we call the ChangeName() method of myNewClass, and we pass it the string parameter of "Bob".<br>
+Our instance myNewClass changes it's name member to match our passed string "Bob".<br>
+We check that this change has occurred by writing the class member name to the output window again.<br>
+This time the output result is "My Class name is: Bob".<br> 
+<br>
+These commands occur in the LoadContent() method shown below.<br>
+</p>
+<textarea rows="12" readonly>
+protected override void LoadContent()
+{
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+
+	myNewClass = new MyClass();
+	System.Diagnostics.Debug.WriteLine("My Class name is: " + myNewClass.name);
+
+	myNewClass.ChangeName("Bob");
+	System.Diagnostics.Debug.WriteLine("My Class name is: " + myNewClass.name);
+}
+</textarea>		
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You added a new class called MyNewClass to your project. <br>
+Then you modified your new class to have a variable, a constructor, and a method.<br>
+You then created an instance of your new class in Game1 and called one of the classes methods.<br>
+<br>
+Then you inspected your class instance via the output console using the <b>WriteLine</b> command.<br>
+<b>You will be adding, modifying, creating, and inspecting many classes as you develop your game.</b><br>
+Therefore, it is necessary to have a solid understanding how to do so.
+</p>
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Adding a TrueType Font</h1>
+
+
+<p>In this article, we will add a TrueType font asset to your game's pipeline tool, and build the asset into a XNB.<br>
+This article assumes that you have completed the <b>Textures</b> tutorials.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+<h3>Copy the TrueTypeFont Asset</h3>
+<p>
+First, you'll need to download the TTF below. <br>
+Right click the image and choose 'Save As...' then save it to your project's Content folder.<br>
+</p>
+<br><br>
+<center><a href="../Assets/Arial.ttf" >Arial.ttf</a></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+<h3>Add the TTF file to Your Project</h3>
+<p>
+In your IDE, add the TTF file to your project.<br>
+Set the Build Action to 'None' and the Copy Action to 'Copy Always'.
+</p>
+<br><br>
+<center><img src="../Assets/addTTF1.jpg"></center><br>
+<center><img src="../Assets/addTTF2.jpg"></center><br>
+<center><img src="../Assets/addTTF3.jpg"></center>
+<br><br>
+
+
+
+
+
+<br><br><br><br>
+<h3>Create a .spritefont Description File</h3>
+<p>
+Return to your pipeline tool.<br>
+Click Edit > Add > New Item...
+</p>
+<br><br>
+<center><img src="../Assets/addTTF4.jpg"></center>
+<br><br>
+
+<p>
+Choose the SpriteFont description file type.<br>
+You should name this description file the same name as your font.
+</p>
+<br><br>
+<center><img src="../Assets/addTTF5.jpg"></center>
+<br><br>
+
+
+<p>
+Locate this .spritefont file in your project Content folder.<br>
+Open this file with a text editor.
+</p>
+<br><br>
+<center><img src="../Assets/addTTF6.jpg"></center>
+<br><br>
+
+
+
+<p>
+Locate the fontname tag in the .spritefont file.<br>
+Change the value to your font's name.
+</p>
+<br><br>
+<center><img src="../Assets/addTTF7.jpg"></center>
+<br><br>
+
+
+<p>
+Build the pipeline content project.<br>
+</p>
+<br><br>
+<center><img src="../Assets/addTTF8.jpg"></center>
+<br><br>
+
+
+
+
+
+<br><br><br><br>
+<h3>Modifying Your Font</h3>
+<p>
+Modifying your font's size or weight is done by editing the .spritefont file.
+</p>
+<br>
+
+
+
+<textarea rows="8" readonly>
+<!--
+Size is a float value, measured in points. Modify this value to change
+the size of the font.
+-->
+<Size>12</Size>
+</textarea>	
+<br><br>
+
+
+
+
+<textarea rows="8" readonly>
+<!--
+Style controls the style of the font. Valid entries are "Regular", "Bold", "Italic",
+and "Bold, Italic", and are case sensitive.
+-->
+<Style>Regular</Style>
+</textarea>	
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+Your font asset was added to your project, you created a spritefont description file, 
+and then built your content project. You also learned how to edit the size and weight
+of your font file.<br>
+<br>
+The next step is to load and draw the font in your game.<br>
+We'll cover this in the next article <a href="FontDrawing.html" target="display">Drawing Text</a>.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

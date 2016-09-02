@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+<h1>Project Content vs Game Content</h1>
+
+<p>
+This article explains the differences between a project's Content folder and a game's Content folder.<br>
+<b>Note that a game's Content folder is not the same as a project's Content folder.</b>
+</p>
+
+<br>
+
+<h3>Understanding Project Content</h3>
+<p>
+When a project is created for the first time, your IDE will make several folders for your project.<br>
+One of these folders is the project's Content folder.<br>
+Your project's Content folder will be at something like  "...\Desktop\Game1\Game1\Game1\Content"<br>
+Your pipeline project file (.mgcb) will live in this folder.
+</p>
+
+<br>
+
+<h3>Understanding Game Content</h3>
+<p>
+When a game builds, it creates it's own set of folders to run from.<br>
+One of these folders is the game's Content folder.<br>
+Your game's Content folder will be at something like "...\Desktop\Game1\Game1\Game1\bin\DesktopGL\x86\Debug\Content"<br>
+The pipeline tool will automatically transform your game assets into XNBs and copy them into the game's folder.<br>
+Your game's source code will look for game assets (XNBs) in this folder, unless you tell it otherwise.
+</p>
+
+<br>
+</article>
+</body>
+</html>

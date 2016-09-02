@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Inspecting Game1.cs</h1>
+
+<p>
+In this article, we will inspect the Game1.cs class. <br>
+This article assumes that you have already <a href="BuildingFirstProject.html" target="display">Built A MonoGame Project</a>.<br>
+Let's get started.
+</p>
+<br>
+
+
+<h3>Open Game1.cs in the Editor</h3>
+<p>
+Double click on Game1.cs in the solution explorer.
+</p>
+<br><br>
+<center><img src="../Assets/game1Class.jpg" ></center>
+<br><br>
+
+<p>
+This displays the Game1 class in the editor:
+</p>
+<br><br>
+<center><img src="../Assets/editingGame1.jpg" ></center>
+<br><br>
+
+
+<p>
+Let's look at some of Game1's code:
+</p>
+
+
+<textarea rows="8" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+</textarea>
+
+
+<p>
+First, Game1 requires some things to run properly, so we have <i>using</i> statements that include the XNA framework, graphics, and input. 
+Then we tell the game which namespace it exists in. 
+We see Game1 inherits from the class of Game from the line:
+</p>
+<textarea rows="3" readonly>
+public class Game1 : Game
+</textarea>
+
+
+<p>
+So, Game is known as the base class of Game1. 
+Game1 extends the class of Game with it's own functionality. 
+In order for Game1 to have it's own unique functionality, Game1 must overwrite some of game's methods. 
+Game defines the methods Initialize(), LoadContent(), UnloadContent(), Update(), and Draw(). 
+Game1 will overwrite each of these methods with it's own methods. 
+Let's look at the first method, labeled Game1():
+</p>
+<br><br>
+
+<h3>Inspect The Constructor</h3>
+<textarea rows="6" readonly>
+public Game1()
+{
+	graphics = new GraphicsDeviceManager(this);
+	Content.RootDirectory = "Content";
+}
+</textarea>
+
+<p>
+This method is known as a constructor, and a constructor is called when a class is created.
+In this constructor, the graphics device manager is set and the content root directory is set.
+The game needs a graphics device manger to draw things to the game window.
+The game also needs to know where to look for game assets, like textures, meshes, and fonts.
+This line <i>Content.RootDirectory = "Content";</i> tells the game to look in the Content folder.<br>
+<br>
+If you look in the solution explorer window, you can see that your game has a Content folder.
+</p>
+<br><br>
+<center><img src="../Assets/contentFolder.jpg" ></center>
+<br><br><br><br>
+
+
+
+
+
+
+
+
+
+<h3>Inspect Initialize()</h3>
+<p>	
+Initialize is called once, after the game class is constructed.
+Think of this as the game starting up.
+Notice the term override in this line:
+</p>
+<textarea rows="3" readonly>
+protected override void Initialize()
+</textarea>	
+<p>
+Override in C# means that this class (Game1) is over writing the base class' initialize method.
+Think of it like this: Game.Initialize() is overwritten by Game1.Initialize().
+Game defines what a 'game' is. Game1 is your game, and you get to define what you want it to be.
+For example, here we can set the size of the game window like this:
+</p>
+<textarea rows="6" readonly>
+protected override void Initialize()
+{
+	base.Initialize();
+	graphics.PreferredBackBufferWidth = 1280;
+	graphics.PreferredBackBufferHeight = 720;
+}
+</textarea>	
+<p>
+Or we could show/hide the mouse cursor, and allow the user to resize the game window:
+</p>
+<textarea rows="6" readonly>
+protected override void Initialize()
+{
+	base.Initialize();
+	this.IsMouseVisible = true;
+	Window.AllowUserResizing = true;
+}
+</textarea>	
+<p>
+Go ahead and rename your game window to "MyFirstGame":
+</p>
+<textarea rows="6" readonly>
+protected override void Initialize()
+{
+	base.Initialize();
+	Window.Title = "My First Game";
+}
+</textarea>	
+<p>Press F5 to run your game and see your changes. See? You're getting the hang of it.</p>	
+<br><br><br><br>
+
+
+
+
+
+
+
+
+	
+<h3>Inspect LoadContent()</h3>
+<textarea rows="6" readonly>
+protected override void LoadContent()
+{
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+}
+</textarea>	
+<p>		
+Load content is called once, after initialize.
+This is where the game expects to load assets from the Content folder.
+Here the game creates a new spriteBatch. 
+A SpriteBatch is used to draw textures and sprites to the game window. 
+We'll discuss SpriteBatch in greater detail in a seperate tutorial.
+Don't worry about SpriteBatch right now.
+</p>	
+<br><br><br><br>
+
+	
+	
+	
+	
+	
+	
+<h3>Inspect UnloadContent()</h3>
+<textarea rows="6" readonly>
+protected override void UnloadContent()
+{
+	// TODO: Unload any non ContentManager content here
+}
+</textarea>	
+<p>		
+Note that this method is empty and essentially does nothing right now.
+That's because we haven't loaded any content - so there's nothing to unload.
+Later on when you have loaded content and you need to unload it, you might use this method to do so.
+However, unloading a game's content while the game is running would likely cause errors and a crash.
+It's not good practice to manage a large game's content using these loadContent and unloadContent methods.
+This should be the responsibility of a content manager, or a screen. 
+We'll talk more about that later.
+For simple games or experiments, loadContent and unloadContent will suffice.
+Let's move on to the two most important methods, update and draw.
+</p>	
+<br><br><br><br>
+
+
+
+
+
+
+
+
+
+<h3>Inspect Update()</h3>
+<textarea rows="10" readonly>
+protected override void Update(GameTime gameTime)
+{
+	if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+		Exit();
+	base.Update(gameTime);
+}
+</textarea>	
+<p>	
+The update method is called constantly, every frame or tick while a game runs.
+If you've heard of the term "60 frames per second" then you are familiar with what a frame is.
+Each frame, update is called. For a game running at 60 frames per second, this means Update() is called every 16ms.
+Update() methods are commonly used to track, inspect, change, and calculate game data.
+If you inspect this method you can see the first line of code contains an if statement that reads input.
+In this case, input and update occur in the same method.
+However, it is common to seperate input from the update method, as input and update tend to contain lots of code.
+Let's inspect the if statement in update():
+</p>
+<textarea rows="6" readonly>
+if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+	Exit();
+</textarea>	
+<p>
+Here you can see the game getting the input state of any attached gamepad or keyboard.
+Then the state is checked to see if the user is pressing the gamepad's back button or keyboard's escape key.
+Either input triggers the Exit() method, which exits the game and closes the game window.
+</p>	
+<br><br><br><br>
+
+
+
+
+
+
+
+
+<h3>Inspect Draw()</h3>
+<textarea rows="6" readonly>
+protected override void Draw(GameTime gameTime)
+{
+	GraphicsDevice.Clear(Color.CornflowerBlue);
+	base.Draw(gameTime);
+}
+</textarea>	
+<p>		
+Draw() is called constantly, just like Update(). However, Draw() is called <b>after</b> Update().
+So in terms of execution, each frame your game calls Update(), then Draw(). 
+At 60 frames per second, this means every 16ms <b>both</b> Update() and Draw() are called. 
+Because of time constraints like 16ms, the Update and Draw methods should be kept as fast as possible.
+Monogame limits how fast a game can run to 60 frames per second, 
+so if Update+Draw take less than 16ms to finish the game will wait until the next frame should be called.
+So what does draw actually do?
+Well, draw is where the game draws textures, sprites, images, meshes, and text to the screen.
+Let's change the background color to something else, like black:
+</p>
+<textarea rows="4" readonly>
+GraphicsDevice.Clear(Color.Black);
+</textarea>	
+<br><br>
+
+
+<h3>Summary</h3>
+<p>
+And that's it! You should now have a solid understanding of how your game class operates.
+You should be able to: change the size of the game window, show or hide the mouse cursor, disable or allow
+resizing the game window, rename the game window, and change the background color of your game.
+</p>
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

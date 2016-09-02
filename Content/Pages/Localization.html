@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Localization</h1>
+
+<p>
+In this article, we will discuss localization.<br>
+Let's get started.
+</p>
+<br>
+
+
+<h3>What is Localization?</h3>
+<p>
+Localization is the process of adapting a product or content to a specific locale or market. <br>
+Translation is only one of several elements of the localization process. <br>
+In addition to translation, the localization process may also include adapting graphics to a target market.<br>
+<br>
+For the puposes of the example game RescueDog, we only need to do translation of in game text.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>Handling Multiple Languages</h3>
+<p>
+If you game has a lot of in-game text, then you'll want to display that text using a font.<br>
+You'll want to add a font to your content pipeline project that supports your target language.<br>
+Then you'll need to store each string of in-game text somewhere, along with it's translation.<br>
+Based on the player's selected language, you would then draw the appropriate string using the correct font.<br>
+This is generally the approach used by larger games, but it's pretty complicated.<br>
+<br>
+For this getting started example, we're going to use a solution that is simple - but doesn't scale well.<br>
+If your game has a lot of in-game text, you don't want to use this solution.<br>
+RescueDog only has 8 unique strings of text in the game, so this solution works well in this case.<br>
+We're going to use a sprite sheet, instead of a font, to display our in-game text.<br>
+<br>
+That means our in-game text will be handled using sprite objects.<br>
+This is easy to explain and simple to implement,  plus we don't need to load a language specific font.<br>
+We can also control how our text is displayed down to the pixel, because it's actually a texture.<br>
+Look at the english and japanese text sprite sheets the game uses below:<br>
+</p>
+<br><br>
+<center><img src="../Assets/textSheetExample.jpg"></center>
+<br><br>
+
+
+
+<p>
+RescueDog is setup to use a texture named titleSheet for all in-game text sprites.<br>
+We simply need to tell the game to load a different texture in order to change all in-game text.<br>
+Open Game1.cs and navigate to the LoadContent() method.<br>
+Find the two lines as displayed below.<br>
+</p>
+<textarea rows="4" readonly>
+titleSheet = Content.Load<Texture2D>(@"English");
+//titleSheet = Content.Load<Texture2D>(@"Japanese");
+</textarea>	
+
+<p>
+Uncomment the line that loads the japanese texture, then comment out the line that loads the english texture.<br>
+Now the game will be displayed in japanese, including a japanese game logo in glorious pixel perfect 3d.<br>
+You just couldn't do that using a font based translation solution.<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>Taking It Further</h3>
+<p>
+For now, I'm happy just to have RescueDog available in English and Japanese.<br>
+However, it's fairly straightforward to add support for another language.<br>
+Simply create a copy of the english sheet, then replace the text, making sure you match each text's position.<br>
+Add the new sheet into the content pipeline, or just replace the english sheet.<br>
+Build the content, then in Game1.cs either load the new sheet or load the english sheet you replaced.<br>
+That's it.
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+In this article we looked at two techniques for handling translating in-game text.<br>
+We explored the technique used in RescueDog and discussed how to add additional languages to the game.<br>
+</p>
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

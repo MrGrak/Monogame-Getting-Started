@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>RescueDog's Optimizations</h1>
+
+<p>
+In this article, we will discuss the various optimization techniques used in RescueDog.<br>
+Let's get started.
+</p>
+<br>
+
+
+<h3>What is Optimization?</h3>
+<p>
+The term optimization refers to algorithms or techniques used to reduce computational cost.<br>
+Computational cost refers to how much processing and memory an algorithm requires to complete.<br>
+We want our algorithms to use the least amount of memory and processing, while operating quickly.<br>
+<br>
+At 60 frames per second, each frame has around 16ms to complete.<br>
+The game's algorithms must work inside this timeframe.<br>
+<br>
+When developing a game, we are initially concerned about getting it working.<br>
+However, once the game works we become concerned about making the game efficient.<br>
+Let's take a look at the techniques used that let RescueDog run at less than 1ms per frame.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>Camera View Culling</h3>
+<p>
+The first optimization I'd like to discuss has to deal with how many sprites are drawn each frame.<br>
+RescueDog's level are composed of thousands of sprites - floors, debris, walls, game objects, and actors.<br>
+While we could draw every sprite each frame, it's not necessary and slows the frame time down.<br>
+We need to reduce the sprites we draw to only the sprites that can be seen, each frame.<br>
+<br>
+To do this, RescueDog uses two rectangles.<br>
+The first rectangle matches the width and height of the viewport each frame.<br>
+This is because the viewport could be resized by the player at any time during the game.<br>
+The second rectangle is positioned and sized in world coordinates to match the first rectangle.<br>
+Then we check to see what sprites are contained within the second rectangle. We only draw those sprites.<br>
+<br>
+This drastically reduces how many sprites RescueDog draws each frame, keeping the draw time very low.<br>
+This also has the beneficial effect of allowing the game to only update and collision check visible actors.<br>
+This helps to keep the update time very low as well.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>Collision Checking</h3>
+<p>
+Collision checking in RescueDog is done by checking to see if two Rectangles intersect, just like Camera View Culling.<br>
+Each actor has a collision rectangle that is used for this rectangle intersection check.<br>
+An actor has a direction they want to move to, and each frame their collision rectangle is moved in this direction.<br>
+If their collision rectangle intersects a wall, then that movement is disabled and the actor stays put.<br>
+If there is no collision, then the actor moves in that direction.<br>
+<br>
+It should be noted that this collision check occurs independently on the X and Y axis.<br>
+This allows the actor to slide along a wall, making the movement feel natural.<br>
+If each axis was not checked independently, then the actor would stick to the wall.<br>
+While playtesting the game I strongly preferred that the hero actor be able to slide along walls.<br>
+<br>
+It should also be noted that the game only collision checks actors that are visible.<br>
+Actors are determined to be visible using the Camera View Culling optimization explained in the previous section.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Keeping Level Generator Fast</h3>
+<p>
+Recall that Level Generator creates the cave levels that the player explores.<br>
+The time it takes to create a level depends on the level's size and complexity.<br>
+The algorithm responsible for level creation is called during the game, when the player completes a level.<br>
+The algorithm must be fast, otherwise the player sits waiting for the game to respond.<br>
+<br>
+The best way to make an algorithm fast is to time it, then rewrite slow sections.<br>
+GenerateLevel() is the method responsible for generating each level.<br>
+GenerateLevel() calls several functions, in a specific order, to complete a level.<br>
+Each of these functions was timed and rewritten until GenerateLevel() completed in an acceptable time.<br>
+<br>
+Most improvements in GenerateLevel() were made by redesigning a slow algorithm.<br>
+For example, an algorithm that checks each element in a list against each element in another list operates in quadratic time.<br>
+That's bad. You would want to reduce the time the algorithm takes to operate to linear time.<br>
+This could be done by reducing how the elements are checked, how many elements are checked, and when the elements are checked.<br>
+Perhaps in frame A you could sort one list to find the element you need.<br>
+Then in frame B you could check that element against the other list.<br>
+Using this approach, you split the workload across two frames and removed a "double for" loop.<br>
+While such optimizations increase program complexity, they reduce computational cost per frame, keeping the game fast.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>Managing Garbage Creation</h3>
+<p>
+In C#, garbage is automatically collected, which means you as a programmer don't need to manually free memory.<br>
+This is convenient, but can give rise to poor programming practices that create alot of garbage data.<br>
+When this happens, the garbage collector runs often and can pause your game while it cleans up your mess.<br>
+The solution to this problem is: <b>do not make messes</b>.<br>
+<br>
+But how do you keep your memory clean? The answer is actually very simple.<br>
+<b>Do not create new objects in methods that run every frame.</b><br>
+<br>
+You can easily see when a new object is created because the <b>new</b> keyword is used.<br>
+Using this keyword in an Update() or Draw() loop will create many objects, each frame.<br>
+Eventually the Garbage Collector will have to clean those objects up, likely pausing your game to do so.<br>
+This is bad practice, and you should move those <b>new</b> objects outside of that loop.<br>
+<br>
+But where should those objects go? Make them class members.<br>
+Create those objects in a constructor method, or a LoadContent method, or a method that is called only once.<br>
+Then you can use those objects in your Update() or Draw() loop without needing the <b>new</b> keyword.<br>
+</p>
+
+
+
+<br><br><br><br>
+<h3>Managing Garbage Collection</h3>
+<p>
+Even though garabge is automatically collected, garbage isn't usually collected at a convenient time.<br>
+You'll want to manage when garbage is collected so it doesn't interrupt your game.<br>
+Some people will tell you not to manually call the Garbage Collector. I'm not one of those people.<br>
+<br>
+If you manage your garbage creation right, you'll likely never need to manage your garbage collection.<br>
+However, if your game has been running for a long time (hours or days) certain cases may appear that you'll want to handle.<br>
+The process of running a game for hours or days to find memory leaks or problems is called "Soak Testing".<br>
+Manually managing garbage collection is primarily done to ensure the game's state is predictable on long timelines.<br>
+<br>
+When should you manually call the Garbage Collector? <br>
+The simplest answer is: <b>at a time when user input is not important</b>.<br>
+For example, you could call the GC inbetween a screen transition, when there is no user input.<br>
+You should never call the GC while user input is active - say in the middle of battle.<br>
+And you should never call the GC from a frame loop, like Update() or Draw().<br>
+<br>
+In RescueDog, the GC is manually called at two places in the codebase.<br>
+First, GC is called at the end of BootScreen, once the screen has faded out, during it's exit.<br>
+Note there is no user input at this time. GC frees up the memory used by the MonoGame texture loaded for this screen.<br>
+Second, GC is called at the end of GenerateLevel(). <br>
+During level generation, some data is created that becomes garabage once the method completes.<br>
+Note that user input is not important at this time, so it's an appropriate place to call the GC.<br>
+<br>
+Both of these GC calls are done to keep RescueDog's allocated memory predictable on long timelines.<br>
+As I was soak testing the game, I watched the memory.<br>
+Each time the BootScreen was created, memory rose. Each time a level was generated, memory rose.<br>
+Only after the game's memory exceeded a certain level was the memory freed.<br>
+When the memory was freed was largely unpredictable, which meant memory could be freed during gameplay.<br>
+On slower machines, this could mean dropped frames or stuttering.<br>
+So I decided to manually choose when the GC would run in order to prevent it from running during gameplay.<br>
+</p>
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+In this article we looked at some techniques for algorithm optimization.<br>
+We explored garbage collection and creation, and when it's appropriate to manage them yourself.<br>
+</p>
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

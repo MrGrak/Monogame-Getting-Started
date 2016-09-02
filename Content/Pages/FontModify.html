@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Modifying Text</h1>
+
+
+<p>In this article, we will modify the appearance of our fonts.<br>
+This article assumes you have completed <a href="FontDrawing.html" target="display">Drawing Text</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+<h3>Update Game1.cs</h3>
+<p>
+Replace all the code in Game1.cs with the code below.
+</p>
+<textarea rows="110" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        Texture2D texture;
+        Vector2 position;
+        Rectangle drawRec;
+        float alpha = 0.5f;
+        float rotation = 0.0f;
+        Vector2 origin = new Vector2(0,0);
+        float scale = 1.0f;
+        SpriteEffects spriteEffect = SpriteEffects.None;
+        float zDepth = 0.1f;
+
+        SpriteFont TTfont;
+        Vector2 TTFposition = new Vector2(200, 100);
+        Vector2 TTFOrigin;
+        string TTFText = "TrueType Font Text";
+
+        SpriteFont BitmapFont;
+        Vector2 BitmapFontPosition = new Vector2(200, 150);
+        Vector2 BMPOrigin;
+        string BMPText = "Bitmap Spritefont Text";
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+        protected override void Initialize() { base.Initialize(); }
+
+        protected override void LoadContent()
+        {
+            this.IsMouseVisible = true;
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            texture = Content.Load<Texture2D>(@"monogamelogo46px");
+            drawRec = new Rectangle(0, 0, texture.Width, texture.Height);
+            position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+            origin = new Vector2(texture.Width/2, texture.Height/2);
+
+            TTfont = Content.Load<SpriteFont>("Arial");
+            TTFOrigin = TTfont.MeasureString(TTFText) / 2; //get the middle point of the text
+            TTFOrigin.X = (int)TTFOrigin.X; //convert to whole number
+            TTFOrigin.Y = (int)TTFOrigin.Y;
+
+            BitmapFont = Content.Load<SpriteFont>("FONT_Bark6pt");
+            BMPOrigin = BitmapFont.MeasureString(BMPText) / 2; //get the middle point of the text
+            BMPOrigin.X = (int)BMPOrigin.X; //convert to whole number
+            BMPOrigin.Y = (int)BMPOrigin.Y;
+        }
+        protected override void UnloadContent() {}
+
+        protected override void Update(GameTime gameTime)
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            spriteBatch.Draw(   texture,
+                                position,
+                                drawRec,
+                                Color.White * alpha,
+                                rotation,
+                                origin,
+                                scale,
+                                spriteEffect,
+                                zDepth);
+
+            spriteBatch.DrawString( TTfont,
+                                    TTFText, 
+                                    TTFposition, 
+                                    Color.White * alpha, 
+                                    rotation,
+                                    TTFOrigin, 
+                                    scale, 
+                                    spriteEffect, 
+                                    zDepth);
+
+            spriteBatch.DrawString( BitmapFont,
+                                    BMPText,
+                                    BitmapFontPosition,
+                                    Color.White * alpha,
+                                    rotation,
+                                    BMPOrigin,
+                                    scale,
+                                    spriteEffect,
+                                    zDepth);
+
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+    }
+}
+</textarea>	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+
+
+<h3>What's been Changed?</h3>
+<p>
+We've defined several variables to hold attributes of our two fonts.<br>
+Note each font has it's own position, origin, and string.
+</p>
+<textarea rows="10" readonly>
+SpriteFont TTfont;
+Vector2 TTFposition = new Vector2(200, 100);
+Vector2 TTFOrigin;
+string TTFText = "TrueType Font Text";
+
+SpriteFont BitmapFont;
+Vector2 BitmapFontPosition = new Vector2(200, 150);
+Vector2 BMPOrigin;
+string BMPText = "Bitmap Spritefont Text";
+</textarea>	
+
+
+
+
+<p>
+We've updated LoadContent() to modify these new variables.<br>
+Note that we convert the origin values to whole numbers to ensure each font's sharpness and legibility.<br>
+Recall that you should <b>always draw a font's position with whole numbers.</b><br>
+This rule <b>also applies to the font's origin.</b>
+</p>
+<textarea rows="10" readonly>
+TTfont = Content.Load<SpriteFont>("Arial");
+TTFOrigin = TTfont.MeasureString(TTFText) / 2; //get the middle point of the text
+TTFOrigin.X = (int)TTFOrigin.X; //convert to whole number
+TTFOrigin.Y = (int)TTFOrigin.Y;
+
+BitmapFont = Content.Load<SpriteFont>("FONT_Bark6pt");
+BMPOrigin = BitmapFont.MeasureString(BMPText) / 2; //get the middle point of the text
+BMPOrigin.X = (int)BMPOrigin.X; //convert to whole number
+BMPOrigin.Y = (int)BMPOrigin.Y;
+</textarea>	
+
+
+
+
+<p>
+We've also updated Draw() to use these new variables.
+</p>
+<textarea rows="20" readonly>
+spriteBatch.DrawString(TTfont,
+	TTFText, 
+	TTFposition, 
+	Color.White * alpha, 
+	rotation,
+	TTFOrigin, 
+	scale, 
+	spriteEffect, 
+	zDepth);
+
+spriteBatch.DrawString(BitmapFont,
+	BMPText,
+	BitmapFontPosition,
+	Color.White * alpha,
+	rotation,
+	BMPOrigin,
+	scale,
+	spriteEffect,
+	zDepth);
+</textarea>	
+
+<p>
+Build the game project. Your game window should look like the image below.
+</p>
+<br><br>
+<center><img src="../Assets/modifyText1.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+<br><br><br><br>
+
+<h3>Understanding a Fonts's Origin</h3>
+<p>
+A font's origin works just like a texture's origin.<br>
+See the article <a href="TextureModify.html" target="display">Modifying Textures</a> for a detailed description on origins.<br>
+</p>
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Font's Rotation</h3>
+<textarea rows="4" readonly>
+float rotation = 1.0f;
+</textarea>	
+<p>
+Here we changed the rotation value from 0.0 to 1.0.
+This float value represents the amount of Radians to apply to the font.
+A positive value is clockwise. A negative value is counter-clockwise.
+The image below shows the results of modifying this rotation value.
+</p>
+<br><br>
+<center><img src="../Assets/modifyText2.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Font's Opacity</h3>
+<textarea rows="4" readonly>
+float alpha = 0.5f;
+</textarea>	
+<p>
+Here we change the alpha value from 1.0 to 0.5.
+This means our font will draw at 50% opacity, making it semi-transparent.
+The image below shows the results of modifying this alpha value. 
+</p>
+<br><br>
+<center><img src="../Assets/modifyText3.jpg"></center>
+<br><br>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Font's Scale</h3>
+<textarea rows="4" readonly>
+float scale = 2.0f;
+</textarea>	
+<p>
+Here we change the scale value from 1.0 to 2.0.
+This means our font will draw at 200% size.
+A value less than 1.0 would scale the font down.
+Note that this scale is applied from the origin point.
+The image below shows the results of modifying this scale value. 
+</p>
+<br><br>
+<center><img src="../Assets/modifyText4.jpg"></center>
+<br><br>
+
+
+
+
+<br><br><br><br>
+<h3>Changing a Font's SpriteEffect</h3>
+<textarea rows="4" readonly>
+SpriteEffects spriteEffect = SpriteEffects.FlipHorizontally;
+</textarea>	
+<p>
+Here we change the spriteEffect enumerator value from SpriteEffects.None to SpriteEffects.FlipHorizontally.
+This means our font will be drawn horizontally flipped, or mirrored.
+We could also change SpriteEffects.None to SpriteEffects.FlipVertically.
+That would draw our font flipped vertically.
+The image below shows the results of modifying the SpriteEffects value. 
+</p>
+<br><br>
+<center><img src="../Assets/modifyText5.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+<h3>Summary</h3>
+<p>
+You should now understand a font's origin, position, rotation, alpha, scale, and SpriteEffects values.
+We did not discuss changing a font's zDepth in this article, because there wouldn't be any visual change if we modified this value.
+zDepth will be discussed in a later article, when we need to manage objects on different layers.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

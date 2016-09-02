@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Drawing Text</h1>
+
+
+<p>In this article, we will draw Text to the screen.<br>
+We will draw both types of fonts, a TrueType font and a Bitmap font.<br>
+This article assumes that you have completed the <b>Textures</b> articles, 
+plus 
+<a href="FontAddingTrueType.html" target="display">Adding a TrueType Font</a>
+and 
+<a href="FontAddingSpritefont.html" target="display">Adding a Bitmap SpriteFont</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<h3>Update Game1 to Draw Your Font</h3>
+<p>
+Create two font variables in Game1.cs.<br>
+Create two Vector2 variables to store each font's screen position.<br>
+<br>
+<b>A font's position should always be a whole number</b> like 1, 256, or 4096.<br>
+<b>Never</b> use a decimal or floating point number with a value after the period, like 1.2, or 256.6, or 4096.5.<br>
+Such a number will cause the font to be drawn blurry and significantly degrade the readability.<br>
+If you want crisp, legible fonts - always use a whole number for positioning.<br>
+</p>
+<textarea rows="7" readonly>
+SpriteFont TTfont;
+Vector2 TTFposition = new Vector2(200, 100);
+SpriteFont BitmapFont;
+Vector2 BitmapFontPosition = new Vector2(200, 150);
+</textarea>	
+
+
+
+<p>
+Load your fonts in Game1.LoadContent().
+</p>
+<textarea rows="5" readonly>
+TTfont = Content.Load<SpriteFont>("Arial");
+BitmapFont = Content.Load<SpriteFont>("FONT_Bark6pt");
+</textarea>	
+
+
+
+
+
+<p>
+Draw your fonts in Game1.Draw().<br>
+Notice how similar a font's draw call is to a texture's draw call.
+</p>
+<textarea rows="20" readonly>
+spriteBatch.DrawString(TTfont, 
+	"True Type Font test text", 
+	TTFposition, 
+	Color.White, 
+	rotation, 
+	origin, 
+	scale, 
+	spriteEffect, 
+	zDepth);
+	
+spriteBatch.DrawString(BitmapFont,
+	"Bitmap Font test text",
+	BitmapFontPosition,
+	Color.White,
+	rotation,
+	origin,
+	scale,
+	spriteEffect,
+	zDepth);
+</textarea>	
+<br><br>
+
+
+
+
+<p>
+Build your project, and view the results.
+</p>
+<br><br>
+<center><img src="../Assets/drawText1.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You learned how to load and draw fonts to the game's screen.<br>
+The next step is to modify the text's position, color, rotation, scale, origin, and effect.<br>
+We'll cover this in the next article <a href="FontModify.html" target="display">Modifying Text</a>.
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

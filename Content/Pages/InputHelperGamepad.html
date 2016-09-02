@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Adding Gamepad Input</h1>
+
+
+<p>In this article, we will add Gamepad Input to our InputHelper class.<br>
+Then we will update Game1.cs to check any attached Gamepad for Button and Joystick Input.<br>
+This article assumes that you have completed 
+<a href="InputHelperCreate.html" target="display">Creating InputHelper </a>
+and 
+<a href="InputHelperAdd.html" target="display">Adding InputHelper to Game</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+<br><br><br><br>
+<h3>Update InputHelper.cs</h3>
+<p>
+For this article, we will be using a Microsoft Xbox360 Controller attached to your computer.<br>
+However, you can choose to use other types of controllers for your game's input.<br>
+Please see the article <a href="GamepadsSupported.html" target="display">Supported Controllers</a> for more information.<br>
+<br>
+Open InputHelper.cs and add the code below to the InputHelper class, after cursorPosition.<br>
+</p>
+<textarea rows="8" readonly>
+public GamePadState currentGamePadState = new GamePadState();
+public GamePadState lastGamePadState = new GamePadState();
+public Vector2 leftJoystickPosition = new Vector2(0, 0);
+public Vector2 rightJoystickPosition = new Vector2(0, 0);
+public Vector2 deadzone = new Vector2(0.1f, 0.1f); //amount of joystick movement noise to ignore
+</textarea>	
+<p>
+Here we have defined several new class members to handle gamepad state.<br>
+Just like mouse and keyboard state, we defined a current and previous state for comparison purposes.<br>
+Note the three Vector2s we have declared.<br>
+<br>
+The Vector2 leftJoystickPosition will be used to track the position of the gamepad's left joystick.<br>
+The Vector2 rightJoystickPosition will be used to track the position of the gamepad's right joystick.<br>
+The Vector2 deadzone will be used to ignore small changes in a joystick's movement from a neutral position.<br>
+<br>
+A deadzone is used to combat drift from older controllers.<br>
+As controllers are used, overtime their joysticks can loosen and wiggle, changing the neutral position (0, 0).<br>
+We want to ignore this erroneous input, so we choose to discard any joystick values less than 0.1.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Modify InputHelper.Update()</h3>
+<p>
+Next we want to modify InputHelper's Update method to track the joystick positions.<br>
+First we get the current gamepad's thumbstick positions and set them into our joystick position variables.<br>
+Then we check to see if our joystick position vectors are larger than 0.1.<br>
+If the joystick position vectors are smaller than 0.1, we set them equal to 0.
+</p>
+<textarea rows="30" readonly>
+public void Update()
+{
+	lastKeyboardState = currentKeyboardState;
+	lastMouseState = currentMouseState;
+	lastGamePadState = currentGamePadState;
+
+	currentKeyboardState = Keyboard.GetState();
+	currentMouseState = Mouse.GetState();
+	currentGamePadState = GamePad.GetState(PlayerIndex.One);
+
+	//track cursor position as int
+	cursorPosition.X = (int)currentMouseState.X;
+	cursorPosition.Y = (int)currentMouseState.Y;
+
+	//track gamepad's joysticks
+	leftJoystickPosition = currentGamePadState.ThumbSticks.Left;
+	rightJoystickPosition = currentGamePadState.ThumbSticks.Right;
+
+	//check to make sure joysticks exceed deadzone, else ignore joystick's movement
+	if (Math.Abs(leftJoystickPosition.X) < deadzone.X) { leftJoystickPosition.X = 0; }
+	if (Math.Abs(leftJoystickPosition.Y) < deadzone.Y) { leftJoystickPosition.Y = 0; }
+	if (Math.Abs(rightJoystickPosition.X) < deadzone.X) { rightJoystickPosition.X = 0; }
+	if (Math.Abs(rightJoystickPosition.Y) < deadzone.Y) { rightJoystickPosition.Y = 0; }
+}
+</textarea>	
+<p>
+Note the use of <b>Math.Abs()</b>.<br>
+Math.Abs() takes a numerical parameter, like a float or integer, and returns that value as a positive value.<br>
+Why do we do this?<br>
+<br>
+Well, a joystick's value can be between -1.0 and +1.0.<br>
+For example, when you push a joystick all the way to the left, it's X value will be -1.0.<br>
+When you push it all the way to the right, it's X value will be 1.0.<br>
+<br>
+We use Math.Abs() to transform a joystick's negative value into a positive value.<br>
+Then we check to see if the positive value is greater than our deadzone value.<br>
+Using Math.Abs() allows us to only check the positive case and thus simplify our code.<br>
+</p>
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Add GamePad Helper Methods to InputHelper.cs</h3>
+<p>
+Now we want to add gamepad checking methods to InputHelper.<br>
+It's preferable they function similar to the mouse and keyboard methods.<br>
+This makes it easier to use InputHelper, because it's methods will be consistent.<br>
+<br>
+Add the code below to InputHelper.cs
+</p>
+<textarea rows="12" readonly>
+//check for gamepad button presses and releases
+public bool IsNewButtonPress(Buttons button)
+{ return (currentGamePadState.IsButtonDown(button) && lastGamePadState.IsButtonUp(button)); }
+
+public bool IsButtonDown(Buttons button)
+{ return currentGamePadState.IsButtonDown(button); }
+
+public bool IsNewButtonRelease(Buttons button)
+{ return (lastGamePadState.IsButtonDown(button) && currentGamePadState.IsButtonUp(button)); }
+</textarea>	
+<p>
+We have created 3 new methods inside InputHelper: IsNewButtonPress(), IsButtonDown(), and IsNewButtonRelease().<br>
+Notice how similar these method names are to IsNewKeyPress(), IsKeyDown(), and IsNewKeyRelease().<br>
+If you compare these functions to their mouse and keyboard counterparts, you will see they function similarly.<br>
+<br>
+All of InputHelper's methods are now consistently named.<br>
+For methods that have similar responsibilities, it's good practice to similarly name them.<br>
+Now let's update Game1.cs to check for gamepad input.
+</p>
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Update Game1 to Test Gamepad Button Input</h3>
+<p>
+Now we need to modify Game1.Update() to check for gamepad button input.<br>
+We will do this similar to how we check keyboard and mouse input.<br>
+Copy the code below into Game1.Update(), after the mouse input checks.
+</p>
+<textarea rows="15" readonly>
+//check gamepad for input
+if (inputHelper.IsNewButtonPress(Buttons.A))
+{ System.Diagnostics.Debug.WriteLine("Gamepad A Button pressed."); }
+
+if (inputHelper.IsButtonDown(Buttons.A))
+{ System.Diagnostics.Debug.WriteLine("Gamepad A Button down."); }
+
+if (inputHelper.IsNewButtonRelease(Buttons.A))
+{ System.Diagnostics.Debug.WriteLine("Gamepad A Button released."); }
+</textarea>	
+<p>
+Run your game and press the A button on the connected Xbox 360 controller.<br>
+Your output window should look similar to the image below.
+</p>
+<br><br>
+<center><img src="../Assets/inputGamepad1.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Update Game1 to Test Gamepad Joystick Input</h3>
+<p>
+Now we need to modify Game1.Update() to check for gamepad joystick input.<br>
+We will want to write the position of the left joystick to the output window.<br>
+<br>
+But we only want to report the left joystick's position if the joystick is beyond our dead zone.<br>
+We do this simply by checking if the X or Y position is equal to zero.<br>
+If the X or Y position isn't 0, then we know the user is intentionally moving the joystick.<br>
+<br>
+Copy the code below into Game1.Update(), after the gamepad button input checks we just added.
+</p>
+<textarea rows="10" readonly>
+//check gamepad left joystick for input
+if (inputHelper.leftJoystickPosition.X != 0)
+{ System.Diagnostics.Debug.WriteLine("Gamepad Leftstick X position:" + inputHelper.leftJoystickPosition.X); }
+
+if (inputHelper.leftJoystickPosition.Y != 0)
+{ System.Diagnostics.Debug.WriteLine("Gamepad Leftstick Y position:" + inputHelper.leftJoystickPosition.Y); }
+</textarea>	
+<p>
+Run your game and move the left joystick to the left on the connected Xbox 360 controller.<br>
+Your output window should look similar to the image below.<br>
+Note the X value decreases from 0 to -1 as you move the joystick left.
+</p>
+<br><br>
+<center><img src="../Assets/inputGamepad2.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You updated InputHelper to check for a Xbox360's gamepad input.<br>
+You then updated Game1.cs to test for gamepad input.<br>
+You then tested InputHelper's new methods to make sure they were working correctly.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

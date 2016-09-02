@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Drawing a Texture</h1>
+
+
+<p>In this article, we will draw a XNB texture to our game window.<br>
+This article assumes you have completed <a href="TextureAdding.html" target="display">Adding a Texture</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+
+
+<h3>Change Game1.cs</h3>
+<p>
+Replace Game1's code with the code below.
+</p>
+<br>
+<textarea rows="70" readonly>
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        Texture2D texture;
+        Vector2 position;
+        Rectangle drawRec;
+        float alpha = 1.0f;
+        float rotation = 0.0f;
+        Vector2 origin = new Vector2(0,0);
+        float scale = 1.0f;
+        SpriteEffects spriteEffect = SpriteEffects.None;
+        float zDepth = 0.1f;
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+        protected override void Initialize() { base.Initialize(); }
+
+        protected override void LoadContent()
+        {
+            this.IsMouseVisible = true;
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            texture = Content.Load<Texture2D>(@"monogamelogo46px");
+            drawRec = new Rectangle(0, 0, texture.Width, texture.Height);
+            position = new Vector2(0,0);
+        }
+        protected override void UnloadContent() {}
+
+        protected override void Update(GameTime gameTime)
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            spriteBatch.Draw(   texture,
+                                position,
+                                drawRec,
+                                Color.White * alpha,
+                                rotation,
+                                origin,
+                                scale,
+                                spriteEffect,
+                                zDepth);
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+    }
+}
+
+</textarea>
+
+
+
+
+
+
+
+
+
+<br><br><br>
+<p>
+There shouldn't be any errors in your project.<br>
+Build the project. You should see a window like below.
+</p>
+<br><br>
+<center><img src="../Assets/drawTex1.jpg"></center>
+<br><br>
+
+
+
+
+
+
+<h3>Inspect Game1.cs</h3>
+<p>
+Lets inspect the changes we made to Game1.cs. In the below section of code, 
+we are declaring a Texture2D object, a Vector2 object, a Rectangle object, four 
+float data types, and a SpriteEffect object. We will load our XNB texture into 
+the Texture2D object. Then we will place our texture using the Vector2 
+position, which has a X and Y property. <br>
+<br>
+Monogame wants to know what section of the texture we want to draw, so we use a Rectangle 
+object to tell Monogame that we want to draw the entire texture. Then we create a float for 
+alpha . Alpha will control the opaque pixels of the texture, while preserving the 
+texture's transparent pixels. An alpha of 0 would be invisible, while an alpha of 1.0 would 
+be fully visible, or non-transparent. <br>
+<br>
+Then we create a Vector2 known as origin. How this value will be used is explained in
+the article <a href="TextureModify.html" target="display">Modifying a Texture</a>. 
+Dont worry about it right now, just note that it's value is (0,0).<br>
+<br>
+Next we create a float for rotation. This value will determine how much the texture
+is rotated in radians. Then we create a float for scale. Scale will 
+control the size of the texture. A scale of 1.0 tells Monogame to draw the texture 
+at a 1:1 ratio with the original. Then we declare a SpriteEffect, which allows us to 
+change the texture in a variety of ways, but we aren't going to do anything just yet, 
+so we set the SpriteEffect to None. <br>
+<br>
+Finally we declare a float to control the zDepth of the texture. Think of zDepth as the 
+stacking order of objects on the screen. Because we don't have any other objects to draw, 
+right now the zDepth is unimportant.
+</p>
+<textarea rows="10" readonly>
+Texture2D texture;
+Vector2 position;
+Rectangle drawRec;
+float alpha = 1.0f;
+float rotation = 0.0f;
+Vector2 origin = new Vector2(0,0);
+float scale = 1.0f;
+SpriteEffects spriteEffect = SpriteEffects.None;
+float zDepth = 0.1f;
+</textarea>		
+
+
+
+
+<br><br><br><br>
+<h3>Inspect LoadContent()</h3>
+<p>
+In the LoadContent method we actually load the texture into our ContentManager, called Content.<br>
+<br>
+<i>Game.Content is looking for XNBs in the <b>game's Content folder</b>, and not the project's Content folder.<br>
+Please refer to the article <a href="ProjectGameContent.html" target="display">Project Content vs Game Content</a>
+if you are unfamiliar with the differences between project and game content.</i><br>
+<br>
+We provide the name of the texture we want to load, in this case "monogamelogo46px".
+Monogame automatically adds the .XNB file extension to this address when the asset is loaded.
+The XNB file "monogamelogo46px" is loaded as a Texture2D into our variable "texture".<br>
+<br>
+Next, we want to draw the entire texture, so we set drawRec's position at the texture's starting position (0,0),
+then set drawRec's width and height equal to the textures width and height.
+Finally, we define our variable "position" as a new Vector2 with a X of 0 and a Y of 0.
+</p>
+<textarea rows="10" readonly>
+protected override void LoadContent()
+{
+	this.IsMouseVisible = true;
+	spriteBatch = new SpriteBatch(GraphicsDevice);
+	texture = Content.Load<Texture2D>(@"monogamelogo46px");
+	drawRec = new Rectangle(0, 0, texture.Width, texture.Height);
+	position = new Vector2(0,0);
+}
+</textarea>
+
+
+
+
+<br><br><br><br>
+<h3>Inspect Draw()</h3>
+<p>
+Let's inspect our last method, Draw().
+First, we clear the screen, removing anything previously drawn, and fill it with a blue color.
+Then with an empty blue screen, we tell spriteBatch to Begin();
+We must tell spriteBatch to Begin() before we can draw anything with spriteBatch.Draw();
+Once the spriteBatch has begun, we then tell spriteBatch to draw our texture using the variables
+we defined earlier in the class.<br>
+<br>
+The draw call can be read like this: "Draw this texture, at this position, 
+using this part of the texture, at this opacity, with this rotation, with this origin,
+at this scale, with this sprite effect, at this zDepth".<br>
+<br>
+Finally, we must close the spriteBatch via the End() method.
+This is done with spriteBatch.End();
+</p>
+<textarea rows="20" readonly>
+protected override void Draw(GameTime gameTime)
+{
+	GraphicsDevice.Clear(Color.CornflowerBlue);
+	spriteBatch.Begin();
+	spriteBatch.Draw(   
+		texture,
+		position,
+		drawRec,
+		Color.White * alpha,
+		rotation,
+		origin,
+		scale,
+		spriteEffect,
+		zDepth
+	);
+	spriteBatch.End();
+	base.Draw(gameTime);
+}
+</textarea>
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+Your texture asset is now drawing to the screen. <br>
+The next step is to modify the texture's position, color, rotation, scale, origin, and effect.<br>
+We'll cover this in the next article <a href="TextureModify.html" target="display">Modifying a Texture</a>.
+</p>
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

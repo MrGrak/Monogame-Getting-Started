@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Creating InputHelper.cs</h1>
+
+
+<p>In this article, we will create a new class to handle the user's input.<br>
+This article assumes that you have already <a href="BuildingFirstProject.html" target="display">Built A MonoGame Project</a>.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<h3>Why Should Input be In It's Own Class?</h3>
+<p>
+When you first create a new MonoGame project, you will notice Game1.cs has Input being checked in Update().<br>
+While this is technically acceptable, as your project grows your Input checking code will likely grow as well.<br>
+Your Update() method will become more complex too. It's a good idea to seperate Input from Update().<br>
+<br>
+To do this, we are going to create a new class called InputHelper.<br>
+The responsibility of InputHelper will be to provide the Game with useful information about the mouse and keyboard.<br>
+We will then create an instance of InputHelper in Game, and then check user input through InputHelper.<br>
+This seperates Input logic from Update logic, and makes your game easier to understand.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Creating InputHelper.cs</h3>
+<p>
+Add a new class to your project name "InputHelper.cs".<br>
+Refer to the <a href="CreateAClass.html" target="display">Creating A Class</a> article if you are unfamiliar with this process.<br>
+Open InputHelper.cs in the Editor and replace it's code with the code below.<br>
+</p>
+<textarea rows="95" readonly>
+using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+
+namespace Game1
+{
+    public enum MouseButtons { LeftButton, RightButton }
+
+    public class InputHelper
+    {
+        public KeyboardState currentKeyboardState = new KeyboardState();
+        public MouseState currentMouseState = new MouseState();
+        public KeyboardState lastKeyboardState = new KeyboardState();
+        public MouseState lastMouseState = new MouseState();
+        public Point cursorPosition = new Point(0, 0);
+
+        public InputHelper() {}
+
+        public void Update()
+        {
+            lastKeyboardState = currentKeyboardState;
+            lastMouseState = currentMouseState;
+
+            currentKeyboardState = Keyboard.GetState();
+            currentMouseState = Mouse.GetState();
+
+            //track cursor position as int
+            cursorPosition.X = (int)currentMouseState.X;
+            cursorPosition.Y = (int)currentMouseState.Y;
+        }
+
+        //check for keyboard key press, hold, and release
+        public bool IsNewKeyPress(Keys key)
+        {
+            return (currentKeyboardState.IsKeyDown(key) && 
+                lastKeyboardState.IsKeyUp(key));
+        }
+
+        public bool IsKeyDown(Keys key)
+        { return (currentKeyboardState.IsKeyDown(key)); }
+
+        public bool IsNewKeyRelease(Keys key)
+        {
+            return (lastKeyboardState.IsKeyDown(key) && 
+                currentKeyboardState.IsKeyUp(key));
+        }
+
+        public bool IsNewMouseButtonPress(MouseButtons button)
+        {   //check to see the mouse button was pressed
+            if (button == MouseButtons.LeftButton)
+            {
+                return (currentMouseState.LeftButton == ButtonState.Pressed &&
+                    lastMouseState.LeftButton == ButtonState.Released);
+            }
+            else if (button == MouseButtons.RightButton)
+            {
+                return (currentMouseState.RightButton == ButtonState.Pressed && 
+                    lastMouseState.RightButton == ButtonState.Released);
+            }
+            else { return false; }
+        }
+
+        public bool IsNewMouseButtonRelease(MouseButtons button)
+        {   //check to see the mouse button was released
+            if (button == MouseButtons.LeftButton)
+            {
+                return (lastMouseState.LeftButton == ButtonState.Pressed && 
+                    currentMouseState.LeftButton == ButtonState.Released);
+            }
+            else if (button == MouseButtons.RightButton)
+            {
+                return (lastMouseState.RightButton == ButtonState.Pressed && 
+                    currentMouseState.RightButton == ButtonState.Released);
+            }
+            else { return false; }
+        }
+
+        public Boolean IsMouseButtonDown(MouseButtons button)
+        {   //check to see if the mouse button is being held down
+            if (button == MouseButtons.LeftButton)
+            { return (currentMouseState.LeftButton == ButtonState.Pressed); }
+            else if (button == MouseButtons.RightButton)
+            { return (currentMouseState.RightButton == ButtonState.Pressed); }
+            else { return false; }
+        }
+    }
+}
+</textarea>	
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Understanding InputHelper.cs</h3>
+<p>
+Our new InputHelper class introduces several new keywords and concepts, so let's examine all of them.<br>
+First, look at the <b>using</b> statements at the top of the class.<br>
+Notice that we are using <b>Microsoft.Xna.Framework</b> and <b>Microsoft.Xna.Framework.Input</b>.<br>
+Members of our InputHelper class are defined in these Microsoft.Xna classes.<br>
+</p>
+<textarea rows="6" readonly>
+using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+</textarea>	
+
+
+
+
+
+<br><br><br><br>
+<h3>MouseButton Enumerator</h3>
+<p>
+Now let's look at our new enumerator <b>MouseButtons</b>.<br>
+An enumerator is used to iterate over a collection of items.<br>
+In this case, we have defined two items in our collection <b>MouseButtons</b> - LeftButton and RightButton.<br>
+These two items represent the Left and Right Buttons of the user's mouse.<br>
+</p>
+<textarea rows="4" readonly>
+public enum MouseButtons { LeftButton, RightButton }
+</textarea>	
+
+
+
+
+
+<br><br><br><br>
+<h3>Inspecting InputHelper's Members</h3>
+<p>
+Let's inspect the members of our InputHelper now.<br>
+Below we define several new variables with different class types.<br>
+The class types KeyboardState and MouseState are defined in Microsoft.Xna.Framework.Input.<br>
+The class type Point is defined in Microsoft.Xna.Framework.<br>
+</p>
+<textarea rows="8" readonly>
+public KeyboardState currentKeyboardState = new KeyboardState();
+public MouseState currentMouseState = new MouseState();
+public KeyboardState lastKeyboardState = new KeyboardState();
+public MouseState lastMouseState = new MouseState();
+public Point cursorPosition = new Point(0, 0);
+</textarea>	
+<p>
+<b>KeyboardState</b> is a class that represents a user's keyboard. <br>
+If a key is pressed, this is represented in KeyboardState.<br>
+We create a current keyboard state, and a last keyboard state.<br>
+These two instances allow us to see if a user pressed a key, is holding a key, or released a key.<br>
+<br>
+<b>MouseState</b> is a class that represents a user's mouse.<br>
+If a mouse button is pressed, this is represented in MouseState.<br>
+We create a current mouse state, and a last mouse state.<br>
+These two instances allows us to see if a user pressed a mouse button, is holding a button, or released a button.<br>
+<br>
+Finally we have <b>Point</b>. Point has two integers, X and Y.<br>
+Point represents where on the screen our cursor is.<br>
+We could use a Vector2 to track the cursor position using floats, but we don't need sub-pixel precision.<br>
+In later articles we will check collisions between the mouse and other objects using Points and Rectangles.<br>
+We set our Point variable cursorPosition to 0 for right now.<br>
+</p>
+
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Understanding Update()</h3>
+<p>
+Examine the Update Method below.<br>
+In this method, we capture the previous frame's keyboard and mouse state.<br>
+Then we capture the current frame's keyboard and mouse state.<br>
+Later we will compare the previous and current states to reason about the user's input.<br>
+<br>
+Finally we capture the mouse's screen position in cursorPosition.<br>
+Note that the mouse position is stored as a float in currentMouseState.<br>
+We <b>cast</b> the float to an integer using <b>(int)</b>.<br>
+</p>
+<textarea rows="16" readonly>
+public void Update()
+{
+	lastKeyboardState = currentKeyboardState;
+	lastMouseState = currentMouseState;
+
+	currentKeyboardState = Keyboard.GetState();
+	currentMouseState = Mouse.GetState();
+
+	//track cursor position as int
+	cursorPosition.X = (int)currentMouseState.X;
+	cursorPosition.Y = (int)currentMouseState.Y;
+}
+</textarea>	
+
+
+
+
+
+
+<br><br><br><br>
+<h3>Understanding The Keyboard Methods</h3>
+<p>
+Examine the methods below.<br>
+<br>
+<b>IsKeyDown()</b> checks to see if the passed Key parameter is being held down in currentKeyboardState.<br>
+Note the Key parameter. This allows the function to check whatever Key is passed to it.<br>
+<br>
+<b>IsNewKeyPress()</b> compares previous keyboard state to current keyboard state . <br>
+If the current state is down, and the previous state was up, then the key press occurred on this frame.<br>
+Note that IsNewKeyPress() takes a Key parameter just like IsKeyDown().<br>
+<br>
+<b>IsNewKeyRelease()</b> can be thought of as the opposite of IsNewKeyPress().<br>
+If the last state was down, and the current state is up, then the key release occurred on this frame.<br>
+Note that IsNewKeyRelease() takes a Key parameter just like IsKeyDown().<br>
+</p>
+<textarea rows="15" readonly>
+//check for keyboard key press, hold, and release
+
+public bool IsKeyDown(Keys key)
+{ return (currentKeyboardState.IsKeyDown(key)); }
+
+public bool IsNewKeyPress(Keys key)
+{ return (currentKeyboardState.IsKeyDown(key) && lastKeyboardState.IsKeyUp(key)); }
+
+public bool IsNewKeyRelease(Keys key)
+{ return (lastKeyboardState.IsKeyDown(key) && currentKeyboardState.IsKeyUp(key)); }
+</textarea>	
+
+
+
+
+<br><br><br><br>
+<h3>Understanding The Mouse Methods</h3>
+<p>
+Examine the methods below.<br>
+<br>
+<b>IsMouseButtonDown()</b> checks to see if the passed MouseButton parameter is being held down in currentMouseState.<br>
+Note the MouseButtons parameter. This allows the function to check either Left or Right MouseButtons.<br>
+<br>
+<b>IsNewMouseButtonPress()</b> compares previous mouse state to current mouse state . <br>
+If the current state is down, and the previous state was up, then the button press occurred on this frame.<br>
+Note that IsNewMouseButtonPress() takes a MouseButton parameter just like IsMouseButtonDown().<br>
+<br>
+<b>IsNewMouseButtonRelease()</b> can be thought of as the opposite of IsNewMouseButtonPress().<br>
+If the last state was down, and the current state is up, then the button release occurred on this frame.<br>
+Note that IsNewMouseButtonRelease() takes a MouseButton parameter just like IsMouseButtonDown().<br>
+</p>
+<textarea rows="45" readonly>
+public Boolean IsMouseButtonDown(MouseButtons button)
+{  	//check to see if the mouse button is being held down
+	if (button == MouseButtons.LeftButton)
+	{ return (currentMouseState.LeftButton == ButtonState.Pressed); }
+	else if (button == MouseButtons.RightButton)
+	{ return (currentMouseState.RightButton == ButtonState.Pressed); }
+	else { return false; }
+}
+
+public bool IsNewMouseButtonPress(MouseButtons button)
+{	//check to see the mouse button was pressed
+	if (button == MouseButtons.LeftButton)
+	{
+		return (currentMouseState.LeftButton == ButtonState.Pressed &&
+			lastMouseState.LeftButton == ButtonState.Released);
+	}
+	else if (button == MouseButtons.RightButton)
+	{
+		return (currentMouseState.RightButton == ButtonState.Pressed && 
+			lastMouseState.RightButton == ButtonState.Released);
+	}
+	else { return false; }
+}
+
+public bool IsNewMouseButtonRelease(MouseButtons button)
+{	//check to see the mouse button was released
+	if (button == MouseButtons.LeftButton)
+	{
+		return (lastMouseState.LeftButton == ButtonState.Pressed && 
+			currentMouseState.LeftButton == ButtonState.Released);
+	}
+	else if (button == MouseButtons.RightButton)
+	{
+		return (lastMouseState.RightButton == ButtonState.Pressed && 
+			currentMouseState.RightButton == ButtonState.Released);
+	}
+	else { return false; }
+}
+</textarea>	
+
+
+
+
+
+<br><br><br><br>
+<h3>Summary</h3>
+<p>
+You created InputHelper.cs.<br>
+You inspected InputHelper's members and methods.<br>
+You should understand how key presses and releases are tracked using previous and current keyboard states.<br>
+You should understand how button presses and releases are tracked using previous and current mouse states.<br>
+<br>
+Next we will <a href="InputHelperAdd.html" target="display">Add InputHelper to Game</a> and interact with it.<br>
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

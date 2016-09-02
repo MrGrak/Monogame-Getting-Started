@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Building MonoGame Source Code</h1>
+
+
+<p>
+This section is for those who need to modify monogame's source code to fit a specific need or platform.<br>
+If this is your first time using monogame, it's not recommended that you start by building the source.<br>
+You should have a solid understand of how monogame works before proceeding.<br>
+</p>
+
+<br><br>
+
+
+<h3>Windows - Option A</h3>
+<p>
+Download and install monogame, so visual studio or monodevelop has the monogame project templates.<br>
+Download and install <a href="https://github.com">GitHub</a> for Windows<br>
+Download and install Visual Studio, MonoDevelop, or Xamarin Studio<br>
+Optionally download Xamarin.Android and Windows Phone 8 SDK<br>
+Start up Git Shell, and type in the following:<br>
+</p>
+
+<textarea rows="6" readonly>
+git clone https://github.com/mono/MonoGame.git
+cd MonoGame
+git submodule init
+git submodule update
+</textarea>
+
+<p>
+Once the repo has been cloned, you'll need to build the source and project files.<br>
+Run Protobuild.exe. This should populate the repo folder with the source project files.<br>
+If Protobuild.exe doesn't create .csproj files in it's directory, then you should try Option B.<br>
+</p>
+
+<br><br>
+
+
+
+<h3>Windows - Option B</h3>
+<p>
+Download and install monogame, so visual studio or monodevelop has the monogame project templates.<br>
+Download Tortoise SVN from <a href="https://tortoisesvn.net/">https://tortoisesvn.net/</a>.<br>
+Create a new folder called MonoGame Source (you can call it anything you like).<br>
+Browse to the MonoGame source repository <a href="https://github.com/mono/MonoGame">https://github.com/mono/MonoGame</a>  
+and copy in https://github.com/mono/MonoGame.git<br>
+Right click in the Explorer window where you created the MonoGame Source directory and 
+selected SVN checkout by right-clicking in my explorer directory and selecting that option.<br>
+<br><br>
+<center><img src="../Assets/svnCheckout.jpg" ></center>
+<br><br>
+
+In the window that appears, enter https://github.com/mono/MonoGame.git into the URL for the repository.<br>
+Click on OK and wait a while whilst it downloads the entire source (around 300MB) - takes a few minutes.<br>
+<br><br>
+<center><img src="../Assets/svnCheckout2.jpg" ></center>
+<br><br>
+
+
+Download GitHub for desktop <a href="https://desktop.github.com/">https://desktop.github.com/</a><br>
+Run the installer and just skip all the signin steps - ensure it installs the command line tools.<br>
+Open your MonoGame source directory and open the trunk folder.<br>
+Double-click on ProtoBuild.exe. The cache may be corrupted, which will take a few minutes to rebuild.<br>
+<br><br>
+<center><img src="../Assets/protobuild.jpg" ></center>
+<br><br>
+
+<br><br>
+<center><img src="../Assets/sourceBuilt.jpg" ></center>
+<br><br>
+Open Visual Studio 2015 and browse to the newly created MonoGame.Framework.Windows.sln (or whatever platform you wish to open).<br>
+Build the project. It should compile without issue.<br>
+</p>
+
+
+<br><br>
+
+
+<h3>Linux and Mac</h3>
+<p>
+<b>Linux:</b><br>
+Install package called "git".<br>
+Install Monodevelop.<br>
+<br>
+<b>Mac:</b><br>
+Download and Install <a href="https://github.com">GitHub</a> for Mac.<br>
+Download and Install Xamarin Studio.<br>
+Optionally download Xamarin.Android and Xamarin.iOS.<br>
+<br>
+Start terminal and type in the following:<br>
+</p>
+
+<textarea rows="6" readonly>
+git clone https://github.com/mono/MonoGame.git
+cd MonoGame
+git submodule init
+git submodule update
+</textarea>
+<br><br>
+
+<p>
+Once the update completes, type into terminal:<br>
+</p>
+<textarea rows="3" readonly>
+cd MonoGame
+mono Protobuild.exe
+</textarea>
+
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>
