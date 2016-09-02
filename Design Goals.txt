@@ -16,31 +16,16 @@ Documentation StyleGuide
 	When a new version of monogame is released, all articles must be checked against the new release
 	any errors must be fixed and the documentation must be updated
 	
-Documentation RoadMap
-	networking tutorial (lidgren)
-	multiple gamepad input example
-	xamarin tutorials
-	
+
 
 	
 	
 
-TODO
+Articles To Create
 
 
-
-(good frame rate)
-
-record gif of english version
-record gif of japanese version
-
-screenshot of webpage
-
-list of topics
-
-
-
-note that tom spillman mentioned that monogame needed getting started documentation in one of the monogame youtube videos
-
-goals for the getting started documentation
+	running on xbox one
+	lidgren networking
+	multiple gamepad input
+	xamarin
 
