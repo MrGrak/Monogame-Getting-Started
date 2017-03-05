@@ -115,7 +115,7 @@ div.display {
 }
 iframe {
     width: 100%;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 170px);
 	border: 0 none;
 }
 
@@ -174,7 +174,8 @@ textarea.epic { height: 1000px; }
 
 
 
-
+/*
+as of 2017, monogame.net docs don't use footer anymore
 .footer {
     position : fixed;
     bottom : 0;
@@ -193,4 +194,6 @@ textarea.epic { height: 1000px; }
 	margin-top: 17px;
 	font-weight: normal;
 }
+*/
+
 </style>

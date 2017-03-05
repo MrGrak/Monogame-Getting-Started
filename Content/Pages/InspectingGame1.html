@@ -56,9 +56,9 @@ namespace Game1
 
 
 <p>
-First, Game1 requires some things to run properly, so we have <i>using</i> statements that include the XNA framework, graphics, and input. 
-Then we tell the game which namespace it exists in. 
-We see Game1 inherits from the class of Game from the line:
+First, Game1 requires some things to run properly, so we have <b>using statements</b> that include the XNA framework, graphics, and input.<br>
+Then we tell the game which <b>namespace</b> it exists in. <br>
+We see Game1 <b>inherits</b> from the class of Game from the line:<br>
 </p>
 <textarea rows="3" readonly>
 public class Game1 : Game
@@ -66,12 +66,13 @@ public class Game1 : Game
 
 
 <p>
-So, Game is known as the base class of Game1. 
-Game1 extends the class of Game with it's own functionality. 
-In order for Game1 to have it's own unique functionality, Game1 must overwrite some of game's methods. 
-Game defines the methods Initialize(), LoadContent(), UnloadContent(), Update(), and Draw(). 
-Game1 will overwrite each of these methods with it's own methods. 
-Let's look at the first method, labeled Game1():
+So, Game is known as the <b>base class</b> of Game1. <br>
+Game1 <b>extends</b> the class of Game with it's own functionality. <br>
+<br>
+In order for Game1 to have it's own unique functionality, Game1 must overwrite some of game's methods. <br>
+Game defines the methods <b>Initialize(), LoadContent(), UnloadContent(), Update(), and Draw()</b>. <br>
+Game1 will overwrite each of these methods with it's own methods. <br>
+Let's look at the first method, labeled Game1():<br>
 </p>
 <br><br>
 
@@ -85,13 +86,18 @@ public Game1()
 </textarea>
 
 <p>
-This method is known as a constructor, and a constructor is called when a class is created.
-In this constructor, the graphics device manager is set and the content root directory is set.
-The game needs a graphics device manger to draw things to the game window.
-The game also needs to know where to look for game assets, like textures, meshes, and fonts.
-This line <i>Content.RootDirectory = "Content";</i> tells the game to look in the Content folder.<br>
+This method is known as a <b>constructor</b>.
+The constructor method is called when a class is <b>instantiated</b>.<br>
+Instantiation occurs when an instance of the class is created using the <b>new</b> keyword.<br>
 <br>
-If you look in the solution explorer window, you can see that your game has a Content folder.
+In this constructor, the graphics device manager is set and the content root directory is set.<br>
+The game needs a graphics device manger to draw things to the game window.<br>
+Monogame communicates with the graphical backend through the graphics device manager.<br>
+<br>
+The game also needs to know where to look for game assets, like textures, meshes, sounds, and fonts.<br>
+The line <i>Content.RootDirectory = "Content";</i> tells the game to look in the Content folder.<br>
+<br>
+If you look in the solution explorer window, you can see that your game has a Content folder.<br>
 </p>
 <br><br>
 <center><img src="../Assets/contentFolder.jpg" ></center>
@@ -107,18 +113,17 @@ If you look in the solution explorer window, you can see that your game has a Co
 
 <h3>Inspect Initialize()</h3>
 <p>	
-Initialize is called once, after the game class is constructed.
-Think of this as the game starting up.
-Notice the term override in this line:
+Initialize is called once, after the game class is constructed.<br>
+Think of this as the game starting up. Notice the term <b>override</b> in this line:<br>
 </p>
 <textarea rows="3" readonly>
 protected override void Initialize()
 </textarea>	
 <p>
-Override in C# means that this class (Game1) is over writing the base class' initialize method.
-Think of it like this: Game.Initialize() is overwritten by Game1.Initialize().
-Game defines what a 'game' is. Game1 is your game, and you get to define what you want it to be.
-For example, here we can set the size of the game window like this:
+Override in C# means that this class (Game1) is over writing the base class' initialize method.<br>
+Think of it like this: Game.Initialize() is overwritten by Game1.Initialize().<br>
+Game defines what a 'game' is. Game1 is your game, and you get to define what you want it to be.<br>
+For example, here we can set the size of the game window like this:<br>
 </p>
 <textarea rows="6" readonly>
 protected override void Initialize()
@@ -149,7 +154,7 @@ protected override void Initialize()
 	Window.Title = "My First Game";
 }
 </textarea>	
-<p>Press F5 to run your game and see your changes. See? You're getting the hang of it.</p>	
+<p>Run your game and see the changes.</p>	
 <br><br><br><br>
 
 
@@ -168,12 +173,9 @@ protected override void LoadContent()
 }
 </textarea>	
 <p>		
-Load content is called once, after initialize.
-This is where the game expects to load assets from the Content folder.
-Here the game creates a new spriteBatch. 
-A SpriteBatch is used to draw textures and sprites to the game window. 
-We'll discuss SpriteBatch in greater detail in a seperate tutorial.
-Don't worry about SpriteBatch right now.
+Load content is called once, after initialize. This is where the game expects to load assets from the Content folder.<br>
+Here the game creates a new spriteBatch. A <b>SpriteBatch</b> is used to draw textures and fonts to the game window.<br> 
+We explore the SpriteBatch in the <a href="SpriteBatchClass.html" target="display">SpriteBatch Class article</a>.<br>
 </p>	
 <br><br><br><br>
 
@@ -191,15 +193,13 @@ protected override void UnloadContent()
 }
 </textarea>	
 <p>		
-Note that this method is empty and essentially does nothing right now.
-That's because we haven't loaded any content - so there's nothing to unload.
-Later on when you have loaded content and you need to unload it, you might use this method to do so.
-However, unloading a game's content while the game is running would likely cause errors and a crash.
-It's not good practice to manage a large game's content using these loadContent and unloadContent methods.
-This should be the responsibility of a content manager, or a screen. 
-We'll talk more about that later.
-For simple games or experiments, loadContent and unloadContent will suffice.
-Let's move on to the two most important methods, update and draw.
+Note that this method is empty and essentially does nothing right now.<br>
+That's because we haven't loaded any content - so there's nothing to unload.<br>
+Later on when you have loaded content and you need to unload it, you might use this method to do so.<br>
+You may instead choose to create a dedicated class to manage content loading and unloading.<br>
+This is commonly done in larger games where there are many assets to be managed.<br>
+<br>
+Let's move on to the two most important methods, <b>Update()</b> and <b>Draw()</b>.<br>
 </p>	
 <br><br><br><br>
 
@@ -221,23 +221,32 @@ protected override void Update(GameTime gameTime)
 }
 </textarea>	
 <p>	
-The update method is called constantly, every frame or tick while a game runs.
-If you've heard of the term "60 frames per second" then you are familiar with what a frame is.
-Each frame, update is called. For a game running at 60 frames per second, this means Update() is called every 16ms.
-Update() methods are commonly used to track, inspect, change, and calculate game data.
-If you inspect this method you can see the first line of code contains an if statement that reads input.
-In this case, input and update occur in the same method.
-However, it is common to seperate input from the update method, as input and update tend to contain lots of code.
-Let's inspect the if statement in update():
+The update method is called every frame your game runs.<br>
+If you've heard of the term "60 frames per second" then you know what a frame is.<br>
+For a game running at 60 frames per second, <b>Update() is called every 16ms</b>.<br>
+By default, Monogame runs at 60 frames per second - but this can be changed.<br>
+<br>
+Update() methods are commonly used to track, inspect, change, and calculate game data or state.<br>
+If you inspect this method you see the first line of code contains an if statement that reads input.<br>
+In this case, input and update code exist in the same method.<br>
+It is common to seperate input and update code into different methods.<br>
+<br>
+Let's inspect the if statement in update():<br>
 </p>
 <textarea rows="6" readonly>
 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 	Exit();
 </textarea>	
 <p>
-Here you can see the game getting the input state of any attached gamepad or keyboard.
-Then the state is checked to see if the user is pressing the gamepad's back button or keyboard's escape key.
-Either input triggers the Exit() method, which exits the game and closes the game window.
+Here you can see the game getting the input state of any attached gamepad or keyboard.<br>
+Then the state is checked to see if the user is pressing the gamepad's back button or keyboard's escape key.<br>
+Either input triggers the <b>Exit()</b> method, which exits the game and closes the game window.<br>
+<br>
+Notice the code <i>PlayerIndex.One</i>. <br>
+The game is getting input from the gamepad controller associated with PlayerIndex.One.<br>
+This is usually the gamepad that was plugged in first.<br>
+The gamepad plugged in second would be associated with PlayerIndex.Two.<br>
+You could target player 2's controller using the code <i>PlayerIndex.Two</i>.<br>
 </p>	
 <br><br><br><br>
 
@@ -257,15 +266,20 @@ protected override void Draw(GameTime gameTime)
 }
 </textarea>	
 <p>		
-Draw() is called constantly, just like Update(). However, Draw() is called <b>after</b> Update().
-So in terms of execution, each frame your game calls Update(), then Draw(). 
-At 60 frames per second, this means every 16ms <b>both</b> Update() and Draw() are called. 
-Because of time constraints like 16ms, the Update and Draw methods should be kept as fast as possible.
-Monogame limits how fast a game can run to 60 frames per second, 
-so if Update+Draw take less than 16ms to finish the game will wait until the next frame should be called.
-So what does draw actually do?
-Well, draw is where the game draws textures, sprites, images, meshes, and text to the screen.
-Let's change the background color to something else, like black:
+Draw() is called each frame, just like Update().<br>
+However, Draw() is called <b>after</b> Update().<br>
+So in terms of execution, each frame your game calls Update(), then Draw().<br>
+At 60 frames per second, this means <b>every 16ms both Update() and Draw() are called</b>.<br>
+<br>
+Divided evenly, this means Update() and Draw() each have 8ms to complete their work.<br>
+Because of time constraints like 16ms, the Update and Draw methods should be kept as fast as possible.<br>
+By default Monogame runs at 60 frames per second, or 16ms each frame.<br>
+If Update and Draw take less than 16ms to finish, Monogame will wait until the next frame should be called.<br>
+<br>
+So what does draw actually do?<br>
+Well, <b>draw is where the game should draw textures, sprites, images, meshes, and text to the screen</b>.<br>
+Let's change the background color to something else, like black:<br>
+
 </p>
 <textarea rows="4" readonly>
 GraphicsDevice.Clear(Color.Black);
@@ -275,9 +289,16 @@ GraphicsDevice.Clear(Color.Black);
 
 <h3>Summary</h3>
 <p>
-And that's it! You should now have a solid understanding of how your game class operates.
-You should be able to: change the size of the game window, show or hide the mouse cursor, disable or allow
-resizing the game window, rename the game window, and change the background color of your game.
+And that's it! You should now have a solid understanding of how the game class operates.<br>
+We learned how to:<br>
+<ul>
+  <li>change the size of the game window</li>
+  <li>show or hide the mouse cursor</li>
+  <li>disable or allow resizing of the game window</li>
+  <li>rename the game window</li>
+  <li>change the background color of your game</li>
+</ul> 
+
 </p>
 
 

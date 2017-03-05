@@ -1,4 +1,6 @@
 
+
+
 Documentation StyleGuide
 	html documents must display identically across (FF/iE/Ch) using only basic HTML+CSS (no scripts)(check > examples.html)
 	articles should always have a matching <h1> header to the link the user clicked
@@ -17,15 +19,14 @@ Documentation StyleGuide
 	any errors must be fixed and the documentation must be updated
 	
 
-
+ToDo
+	* monogame wikipedia page needs to be updated
 	
-	
-
-Articles To Create
-
-
-	running on xbox one
-	lidgren networking
+Articles I want to create
+	port RescueDog to Xbox1
+	creating an interactive UI
 	multiple gamepad input
+	
+Articles I dont want to create
+	lidgren networking
 	xamarin
-

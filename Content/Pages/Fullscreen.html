@@ -14,11 +14,15 @@
 
 <h1>Making The Game Fullscreen</h1>
 <p>
-There are three options for making a game fullscreen.<br>
-The first option is by using the graphicsManager's built in fullscreen functionality.<br>
-The second option is to allow window resizing, so the player can press the fullscreen button on the game window.<br>
-The third option is by matching the game window's size to the user's display size.<br>
-Each option has it's own set of pros and cons, discussed below.
+There are 3 options for making a game fullscreen.<br>
+<br>
+One option is using the graphicsManager's built in fullscreen functionality.<br>
+Another option is to allow window resizing, so the player can press the fullscreen button on the game window.<br>
+Another option is to match the game window's size to the user's screen size.<br>
+<br>
+Each option has it's own set of pros and cons, discussed below.<br>
+It's likely that you will use a combination of these options, based on your needs.<br>
+<b>Note</b>: these code examples refer to Game1.Initialize().<br>
 </p>
 
 
@@ -40,16 +44,21 @@ protected override void Initialize()
 </textarea>
 <p>
 <b>Pros</b><br>
-It's easy and simple. Whatever resolution your game is will be stretched to match the user's display.
-No additional code is necessary to ensure your game displays in fullscreen.<br>
+<ul>
+  <li>Your game will be stretched to match the user's screen resolution.</li>
+  <li>No additional code is necessary to ensure your game displays fullscreen.</li>
+</ul> 
 <br>
+
 <b>Cons</b><br>
-If the ratio of your game window doesn't match the user's display ratio, your game will be stretched or squashed.
-In other words, you dont have any control over how your game will be displayed. 
-Any textures or images your game displays will be scaled up as well, usually with blurry results.
-This option does not preserve the original quality of textures or images. 
-If you deeply care about the quality of your textures or images, then you probably don't want to use this option. 
-By default the game window's titlebar will be hidden too.
+<ul>
+  <li>If the ratio of your game window doesn't match the user's display ratio, your game will appear distorted.</li>
+  <li>You don't have control over how your game will be displayed across different resolutions.</li>
+  <li>Textures and Fonts will be stretched as well, usually with blurry results.</li>
+  <li>By default the game window's titlebar will be hidden.</li>
+</ul> 
+<br>
+
 </p>
 
 
@@ -74,15 +83,23 @@ protected override void Initialize()
 </textarea>
 <p>
 <b>Pros</b><br>
-It's easy and simple, but the game won't start in fullscreen, unless you set the game's resolution to the user's display resolution.
-Essentially, you've created the <b>option</b> for fullscreen.<br>
+<ul>
+  <li>Your game window can be resized to match the user's max display resolution.</li>
+  <li>Your game window can be resized to meet the user's preferences.</li>
+</ul> 
 <br>
+
 <b>Cons</b><br>
-Your game will be displayed at different aspect ratios, even uncommon ones.
-Consider that the user could resize the window to a vertical oriented portrait mode.
-Or the window could be resized to a very wide, but narrow cinema aspect ratio.
-This means you would have to program your game's UI to function in these uncommon aspect ratios.
-The window's titlebar <b>must</b> be displayed as well, otherwise the user can't resize or fullscreen the game.
+<ul>
+  <li>Technically, not fullscreen.</li>
+  <li>Your game can be displayed at wildly different aspect ratios.</li>
+  <li>Consider that the user could resize the window to a vertical portrait mode.</li>
+  <li>Or the window could be resized to a very wide and narrow cinema aspect ratio.</li>
+  <li>This means you have to program your game's UI to function in these uncommon aspect ratios.</li>
+  <li>The window's titlebar <b>must</b> be displayed as well, otherwise the user can't resize or fullscreen the game.</li>
+  <li>However, you can programmatically set the minimum and maximum resolutions your game window can be resized to.</li>
+</ul> 
+<br>
 </p>
 
 
@@ -116,12 +133,29 @@ protected override void Initialize()
 </textarea>
 <p>
 <b>Pros</b><br>
-The game starts fullscreen, without any border.<br>
+<ul>
+  <li>The game starts fullscreen, without any border or title bar.</li>
+  <li>The "professional" option.</li>
+</ul> 
 <br>
+
 <b>Cons</b><br>
-Your game will be displayed at different aspect ratios, but you can determine this ratio prior to changing the game window
-and the game can react accordingly - preserving the scale and quality of it's textures or images.
-You'll also need to create a way to exit the game - don't assume everyone knows how to quit a program via keyboard input.
+<ul>
+  <li>You'll still need to consider how your game displays at uncommon resolutions.</li>
+  <li>You <b>should</b> provide a way to exit the game.</li>
+  <li>The game cannot be resized by the user.</li>
+</ul> 
+<br>
+</p>
+
+<br><br>
+<h3>Summary</h3>
+<p>
+In this article we looked at several ways to make your game display fullscreen.<br>
+<br>
+You'll probably use a combination of Option2 and Option3 to allow control over the game window.<br>
+Option1 can lead to unpredictable scaling, which can make your game look bad.<br>
+However, Option1 pretty much works all the time - so think of it as a last resort.<br>
 </p>
 
 

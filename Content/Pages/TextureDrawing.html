@@ -133,9 +133,8 @@ alpha . Alpha will control the opaque pixels of the texture, while preserving th
 texture's transparent pixels. An alpha of 0 would be invisible, while an alpha of 1.0 would 
 be fully visible, or non-transparent. <br>
 <br>
-Then we create a Vector2 known as origin. How this value will be used is explained in
-the article <a href="TextureModify.html" target="display">Modifying a Texture</a>. 
-Dont worry about it right now, just note that it's value is (0,0).<br>
+Then we create a Vector2 known as origin. How this value us used is explained in
+the article <a href="TextureModify.html" target="display">Modifying a Texture</a>.<br>
 <br>
 Next we create a float for rotation. This value will determine how much the texture
 is rotated in radians. Then we create a float for scale. Scale will 
@@ -145,8 +144,9 @@ change the texture in a variety of ways, but we aren't going to do anything just
 so we set the SpriteEffect to None. <br>
 <br>
 Finally we declare a float to control the zDepth of the texture. Think of zDepth as the 
-stacking order of objects on the screen. Because we don't have any other objects to draw, 
-right now the zDepth is unimportant.
+stacking order, or layer, of objects on the screen. Because we don't have any other objects to draw, 
+right now the zDepth is unimportant. It's important to note how zDepth is layered. 
+A texture with a zDepth of 0.999 draws <b>behind</b> a texture with a zDepth of 0.111.
 </p>
 <textarea rows="10" readonly>
 Texture2D texture;

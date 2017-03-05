@@ -15,12 +15,55 @@
 <h1>Platforms and Project Types</h1>
 
 <p>
-Monogame projects are targeted at a platform, for example Windows, Mac, and Linux desktops.
-In order for monogame to run on these platforms, certain libraries are required.
-For example, running Monogame on a Windows machine may require DirectX, or OpenGL, or a library/SDK specific to that version of Windows.
-In order to develop for certain platforms, you may be required to download and install additional software.
-To view available project templates that target a variety of platforms, launch a supported IDE with Monogame installed.
+
+
+
+
+
+
+
+<h3>Platforms</h3>
+
+A <b>platform</b> is a device plus it's software environment.<br>
+A home PC running Windows7 is a platform. <br>
+A smart phone running Android is a platform.<br>
+A Playstation 4 console running Orbis OS is a platform.<br>
+Monogame supports a variety of platforms.<br>
+Coming soon, Monogame will even support the <a href="http://nintendoeverything.com/monogame-software-is-compatible-with-switch/">Nintendo Switch</a>.<br>
+<br>
+In order to develop for certain platforms, you may be required to download and install additional software.<br>
+For example, in order to develop UWP apps/games for Xbox One, you must use Visual Studio.<br>
+You must be using Windows 10 as well, and have access to an Xbox One console.<br>
+In addition, you must install the Universal Windows App Development Tools.<br>
+Finally, you must install the latest Windows 10 SDK.<br>
+<br>
+
+
+<h3>Project Types</h3>
+
+Monogame projects can target different platforms.<br>
+Different platforms require different libraries and backends to run.<br>
+A <b>project type</b> tells Monogame which platform it's targeting, and the libraries it needs to use.<br>
+<br>
+For example, a Monogame 3.6 Desktop OpenGL project will now use SDL2 for the backend.<br>
+A Monogame 3.6 Desktop OpenGL project will also use OpenAL to play sounds.<br>
+You may be required to also install OpenAL to test your OpenGL project.<br>
+This means that anyone who plays your game will also need OpenAL.<br>
+<br>
+
+
+
+<h3>Templates</h3>
+
+A <b>template</b> allows an IDE to create a project targeted at a specific platform.<br>
+A project is a series of files that describe the program, and let the IDE know what libraries to use.<br>
+The libraries a project requires to run are also known as <b>dependencies</b>.<br>
+Each project or template has different dependencies based on the platform it targets.<br>
+<br>
+To view the available templates, launch a supported IDE with Monogame installed.<br>
 </p>
+
+
 
 <br><br>
 <center><img src="../Assets/projectTypes.jpg"></center>
@@ -30,29 +73,29 @@ To view available project templates that target a variety of platforms, launch a
 <br><br>
 
 
-<h3>Monogame Windows Desktop Project</h3>
-<p>A Monogame project for Windows using DirectX.</p><br>
-<br>
-<h3>Monogame Cross Platform Desktop Project</h3>
-<p>A Monogame project for Windows, Mac, and Linux using OpenGL.</p><br>
-<br>
-<h3>Monogame Windows 10 Project</h3>
-<p>A Monogame project for Windows 10 UWP. Requires Windows 10.</p><br>
-<br>
-<h3>Monogame Android Project</h3>
-<p>A Monogame project for Android. 
-Requires <a href="https://www.visualstudio.com/en-us/features/xamarin-vs.aspx">Mono for Android</a> by Xamarin.</p><br>
-<br>
-<h3>Monogame iOS Project</h3>
-<p>A Monogame project for iOS. Requires <a href="https://www.xamarin.com/platform">Xamarin.iOS</a>.</p><br>
-<br>
-<h3>Monogame OUYA Project</h3>
-<p>A Monogame project for OUYA. 
-Requires <a href="https://developer.xamarin.com/releases/android/xamarin.android_4/xamarin.android_4.8/">Xamarin.Android 4.8.2</a> or greater.</p><br>
-<br>
-<h3>Monogame Content Pipeline Extension Project</h3>
-<p>A Monogame project for creating a custom content importer and processor.</p><br>
+<h3>Supported Platforms</h3>
 
+<p>
+<ul>
+  <li>iOS</li>
+  <li>OS X</li>
+  <li>Android</li>
+  <li>Linux</li>
+  
+  <li>BSD</li>
+  <li>Windows Phone 8</li>
+  <li>Windows Store</li>
+  <li>Windows Desktop</li>
+  
+  <li>Windows 10</li>
+  <li>PlayStation 4</li>
+  <li>PlayStation Vita</li>
+  <li>Xbox One</li>
+  
+  <li>Nintendo Switch (coming soon)</li>
+</ul> 
+<b>Note</b>: as of MonoGame 3.6, OUYA support has been removed.<br>	
+</p>
 
 
 

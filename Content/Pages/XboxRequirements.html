@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Requirements for Deploying XBox One UWP Apps</h1>
+
+
+<p>
+This section discusses all the requirements for deploying UWP apps to an Xbox One console.<br>
+</p>
+
+
+<br><br>
+<h3>Hardware Requirements</h3>
+<p>
+You will need:
+ <ul>
+  <li>A Desktop PC</li>
+  <li>A <a href="http://www.xbox.com/en-US/xbox-one/consoles">Xbox One Console</a> (standard retail version)</li>
+  <li>A Network connecting the PC and Xbox</li>
+</ul> 
+</p>
+
+
+<br><br>
+<h3>Software Requirements</h3>
+<p>
+You will need:
+ <ul>
+  <li><a href="https://www.microsoft.com/en-us/windows/get-windows-10">Windows 10</a> running on a PC</li>
+  <li><a href="https://www.visualstudio.com/vs/community/">Visual Studio</a> 2015 or later</li>
+  <li>Universal Windows App Development Tools (installed through Visual Studio)</li>
+  <li>the <a href="https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk">latest Windows 10 SDK</a> installed</li>
+  <li><a href="http://www.monogame.net/downloads/">Monogame (3.5+)</a> installed</li>
+</ul> 
+</p>
+
+
+
+
+<br><br>
+<h3>Additional Requirements and Notes</h3>
+<p>
+You will also need a <a href="https://docs.microsoft.com/en-us/windows/uwp/publish/opening-a-developer-account">Windows Creator or Developer account</a>.<br>
+If you created a Windows Store Developer account, then you're good to go.<br>
+You <b>must</b> have a Windows Creator or Developer account to deploy UWP apps to a Xbox One Console.<br>
+<a href="https://docs.microsoft.com/en-us/windows/uwp/publish/account-types-locations-and-fees">It only costs $20 to register as an Individual Developer</a>.<br>
+This Developer account also lets you publish UWP apps to the Windows Store.<br>
+</p>
+
+
+
+
+
+<br><br>
+<h3>The Deployment Process</h3>
+<p>
+
+Here is a link to the <a href="https://docs.microsoft.com/en-us/windows/uwp/xbox-apps/getting-started">official guide</a>.<br>
+Follow this guide up until you get to the section titled "Creating your first project in Visual Studio 2015", then stop.<br>
+Instead of creating a Universal Windows project, you will be creating a UWP Monogame Project.<br>
+
+<br><br>
+<center><img src="../Assets/UWPprojectCreation.jpg" ></center>
+<br><br>
+
+After you create this project, you can continue to follow the official guide as normal.<br>
+Make sure you setup the project's properties correctly.<br>
+
+<br><br>
+<center><img src="../Assets/UWPsettings.jpg" ></center>
+<br><br>
+
+The first time you deploy to your Xbox One, Visual Studio will ask for a PIN.<br>
+You can get a PIN by starting Dev Home on your Xbox One and selecting the Pair with Visual Studio button.<br>
+Once paired and deployed (it may take a while for the first time), you'll see the familiar blue screen.<br>
+
+<br><br>
+<center><img src="../Assets/UWPbaseDeploy.jpg" ></center>
+<br><br>
+
+</p>
+
+
+
+
+
+<br><br>
+<h3>Anatomy of a UWP Monogame Project</h3>
+<p>
+
+
+App.Xaml.cs loads GamePage.Xaml.cs.<br>
+GamePage.Xaml.cs instantiates the familiar Game1.cs.<br>
+You will probably never need to modify GamePage.Xaml.cs.<br>
+You will likely need to modify App.Xaml.cs.<br>
+<br>
+App.Xaml.cs is kind of hidden in the project.<br>
+You need to locate App.xaml in the Solution Explorer, then click it's arrow icon on the left.<br>
+App.Xaml.cs will then be displayed below App.xaml.<br>
+Double-click to open this file for editing.<br>
+
+<br><br>
+<center><img src="../Assets/UWPappXaml.jpg" ></center>
+<br><br>
+
+You may notice a few extra visual elements are displayed over the familiar blue screen.<br>
+You may or may not want these elements to be displayed.<br>
+We'll remove these in the next article <a href="XboxUWPCleanup.html" target="display">Cleaning Up</a>.<br>
+
+<br><br>
+<center><img src="../Assets/UWPugliness.jpg" ></center>
+<br><br>
+
+</p>
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

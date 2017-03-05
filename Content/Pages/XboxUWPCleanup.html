@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Cleaning Up the Default UWP Project</h1>
+
+
+<p>
+
+This article discusses how to remove the UWP app frame counter and additional runtime tools.<br>
+If you're like me, you want to start your project with just a blank blue screen and nothing else.<br>
+
+
+</p>
+
+
+<br><br>
+<h3>What do we need to clean up?</h3>
+<p>
+By clean up, I mean remove or disable.<br>
+Specifically, we want to remove the UWP frame counter and the runtime tools that overlay the blue screen.<br>
+These two elements are highlited below with a red outline.<br>
+</p>
+
+<br><br>
+<center><img src="../Assets/UWPugliness.jpg" ></center>
+<br><br>
+
+
+
+
+
+
+<br><br>
+<h3>Removing the Frame Rate Counter</h3>
+<p>
+First, we'll get rid of the frame rate counter on the left.<br>
+Locate the section of code below in App.xaml.cs.<br>
+Comment the section of code out. Or delete it. Or set the value to be false.<br>
+</p>
+
+<br><br>
+<center><img src="../Assets/UWPframeCounter.jpg" ></center>
+<br><br>
+
+
+
+
+
+<br><br>
+<h3>Removing the Runtime Tools</h3>
+<p>
+Next, we'll get rid of the runtime tools in the top middle.<br>
+Click on Debug > Options.<br>
+</p>
+<br><br>
+<center><img src="../Assets/UWPruntimeTools1.jpg" ></center>
+<br><br>
+
+<p>
+Then click on Debuging > General.<br>
+Uncheck the box labeled "Show runtime tools in application".<br>
+</p>
+<br><br>
+<center><img src="../Assets/UWPruntimeTools2.jpg" ></center>
+<br><br>
+
+<p>
+Exit the Options window, then run or deploy your game.<br>
+</p>
+<br><br>
+<center><img src="../Assets/UWPpretty.jpg" ></center>
+<br><br>
+
+
+<p>
+You should now be able to apply all the examples in this guide to your project.<br>
+There are some limitations for UWP apps that are running on the Xbox One.<br>
+These limitations are discussed in the next article <a href="XboxUWPLimits.html" target="display">UWP Limits</a>.<br>
+</p>
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

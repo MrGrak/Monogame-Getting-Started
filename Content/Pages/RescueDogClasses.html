@@ -253,7 +253,7 @@ Level also has the standard Update and Draw methods.<br>
 <p>
 Level Generator is responsible for creating cave levels that are solvable.<br>
 Solvable is defined as traversable from the spawn to the exit via 1 or more critical paths.<br>
-A floor fill algorithm is used to ensure each level is solvable.<br>
+A flood fill algorithm is used to ensure each level is solvable.<br>
 <br>
 Level Generator contains several methods that work together to create an interesting maze-like level.<br>
 This is accomplished using a tile list, and many rectangles.<br>
@@ -279,7 +279,7 @@ There's not much to say about Program.cs.<br>
 <h3 id="Room">Room.cs</h3>
 <p>
 The Room class describes a room in the level.<br>
-Rooms are only used by LevelGenerator, and their only used to group fill tiles.<br>
+Rooms are only used by LevelGenerator, and they are only used to group fill tiles.<br>
 <br>
 The Room class was originally designed so each room could have a purpose.<br>
 You can see the start of this idea with Room's Type enumerator.<br>
@@ -412,16 +412,16 @@ The WonScreen represents the "end" of the game, afterwards the game essentially 
 
 
 
-
-
-
-
-
 <br><br><br><br>
+<br><br><br><br>
+
+
+
+
 <h3>Summary</h3>
 <p>
 In this article we explored the classes of RescueDog.<br>
-You should have an understanding of each class.<br>
+You should have a basic understanding of each class.<br>
 </p>
 
 

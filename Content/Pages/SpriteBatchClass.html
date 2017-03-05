@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>The SpriteBatch Class</h1>
+
+
+<p>In this article, we will discuss the SpriteBatch class <b>and how Monogame draws</b>.<br>
+<br>
+SpriteBatch is (basically) responsible for drawing textures and spriteFonts (strings) to the screen.<br>
+We will not be discussing the code for drawing textures and fonts to the screen.<br>
+Refer to the <a href="TextureDrawing.html" target="display">Texture Drawing article</a> 
+and the <a href="FontDrawing.html" target="display">Font Drawing article</a> for code examples.<br>
+Let's get started.</p>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<h3>What does the SpriteBatch class do exactly?</h3>
+<p>
+You can view the source code for SpriteBatch <a href="https://github.com/MonoGame/MonoGame/blob/develop/MonoGame.Framework/Graphics/SpriteBatch.cs">right here</a>.<br>
+<br>
+SpriteBatch.cs describes itself as a "Helper class for drawing text strings and sprites in one or more optimized batches".<br>
+Essentially, SpriteBatch passes textures and strings to another class called SpriteBatcher.cs.<br>
+SpriteBatch checks to make sure Textures and SpriteFonts you pass into it are valid.<br>
+SpriteBatch also has a variety of Draw() methods that accept various parameters.<br>
+<br>
+So, SpriteBatch kinda "wraps" the SpriteBatcher class and acts as an intermediary or interface.<br>
+For example, you would never interact with the SpriteBatcher class directly.<br>
+You would interact with the SpriteBatch class, which would then call _batcher.CreateBatchItem().<br>
+SpriteBatch also handles/enforces the Begin() and End() calls necessary for drawing.<br>
+Note that drawing actually occurs in the End() method, which calls _batcher.DrawBatch().<br>
+</p>
+
+
+
+
+<br><br>
+<h3>Ok, What does the SpriteBatcher class do?</h3>
+<p>
+You can view the source code for SpriteBatcher <a href="https://github.com/MonoGame/MonoGame/blob/develop/MonoGame.Framework/Graphics/SpriteBatcher.cs">right here</a>.<br>
+<br>
+SpriteBatcher.cs describes itself as a "class that handles the queueing of batch items into the GPU...".<br>
+This is done by "creating triangle tesselations that are used to draw the sprite textures".<br>
+Technically, SpriteBatcher doesn't interact with the GPU directly - it calls a GraphicsDevice method.<br>
+SpriteBatcher's drawing is done through the GraphicsDevice method <i>DrawUserIndexedPrimitives();</i>.<br>
+<br>
+SpriteBatcher.cs communicates with the target graphic device, passing it lists of triangles and textures.<br>
+SpriteBatcher must be efficient and fast, so it uses pointer indexing to bypass array checking overhead.<br>
+Basically, theres a bunch of code in SpriteBatcher that aims to make it as fast as possible.<br>
+Note that SpriteBatcher.cs uses a List of SpriteBatchItem instances to efficiently represent "sprites".<br>
+</p>
+
+
+
+<br><br>
+<h3>Hmm, What does the SpriteBatchItem class do?</h3>
+<p>
+You can view the source code for SpriteBatchItem <a href="https://github.com/MonoGame/MonoGame/blob/develop/MonoGame.Framework/Graphics/SpriteBatchItem.cs">right here</a>.<br>
+<br>
+Think of the SpriteBatchItem class as a rectangular billboard in 3D space.<br>
+This billboard has a texture, a position XYZ, and a color.<br>
+It also has X and Y Texture Coordinates.<br>
+The billboard's corners are represented by 4 VertexPositionColorTexture instances.<br>
+</p>
+
+
+<br><br>
+<h3>Jeez, What's a VertexPositionColorTexture?</h3>
+<p>
+Well, it's a point in 3D space that has an XYZ value.<br>
+This point, or vertex, also has a Color value.<br>
+In addition, it has XY Texture Coordinates.<br>
+When you use 4 VertexPositionColorTextures, you can describe a billboard in 3D space - like the SpriteBatchItem class.<br>
+</p>
+
+
+
+
+<br><br>
+<h3>What's a GraphicsDevice?</h3>
+<p>
+You can view the source code for GraphicsDevice <a href="https://github.com/MonoGame/MonoGame/blob/develop/MonoGame.Framework/Graphics/GraphicsDevice.cs">right here</a>.<br>
+<br>
+Well, the GraphicsDevice classes are... complicated. <b>Very complicated</b>.<br>
+A GraphicsDevice communicates with a graphics API like OpenGL or DirectX.<br>
+A GraphicsDevice's code path is also controlled by the target platform.<br>
+The GraphicsDevice basically handles communication between the graphics API, the target platform, and your game.<br>
+It handles communication, translation, and manages graphical state for many disparate systems.<br>
+<br>
+The GraphicsDevice presents generic methods for interacting with the supported graphics APIs.<br>
+By doing this, the SpriteBatch/SpriteBatcher classes don't need to know or interact with specific graphics APIs.<br>
+Because your codebase can only call SpriteBatch's methods, your codebase never needs to interact with a graphics API either.<br>
+This allows your codebase to be (more) cross-platform.<br>
+<br>
+You might recall that the GraphicsDevice is used by SpriteBatcher to draw textured rectangles or triangles to the screen.<br>
+This is done using the DrawUserIndexedPrimitives() method.<br>
+How this method is actually implemented <b>depends on the graphics API</b>.<br>
+For example, if the project uses OpenGL, then DrawUserIndexedPrimitives() either calls <b>GL.DrawElements()</b> or <b>GL.DrawArrays()</b>.<br>
+If the project uses DirectX, then DrawUserIndexedPrimitives() either calls <b>_d3dContext.Draw</b> or <b>_d3dContext.DrawIndexed()</b>.<br>
+<br>
+Explaining OpenGL or DirectX is way beyond the scope of this getting started guide.<br>
+Entire books are dedicated to these subjects. If you'd like to learn more, there are many resources available.<br>
+</p>
+
+
+
+<br><br>
+<h3>Interesting, I'd like to learn more...</h3>
+<p>
+Great, here is a list of resources:
+ <ul>
+  <li><a href="https://blogs.msdn.microsoft.com/shawnhar/2011/01/12/spritebatch-billboards-in-a-3d-world/">Efficent billboards in 3D space</a></li>
+  <li><a href="http://www.riemers.net/">3D XNA Tutorials</a></li>
+  <li><a href="http://www.opengl-tutorial.org/">OpenGL Tutorials</a></li>
+  <li><a href="http://www.directxtutorial.com/">DirectX Tutorials</a></li>
+</ul> 
+</p>
+
+
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

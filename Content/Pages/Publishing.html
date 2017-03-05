@@ -23,34 +23,162 @@ Let's get started.
 
 <h3>What is Publishing?</h3>
 <p>
-Publishing is the process of sharing your game with others.<br>
-Usually, this is done using an installer, such as Click Once.<br>
-This can also be done by distributing an application file plus required dlls and the content folder.<br>
+Publishing is the process of selling or sharing your game with others.<br>
+There are many approaches to publishing.<br>
 <br>
-Keep in mind that different computers have different hardware and software setups.<br>
-Your game may not run, or may run incorrectly, on some computers.<br>
-This may be due to a driver issue, a GPU issue, an OS issue, or some other hardware/software issue.<br>
-Without specific error information, it can be impossible to determine what's causing the problem.<br>
+The easiest way to share your game with others is to <b>package it into an archive</b>.<br>
+You'll need to make sure you include your game's dependencies, if you legally can.<br>
+Sometimes you cannot legally redistribute a dependency because of it's license.<br>
+It's important to know the licensing of the libraries your game requires.<br>
+Once you have created an archive you can then post it to a game marketplace, like <a href="https://itch.io/">itch.io</a>.<br>
+</p>
+
+
+<br><br>
+<h3>Selling Your Game</h3>
+<p>
+If you want to sell your game, you'll have to consider many things:<br>
+<ul>
+  <li>Forming a Business and Paying Taxes</li>
+  <li>Copyrighting your Game, Artwork, Sounds, and Logos</li>
+  <li>Preventing or Discouraging Piracy</li>
+  <li>Promotion and Advertising</li>
+  <li>Installation and Support</li>
+</ul> 
+<br>
+All of these topics are outside of the scope for a Getting Started Guide.<br>
+They are included here to introduce you to the realities of selling a game.<br>
+Sharing a game for free is relatively easy and straight forward.<br>
+Selling a game can be a very complicated, expensive, and dangerous process.<br>
+You should hire legal consultation prior to selling a game or forming a business.<br>
+</p>
+
+
+<br><br>
+<h3>Hardware Requirements</h3>
+<p>
+Determining the hardware requirements for your game can be challenging.<br>
+If you are developing for a console, then you know the hardware the game will run on.<br>
+If you're developing for desktops or smart phones, the hardware may be old, new, or simply incompatible.<br>
+It's very difficult to ensure that your game will run on unknown hardware or software.<br>
+Therefore you should provide a list of recommended hardware & software that your game is known to run on.<br>
+It's also a good idea to have a website that lists known bugs or errors, so users can get help if they need to.<br>
 <br>
 </p>
+
+
+<br><br>
+<h3>When Things Break</h3>
+<p>
+In an ideal world, your game installs and runs without issue, and everyone loves it.<br>
+However we live in reality, and <b>in reality there are always problems and bugs with software</b>.<br>
+When there is a problem with a piece of software, it frustrates people.<br>
+When something frustrates a person, they start to dislike it.<br>
+These frustrated people are more likely to search for, and talk about, their problems online.<br>
+And frustrated people, who spent money on a non-functioning product, can be mean.<br>
+Let's hope you never experience this, or worse yet - have to deal with it.<br>
+<br>
+When things break, someone has to fix them. If you're a single developer, that person is you.<br>
+For this section, I'm going to assume you are the person who has to fix the problem.<br>
+I'm going to provide a series of actions that you should take.<br>
+<br>
+<b>The first thing you should do is clearly communicate that someone is looking into the problem.</b><br>
+Do not leave players, or customers, in the dark about what's going on.<br>
+This makes them feel ignored, which amplifies their belief that the devs only care about their money.<br>
+You should also provide frequent updates about your progress resolving the problem.<br>
+This doesn't have to be an article or blog post, just a simple tweet will do.<br>
+<br>
+<b>The second thing you should do is collect as much information about the problem as you can.</b><br>
+It's a good idea to have an alpha + beta test prior to release.<br>
+The reality is that indie devs can't always afford this, or may be working under tight deadlines.<br>
+The alternative is to embed debugging tools into the game that write or send crash reports.<br>
+You should assume that any information a player gives you has been tainted in some way.<br>
+They may think of themselves as genuises and 'solve' the issue, without really understanding the problem.<br>
+Their opinions are of little value - you need to collect as much hard, objective data as you can.<br>
+<br>
+<b>Third - you should understand and reproduce the problem, based on the information available.</b><br>
+Don't worry about solving it right now. You should focus on fully understanding the problem.<br>
+If you can't reproduce the problem, then you can't check to see if you've actually solved it.<br>
+If you don't understand the problem, then your solution isn't going to fix it.<br>
+<br>
+<b>Fourth - you should implement a solution.</b><br>
+Apply the patch, then test that the problem has been resolved by attempting to reproduce it. <br>
+If your solution fixes the problem, then you need to push out the patch to your game.<br>
+On some platforms and marketplaces, patches or updates can cost alot of money.<br>
+Financially speaking, it may not be worth fixing a small bug if it costs alot to patch.<br>
+Or you may want to wait and release an update that patches multiple bugs.<br>
+<br>
+<b>Finally, you should document the problem and solution, and notify affected players.</b><br>
+It's likely that your solution is hacky or brittle - and that's just the nature of patching complex systems.<br>
+In the future, if additional work is done to the game's codebase, your patch will likely break.<br>
+At this point, it's good to have documentation to refer to when understanding a new problem.<br>
+This documentation will likely reduce how long it takes to understand the new problem.<br>
+Affected players will appreciate being notified that their particular problem was fixed.<br>
+It makes them feel like they were a part of the process, and that their voice mattered.<br>
+</p>
+
+
+
+<br><br>
+<h3>The Worst Case Scenario</h3>
+<p>
+If you're lucky, you'll never get here.<br>
+But for some indie devs, certain things can happen that they are unable to deal with.<br>
+Getting sued by a large corporation, for example, will end most indie studios overnight.<br>
+Unless you have the money for legal fees and a lengthy trial, you're done.<br>
+This is an example of a "Worst Case Scenario", and you should have a plan for it.<br>
+<br>
+If you're reading this, hopefully you're not in a "Worst Case Scenario".<br>
+Instead, you're probably just getting into game development.<br>
+So think of this section as an introduction on how to avoid these "Worst Case Scenarios".<br>
+<br>
+The vast majority of WCSs stem from a lack of understanding or research.<br>
+For example, prior to releasing a game in China, you should do some research on their culture.<br>
+Aspects of your game may not be culturally appropriate and there could be serious consequences.<br>
+<br>
+Alot of WCSs also come from copyright violation or improper use of an asset's license.<br>
+You should understand the licenses attached to the assets you are using.<br>
+If you have created your own assets then you're probably safe.<br>
+It's a good idea to patent, trademark, or copyright unique intellectual property.<br>
+You should also check to see if any assets you are using are legally protected by copyright.<br>
+<br>
+Other WCSs can arise from hiring people to work on or promote your game.<br>
+You should always secure written agreements between employees or independent contractors.<br>
+Always, always, always do this. If your game starts making good money, they will want a piece.<br>
+A written agreement prevents them from claiming more than they are owed.<br>
+It also entitles them to what they are owed - so it keeps everyone honest.<br>
+<br>
+The most common WCS is bankruptcy or dissolution.<br>
+Most businesses fail. Almost all businesses lose money for the first few years of operation.<br>
+If you don't have enough money to pay the bills and employees, then get loans or sell.<br>
+If you can't get loans due to bad credit, then you'll likely have to dissolve the business.<br>
+Don't be unaware of this process - it can ruin you financially.<br>
+<br>
+This section may seem to be beyond the scope for a getting started guide, but it's not.<br>
+Most game developers are ignorant of the law, and are frequently taken advantage of.<br>
+By introducing you to these concepts early on, I hope to make you aware of the pitfalls you may face.<br>
+I would contend that knowing your legal rights and obligations is just as important as development.<br>
+<b>If you want to make money developing games, you need to know the law.</b><br>
+<br>
+</p>
+
+
+
+
+
+
 
 
 <br><br>
 <center>
 <img src="../Assets/installingGame.gif">
-<p>A user installing your game.</p>
+<p>
+An experienced game developer.
+</p>
 </center>
 <br><br>
 
 
-
-
-
-<br><br><br><br>
-<h3>Summary</h3>
-<p>
-In this article we discussed publishing your game.
-</p>
 
 
 

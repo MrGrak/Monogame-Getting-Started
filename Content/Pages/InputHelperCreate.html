@@ -74,7 +74,7 @@ namespace Game1
         public MouseState currentMouseState = new MouseState();
         public KeyboardState lastKeyboardState = new KeyboardState();
         public MouseState lastMouseState = new MouseState();
-        public Point cursorPosition = new Point(0, 0);
+        public Vector2 cursorPos = new Vector2(0, 0);
 
         public InputHelper() {}
 
@@ -86,9 +86,9 @@ namespace Game1
             currentKeyboardState = Keyboard.GetState();
             currentMouseState = Mouse.GetState();
 
-            //track cursor position as int
-            cursorPosition.X = (int)currentMouseState.X;
-            cursorPosition.Y = (int)currentMouseState.Y;
+            //track cursor position
+            cursorPos.X = currentMouseState.X;
+            cursorPos.Y = currentMouseState.Y;
         }
 
         //check for keyboard key press, hold, and release
@@ -196,14 +196,14 @@ public enum MouseButtons { LeftButton, RightButton }
 Let's inspect the members of our InputHelper now.<br>
 Below we define several new variables with different class types.<br>
 The class types KeyboardState and MouseState are defined in Microsoft.Xna.Framework.Input.<br>
-The class type Point is defined in Microsoft.Xna.Framework.<br>
+The class type Vector2 is defined in Microsoft.Xna.Framework.<br>
 </p>
 <textarea rows="8" readonly>
 public KeyboardState currentKeyboardState = new KeyboardState();
 public MouseState currentMouseState = new MouseState();
 public KeyboardState lastKeyboardState = new KeyboardState();
 public MouseState lastMouseState = new MouseState();
-public Point cursorPosition = new Point(0, 0);
+public Vector2 cursorPos = new Vector2(0, 0);
 </textarea>	
 <p>
 <b>KeyboardState</b> is a class that represents a user's keyboard. <br>
@@ -216,11 +216,9 @@ If a mouse button is pressed, this is represented in MouseState.<br>
 We create a current mouse state, and a last mouse state.<br>
 These two instances allows us to see if a user pressed a mouse button, is holding a button, or released a button.<br>
 <br>
-Finally we have <b>Point</b>. Point has two integers, X and Y.<br>
-Point represents where on the screen our cursor is.<br>
-We could use a Vector2 to track the cursor position using floats, but we don't need sub-pixel precision.<br>
-In later articles we will check collisions between the mouse and other objects using Points and Rectangles.<br>
-We set our Point variable cursorPosition to 0 for right now.<br>
+Finally we have <b>Vector2</b>. Vector2 has two floats, X and Y.<br>
+This Vector2, known as CursorPos, represents where on the screen our cursor is.<br>
+We initially set our Vector2 variable to 0.<br>
 </p>
 
 
@@ -236,10 +234,7 @@ Examine the Update Method below.<br>
 In this method, we capture the previous frame's keyboard and mouse state.<br>
 Then we capture the current frame's keyboard and mouse state.<br>
 Later we will compare the previous and current states to reason about the user's input.<br>
-<br>
-Finally we capture the mouse's screen position in cursorPosition.<br>
-Note that the mouse position is stored as a float in currentMouseState.<br>
-We <b>cast</b> the float to an integer using <b>(int)</b>.<br>
+Finally we capture the mouse's screen position in cursorPos.<br>
 </p>
 <textarea rows="16" readonly>
 public void Update()
@@ -250,9 +245,9 @@ public void Update()
 	currentKeyboardState = Keyboard.GetState();
 	currentMouseState = Mouse.GetState();
 
-	//track cursor position as int
-	cursorPosition.X = (int)currentMouseState.X;
-	cursorPosition.Y = (int)currentMouseState.Y;
+	//track cursor position
+	cursorPos.X = currentMouseState.X;
+	cursorPos.Y = currentMouseState.Y;
 }
 </textarea>	
 
