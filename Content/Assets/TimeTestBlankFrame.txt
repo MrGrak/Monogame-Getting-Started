@@ -1,0 +1,78 @@
+using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Game1
+{
+    public class Game1 : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        public Color bkgColor = new Color(10, 10, 10, 255);
+
+        public Stopwatch stopWatch = new Stopwatch();
+        public Stopwatch total = new Stopwatch();
+        public TimeSpan timespan;
+        public long averageTicks;
+        public long totalTicks;
+        public long frameCount;
+
+        public SpriteFont font;
+        public String text = "";
+        public Vector2 textPos = new Vector2(50, 50);
+        public Color textColor = new Color(255, 255, 255, 255);
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+
+            this.IsMouseVisible = true;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+        }
+        protected override void Initialize() { base.Initialize(); }
+
+        protected override void LoadContent()
+        {
+            font = Content.Load<SpriteFont>(@"testFont");
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            total.Reset(); total.Start();
+
+            averageTicks = 0;
+            totalTicks = 0;
+            frameCount = 0;
+        }
+        protected override void UnloadContent() { }
+
+        protected override void Update(GameTime gameTime)
+        {
+            stopWatch.Reset(); stopWatch.Start();
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(bkgColor);
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, text, textPos, textColor, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.01f);
+            spriteBatch.End();
+            base.Draw(gameTime);
+
+            stopWatch.Stop(); timespan = stopWatch.Elapsed;
+
+            frameCount++;
+            if (frameCount > 10) //discard the first 10 frames
+            {
+                totalTicks += timespan.Ticks;
+                averageTicks = totalTicks / (frameCount - 10);
+            }
+
+            text = "";
+            text += "ticks this frame: " + timespan.Ticks;
+            text += "\naverage ticks per frame: " + averageTicks;
+            text += "\nelapsed time: " + total.Elapsed.ToString(@"hh\:mm\:ss");
+        }
+    }
+}

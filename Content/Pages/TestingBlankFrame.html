@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>The Blank Frame Test</h1>
+<p>
+This test times how long it takes to draw a blank monogame frame.<br>
+</p>
+
+<h3>Test Requirements</h3>
+<p>
+This test draws text to the screen, using a sprite font.<br>
+Follow the <a href="FontAddingSpritefont.html" target="display">Adding A Bitmap SpriteFont article </a> 
+to add a sprite font asset to an empty monogame project.<br>
+Replace the contents of Game1.cs with the source code provided 
+<b><a href="../Assets/TimeTestBlankFrame.txt" >here</a></b>.<br>
+You may need to change the <i>Content.Load</i> address to the sprite font you are using.<br>
+The source code will work for all project types.
+</p>
+
+<br><br>
+<center><img src="../Assets/TimeTestBlankFrameResult.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<br><br><br><br>
+<h3>DirectX Test Results</h3>
+<p>
+This test was conducted using the <a href="TestingEnvironments.html" target="display">Mid-Range PC</a>.<br>
+<br>
+With Debugging enabled:<br>
+After 10 minutes (36,000 frames), the average tick per frame was around <b>240</b>.<br>
+After 30 minutes (108,000 frames), the average tick per frame was around <b>245</b>.<br>
+<br>
+Without Debugging enabled:<br>
+After 10 minutes (36,000 frames), the average tick per frame was around <b>218</b>.<br>
+After 30 minutes (108,000 frames), the average tick per frame was around <b>217</b>.<br>
+<br>
+<b>Note</b>: In this test, the debugger added about <b>20</b> ticks of overhead.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<br><br><br><br>
+<h3>OpenGL Test Results</h3>
+<p>
+This test was conducted using the <a href="TestingEnvironments.html" target="display">Mid-Range PC</a>.<br>
+Note that Monogame 3.6 uses SDL2 for OpenGL projects.<br>
+<br>
+<b>
+This test will be put on hold until specific issues can be resolved.<br>
+These issues skew the timing of the OpenGL test results and don't provide an accurate report.<br>
+</b>
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<br><br><br><br>
+<h3>Windows10 UWP App Test Results</h3>
+<p>
+This test was conducted using the <a href="TestingEnvironments.html" target="display">Mid-Range PC</a>.<br>
+<br>
+With Debugging enabled:<br>
+After 10 minutes (36,000 frames), the average tick per frame was around <b>473</b>.<br>
+After 30 minutes (108,000 frames), the average tick per frame was around <b>476</b>.<br>
+<br>
+Without Debugging enabled:<br>
+After 10 minutes (36,000 frames), the average tick per frame was around <b>343</b>.<br>
+After 30 minutes (108,000 frames), the average tick per frame was around <b>344</b>.<br>
+<br>
+<b>Note</b>: In this test, the debugger added about <b>130</b> ticks of overhead.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<br><br><br><br>
+<h3>Xbox One UWP App Test Results</h3>
+<p>
+This test was conducted using the <a href="TestingEnvironments.html" target="display">Standard Xbox One Console</a>.<br>
+Note that UWP apps dont get access to the full power of the xbox hardware.<br>
+UWP apps share resources with other running applications.<br>
+<br>
+With Debugging enabled:<br>
+After 10 minutes (36,000 frames), the average tick per frame was around <b>4180</b>.<br>
+After 30 minutes (108,000 frames), the average tick per frame was around <b>4150</b>.<br>
+<br>
+Without Debugging enabled:<br>
+After 10 minutes (36,000 frames), the average tick per frame was around <b>3490</b>.<br>
+After 30 minutes (108,000 frames), the average tick per frame was around <b>3490</b>.<br>
+<br>
+<b>Note</b>: In this test, the debugger added about <b>650</b> ticks of overhead.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+<br><br><br><br>
+</article>
+</body>
+</html>

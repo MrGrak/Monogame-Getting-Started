@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Testing Concepts</h1>
+
+<p>
+The timing tests presented in this Guide use <b>Milliseconds</b> and <b>Ticks</b>.<br>
+<br>
+Commonly, frame times are measured using Milliseconds.<br>
+At 60 frames per second, this means each frame is 16.6 ms.<br>
+But ticks are much smaller than milliseconds.<br>
+For example, there are 160,000 ticks in 16ms.<br>
+<br>
+Let's explore ticks and why they are used.<br>
+</p>
+
+
+
+
+<br><br>
+<h3>What is a tick?</h3>
+<p>
+A tick is an arbitrary unit for measuring internal system time. <br>
+There is usually an OS-internal counter for ticks.<br>
+The current time and date used by various functions of the OS are derived from that counter.<br>
+<br>
+How many milliseconds a tick represents depends on the OS.<br>
+This may vary between installations and versions.<br>
+On MS Windows, there are 
+<a target="_blank" href="http://msdn.microsoft.com/en-us/library/system.datetime.ticks.aspx">10,000 ticks in a millisecond</a>.<br>
+On Linux, the number of clock ticks per second can be obtained using 
+<a target="_blank" href="http://linux.die.net/man/2/times">sysconf(_SC_CLK_TCK);</a>.<br>
+
+<br>
+Note that ticks and processor cycles are two different concepts.<br>
+Processor cycle length is determined by the hardware (CPU frequency).<br>
+Ticks are produced by the OS and use whatever length the OS deems appropriate.<br>
+</p>
+
+
+<br><br>
+<h3>Why do you use ticks in some of the timing tests?</h3>
+<p>
+In order to time certain functions or code paths, sub-millisecond precision is required.<br>
+<br>
+For example, let's imagine we wanted to time how long it takes to update and draw an empty Monogame viewport.<br>
+If we time this code path in milliseconds, it's very likely the result will be 0 milliseconds, depending on the hardware.<br>
+A mid-range PC will return 0 milliseconds. A high-end PC will also return 0 milliseconds.<br>
+But we know that the high-end PC is faster and more powerful.<br>
+We need more accurate precision in order to judge the relative power of hardware.<br>
+<br>
+We can also use ticks to compare the relative overhead of the environment a program is executing in.<br>
+<br>
+For example, running a Monogame program with an IDE Debugger active uses up additional ticks per frame.<br>
+Running a Monogame program without an active debugger uses less ticks per frame.<br>
+In some execution environments, less resources are available- consider a Monogame UWP app running on an Xbox One.<br>
+The UWP app has to share hardware resources with other running applications.<br>
+If many applications are running, then less resources are available to the Monogame UWP program.<br>
+We can determine how many ticks the game is using each frame, and adjust the codepath if necessary.<br>
+</p>
+
+
+
+
+<br><br><br>
+</article>
+</body>
+</html>
