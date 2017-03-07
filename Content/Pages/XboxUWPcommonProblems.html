@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Common Problems</h1>
+
+
+<p>
+This section discusses common problems you might run into when deploying UWP apps to your Xbox One.<br>
+Let's get started.
+</p>
+
+
+
+
+<br><br>
+<h3>Index of Common Problems</h3>
+<p>
+<ul>
+  <li><b><a href="#AssetLoad">Asset Loading Error</a></b> - asset can't load as a non-content file.</li>
+</ul>
+</p>
+<br><br><br><br>
+<br><br><br><br>
+
+
+
+
+
+<br><br><br><br>
+<h3 id="AssetLoad">Asset Loading Error</h3>
+<p>
+
+
+<b>Problem Description:</b><br>
+Sometimes when you deploy your UWP app to the Xbox One, an exception is thrown related to loading your asset as a non-content file.<br>
+<br><br>
+<center><img src="../Assets/UWPassetLoadError1.jpg"></center>
+<br><br>
+
+First, make sure your asset file is in the proper directory.<br>
+Second, make sure the address to your asset file is correct.<br>
+Third, check that your app runs correctly on your local machine.<br>
+If you deploy to your local machine and the app works, deploy the app to the Xbox One again.<br>
+<br>
+If the exception still occurs, inspect the exception information provided by the debugger.<br> 
+You'll likely find an "Access is Denied" description, plus an error code.
+<br><br>
+<center><img src="../Assets/UWPassetLoadError2.jpg"></center>
+<br><br>
+
+
+<b>Problem Solution:</b><br>
+Open your project settings and check the box marked "Uninstall and then re-install my package...", then re-deploy.<br>
+<br><br>
+<center><img src="../Assets/UWPassetLoadFix.jpg"></center>
+<br><br>
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>

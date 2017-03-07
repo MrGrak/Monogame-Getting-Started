@@ -19,9 +19,7 @@ Documentation StyleGuide
 	any errors must be fixed and the documentation must be updated
 	
 
-ToDo
-	* monogame wikipedia page needs to be updated
-	
+
 Articles I want to create
 	port RescueDog to Xbox1
 	creating an interactive UI
@@ -30,3 +28,4 @@ Articles I want to create
 Articles I dont want to create
 	lidgren networking
 	xamarin
+	
