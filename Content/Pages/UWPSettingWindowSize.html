@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Setting a UWP App's Window Size</h1>
+
+
+<p>
+This article discusses how to set the window (and frame) for a UWP App.<br>
+You may of noticed that UWP apps don't respond to the traditional Monogame way of setting the window's size.<br>
+We'll talk about why that happens, and how you can work around it.<br>
+</p>
+
+
+<br><br>
+<h3>Windows and Frames</h3>
+<p>
+First we need to discuss the difference between what a Window and a Frame is, in the context of a UWP App.<br>
+<br>
+A <b>Window</b> represents the re-sizable window the UWP App is currently running in.<br>
+A <b>Frame</b> represents a rectangle that your game is rendered to, inside of that Window.<br>
+By default the Frame is set to the same size as the Window, and scales to meet the Window's size.<br>
+Below shows a visual representation of the App Window and App Frame.<br>
+</p>
+
+
+<br><br>
+<center><img src="../Assets/UWPwindowFrame.jpg" ></center>
+<br><br>
+
+
+
+
+
+
+<br><br>
+<h3>Window Re-sizing can't be Disabled</h3>
+<p>
+Unlike DirectX or OpenGL projects, UWP Apps do not allow the programmer to disable window re-sizing.<br>
+UWP apps are expected to work across many devices and resolutions, which requires re-sizing the window.<br>
+You cannot prevent the user from re-sizing the UWP App's window, but you can control the size of your game's frame.<br>
+</p>
+
+
+
+
+<br><br>
+<h3>Setting the Frame and Window Size</h3>
+<p>
+Locate the <b>App.xaml.cs</b> file in your project.<br>
+Navigate to the <b>OnLaunched()</b> function.<br>
+This is where we'll add code to control the size of the Frame and Window upon launch.<br>
+Inspect the code below, and integrate it into your function where appropriate.<br>
+<br>
+<textarea rows="20" readonly>
+Frame rootFrame = Window.Current.Content as Frame;
+
+if (rootFrame == null)
+{
+	rootFrame = new Frame();
+
+	rootFrame.Width = 1280;
+	rootFrame.Height = 720;
+	ApplicationView.PreferredLaunchViewSize = new Size(1280, 720);
+	ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
+	rootFrame.NavigationFailed += OnNavigationFailed;
+	if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) { }
+	Window.Current.Content = rootFrame;
+}
+</textarea>
+<br><br>
+In this code, we set the Window and Frame to a resolution of 1280 by 720.<br>
+</p>
+
+
+
+
+
+
+
+<br><br>
+<h3>Resizing Behavior</h3>
+<p>
+If the window is made smaller than the frame, the frame anchors to the top left corner.<br>
+If the window is made larger than the frame, the frame automatically centers to the window.<br>
+You may want to dynamically change the size of the frame, based on the size of the window.<br>
+There are a variety of ways to do this, all of which are beyond the scope of this tutorial.<br>
+<br>
+It's suggested that you match the window and frame size to the user's screen resolution.<br>
+This type of full screen approach is discussed in the article 
+<a href="Fullscreen.html" target="display">Making the Game Fullscreen</a>.<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>
