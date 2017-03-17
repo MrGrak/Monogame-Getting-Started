@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+
+<h1>Getting a UWP App's Used Memory</h1>
+
+
+<p>
+This article discusses how to get the amount of currently used memory in a UWP app.<br>
+It's useful to know how much memory is being used, due to the limits imposed on Xbox One UWP apps.<br>
+UWP apps use the <b>MemoryManager</b> to handle getting this data.<br>
+
+</p>
+
+
+<br><br>
+<h3>Using MemoryManager</h3>
+<p>
+The MemoryManager provides access to information on an app's memory usage.<br>
+Official Documentation can be found <a target="_blank" href="https://docs.microsoft.com/en-us/uwp/api/windows.system.memorymanager">here</a>.<br>
+<br>
+First, add a reference to Windows.System to your project.<br>
+
+<br><br>
+<center><img src="../Assets/referenceWindows.jpg" ></center>
+<br><br>
+
+
+
+
+<br><br><br><br>
+Next, include the Windows.System namespace in your class or file.<br>
+<br>
+<textarea rows="3" readonly>
+using Windows.System;
+</textarea>
+<br><br><br><br>
+Then you can access the app's memory useage like so:<br><br>
+<textarea rows="3" readonly>
+System.Diagnostics.Debug.WriteLine(MemoryManager.AppMemoryUsage / 1024 / 1024 + " mb");
+</textarea>
+
+</p>
+
+
+
+
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>
