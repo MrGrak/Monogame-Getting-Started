@@ -1,0 +1,18 @@
+
+Documentation StyleGuide
+
+	html documents must display identically across (FF/iE/Ch) using only basic HTML+CSS (no scripts)(check > examples.html)
+	articles should always have a matching <h1> header to the link the user clicked
+	articles should be broken up into <h2> or <h3> sections
+	article sections should have enough whitespace between them for easy recognition
+	always allow enough vertical space for code examples to be displayed (check > examples.html)
+	always follow the text guidelines presented in examples.html
+	no images wider than 1280px, only use JPG or PNG
+	for inline code, use <i></i> tags
+	bold (<b></b>) text that is important to the tutorial/article
+	include as many images or screenshots as you can - some people are visual learners
+	always ALWAYS clearly explain yourself. do not use ambiguous pronouns like 'this' or 'that' or 'it'.
+	articles should take a minimum of 2 hours to complete. if it takes you less, you're either really good or really bad.
+	always <center> images. images default to being left aligned, which visually unbalances the page.
+	When a new version of monogame is released, all articles must be checked against the new release
+	any errors must be fixed and the documentation must be updated
