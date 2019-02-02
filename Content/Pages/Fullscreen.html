@@ -14,14 +14,11 @@
 
 <h1>Making The Game Fullscreen</h1>
 <p>
-There are 3 options for making a game fullscreen.<br>
-<br>
-One option is using the graphicsManager's built in fullscreen functionality.<br>
-Another option is to allow window resizing, so the player can press the fullscreen button on the game window.<br>
-Another option is to match the game window's size to the user's screen size.<br>
-<br>
+There are several options for making your game fullscreen.<br>
+The implementation of these options depends on your platform.<br>
+DirectX will be different than OpenGL, which will be different for Uwp, etc..<br>
+Now we will explore the various options for making the game fullscreen.<br>
 Each option has it's own set of pros and cons, discussed below.<br>
-It's likely that you will use a combination of these options, based on your needs.<br>
 <b>Note</b>: these code examples refer to Game1.Initialize().<br>
 </p>
 
@@ -31,9 +28,104 @@ It's likely that you will use a combination of these options, based on your need
 
 
 
+<h3>Option 1 - Match the User's Display</h3>
+<textarea rows="15" readonly>
+//for directX, in Game1.cs file
+protected override void Initialize()
+{
+	base.Initialize();
+
+	int displayWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+	int displayHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+	graphics.PreferredBackBufferWidth = displayWidth;
+	graphics.PreferredBackBufferHeight = displayHeight;
+
+	this.IsMouseVisible = true;
+	Window.IsBorderless = true;
+	graphics.ApplyChanges();
+}
+</textarea>
+
+
+<br><br><br>
+
+<textarea rows="50" readonly>
+//for uwp, in App.xaml.cs
+protected override void OnLaunched(LaunchActivatedEventArgs e)
+{
+	ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+	Frame rootFrame = Window.Current.Content as Frame;
+
+	if (rootFrame == null)
+	{
+		rootFrame = new Frame();
+
+		//get screen resolution, accounting for scaling of pixels
+		var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+		var scaleFactor = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+		var size = new Size(bounds.Width * scaleFactor, bounds.Height * scaleFactor);
+		
+		//set rootframe and appframe sizes
+		rootFrame.Width = size.Width; 
+		rootFrame.Height = size.Height;
+		ApplicationView.PreferredLaunchViewSize = size;
+		ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+		ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+		
+		//make title bar transparent (hides window title bkg)
+		ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+		formattableTitleBar.ButtonBackgroundColor = Windows.UI.Colors.Transparent;
+		CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+		coreTitleBar.ExtendViewIntoTitleBar = true;
+		
+		rootFrame.NavigationFailed += OnNavigationFailed;
+		if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) { }
+		Window.Current.Content = rootFrame;
+	}
+
+	if (rootFrame.Content == null)
+	{
+		rootFrame.Navigate(typeof(GamePage), e.Arguments);
+	}
+	
+	//one last full screen call, post activate
+	Window.Current.Activate();
+	ApplicationView appView = ApplicationView.GetForCurrentView();
+	ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+}
+</textarea>
+
+
+<br>
+<p>
+<b>Pros</b><br>
+<ul>
+  <li>The game starts fullscreen, without any border or title bar.</li>
+  <li>The best option. You <b>must</b> provide a way to exit the game.</li>
+</ul> 
+<br>
+
+<b>Cons</b><br>
+<ul>
+  <li>???</li>
+</ul> 
+<br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <br><br>
-<h3>Option 1 - Use graphics.ToggleFullScreen()</h3>
+<h3>Option 2 - Use graphics.ToggleFullScreen()</h3>
 <textarea rows="8" readonly>
 protected override void Initialize()
 {
@@ -63,90 +155,6 @@ protected override void Initialize()
 
 
 
-
-
-
-<br><br><br><br>
-
-
-
-
-
-
-<h3>Option 2 - Allow Resizing</h3>
-<textarea rows="8" readonly>
-protected override void Initialize()
-{
-	base.Initialize();
-	Window.AllowUserResizing = true;
-}
-</textarea>
-<p>
-<b>Pros</b><br>
-<ul>
-  <li>Your game window can be resized to match the user's max display resolution.</li>
-  <li>Your game window can be resized to meet the user's preferences.</li>
-</ul> 
-<br>
-
-<b>Cons</b><br>
-<ul>
-  <li>Technically, not fullscreen.</li>
-  <li>Your game can be displayed at wildly different aspect ratios.</li>
-  <li>Consider that the user could resize the window to a vertical portrait mode.</li>
-  <li>Or the window could be resized to a very wide and narrow cinema aspect ratio.</li>
-  <li>This means you have to program your game's UI to function in these uncommon aspect ratios.</li>
-  <li>The window's titlebar <b>must</b> be displayed as well, otherwise the user can't resize or fullscreen the game.</li>
-  <li>However, you can programmatically set the minimum and maximum resolutions your game window can be resized to.</li>
-</ul> 
-<br>
-</p>
-
-
-
-
-
-
-<br><br><br><br>
-
-
-
-
-
-
-
-<h3>Option 3 - Match the User's Display</h3>
-<textarea rows="15" readonly>
-protected override void Initialize()
-{
-	base.Initialize();
-
-	int displayWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-	int displayHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-	graphics.PreferredBackBufferWidth = displayWidth;
-	graphics.PreferredBackBufferHeight = displayHeight;
-
-	this.IsMouseVisible = true;
-	Window.IsBorderless = true;
-	graphics.ApplyChanges();
-}
-</textarea>
-<p>
-<b>Pros</b><br>
-<ul>
-  <li>The game starts fullscreen, without any border or title bar.</li>
-  <li>The "professional" option.</li>
-</ul> 
-<br>
-
-<b>Cons</b><br>
-<ul>
-  <li>You'll still need to consider how your game displays at uncommon resolutions.</li>
-  <li>You <b>should</b> provide a way to exit the game.</li>
-  <li>The game cannot be resized by the user.</li>
-</ul> 
-<br>
-</p>
 
 <br><br>
 <h3>Summary</h3>
