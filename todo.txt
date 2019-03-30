@@ -1,0 +1,105 @@
+
+
+monogame guide todo
+
+
+
+left align all images. they do not need to be centered.
+
+also, we are redoing to direction in prep for a late summer launch.
+
+Intro To Monogame
+1. installing and running monogame
+2. adding textures, fonts, classes (loading content)
+3. adding mouse, keyboard, gamepad input
+4. adding music, soundfx (sfx instances only)
+
+Intro To 2D Game Design
+1. making pong, and understanding game feedback
+2. common game systems (asset loading, physics, collisions, screens, ui, music)
+3. game state, screens, screen manager
+
+Intermediate 2D Game Design
+1. making a basic platformer (physics, collisions)
+2. making a basic top down (physics, collisions)
+3. making a basic program ui
+4. making a basic inventory ui
+5. making a cloth simulation
+
+Advanced 2D Game Design
+1. making an action gun platformer (the vlambeer)
+2. making an action gun top down (the hotline)
+3. making an animated program ui
+4. making an animated inventory ui
+5. tearable cloth and ragdoll physics
+
+Intro to 3D
+1. what is 3d, matrices, etc..
+2. drawing primitives on screen
+3. 3d camera, scene, scene geometry
+4. rendering (phong, diffuse, etc.)
+
+Shaders
+1. what is a shader, adding a shader to projet
+2. kosmonaut's bloom filter (hlsl shader)
+3. other various shaders
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## ToDo
++ discuss differences between opengl, directx, uwp projects (the big 3)
++ writing systems from scratch, and why instead of using existing library
++ writing simple ui (rectangles, click state, buttons, text)
++ writing a collision system (prevent rec overlap)
++ writing a platformer physics system
++ writing a top down physics system
++ writing a game menu system (inventory screen)
++ writing a particle system (using a pool, cursor ui)
++ writing a music player for looped bkg music
++ writing a music player for non-looped bkg music
+
+## Making An Action Platformer - The Vlambeer Example
++ basic example (platformer, enemy, input, gun shoots bullets, enemy death)
++ basic animations and sound (jump anim, walk anim, moving hair, shooting sfx, jump sfx)
++ lower enemy hp + better enemy animations
++ higher rate of fire on gun (only way player can interact with world)
++ more enemies (more world interaction)
++ bigger bullets, muzzle flash, faster bullets (easier to read action)
++ less accurate bullets, impact effects (wall impact sprites)
++ enemy hit animation + knockback (white flash)
++ permanence (enemy corpses stay on ground)
++ 2d camera, lerping and camera movement
++ camera peeking, centering on action
++ screenshake - enemy hit, gun shooting
++ player knockback 
++ sleep, slow motion player death
++ strafing (walking backwards while shooting)
++ more permanence - bullet casings
++ more bullets x3, random enemy death explosions
++ more enemies, faster enemies
++ camera kickback opposite direction of gun firing
++ smoke particles added for enemy explosions
++ player death, slow motion, game over game state
+
+## Improvements
++ improve fullscreen article to handle rendering fullscreen at ultra wide resolutions
+
+## Timing Tests - should be diff repo/section in site
++ create timing test for drawing sprites (at various sizes - 16, 32, 64, 128)
++ create timing test for drawing vector and bitmap fonts
++ create timing test for drawing rectangles
++ create timing test for drawing to RenderTarget2D
