@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Window Focus</h1>
+
+<p>
+
+Window focus just means that the game window is the current window in the foreground.<br>
+Let's say you are playing a game, which requires keyboard input. You switch to another<br>
+window, and start typing. But, you notice that the game is still responding to your input!<br>
+That's bad, a window that doesn't have focus shouldn't respond to user input, in most cases.<br>
+<br>
+
+In this article, we will explore how to prevent user input from being processed when the window<br>
+loses focus. Let's get started.<br>
+<br>
+
+
+<h3>Example Code</h3>
+
+I will assume you know what public static classes/singletons are, since this example will be using<br>
+one, to keep it super simple. First, let's create a class that contains a bool to represent if our<br>
+game has focus or not.<br>
+
+<br>
+<textarea rows="5" readonly>
+public static class Data
+{
+	bool windowFocused;
+}
+</textarea>	<br>
+<br>
+
+Next, let's subscribe our game to the activated and deactivated events.<br>
+
+<br>
+<textarea rows="20" readonly>
+public Game1()
+{
+	//...game constructor code
+	
+	Activated += IsActivated;
+	Deactivated += IsDeactivated;
+}
+
+private void IsDeactivated(object sender, EventArgs e)
+{
+	Data.windowFocused = false;
+}
+
+private void IsActivated(object sender, EventArgs e)
+{
+	if(Data.windowFocused == false)
+	{ Data.windowFocused = true; }
+}
+</textarea>	<br>
+<br>
+
+Then later in code, we can check to see if the window has focus like so.<br>
+
+<br>
+<textarea rows="1" readonly>
+if(Data.windowFocused){ ... }
+</textarea>	<br>
+<br>
+
+There are many different ways to accomplish this, so feel free to make your own to fit<br>
+into your game, according to the patterns you have chosen.<br>
+
+
+
+
+
+</p>
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>
