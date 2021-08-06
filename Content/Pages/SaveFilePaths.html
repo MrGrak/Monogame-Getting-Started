@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>MonoGame Getting Started Guide</title>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<article>
+
+
+
+
+<h1>Save File Paths</h1>
+
+
+<p>
+In this article, we will explore options you have for saving files to disc.<br>
+Please note that saving files on Windows requires a different path than saving files on Mac or Linux.<br>
+<br>
+First, it's important to note that Monogame has removed the storage class. See this discussion:<br>
+<a target="_blank" href="https://github.com/MonoGame/MonoGame/issues/4311">
+https://github.com/MonoGame/MonoGame/issues/4311</a><br>
+<br>
+So, if you're migrating from Xna to Monogame, the storage class wont be available to use.<br>
+You'll need to handle it yourself, which can vary widely based on platform.<br>
+Let's take a look at save file paths on Windows, Mac, and Linux.<br>
+<br>
+
+
+
+
+<h3>Saving Files To Application Folder (Windows)</h3>
+There are many options for saving files on Windows, but there are hidden pitfalls as well.<br>
+First, lets take a look at the naive way of saving files to the game's application directory:<br>
+<br>
+<textarea rows="1" readonly>
+string SavePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+</textarea>	<br>
+<br>
+You may think this is a working solution, but it isn't! Some windows users wont have permissions<br>
+to write to this directory. This means they won't be able to save their game! So, we must<br>
+consider alternative locations to save data to.<br>
+<br>
+
+
+<h3>Saving Files To AppData (Windows)</h3>
+Windows applications often store their data and settings in an AppData folder, and each Windows <br>
+user account has its own. It’s a hidden folder, so you’ll only see it if you show hidden files <br>
+in the file manager. Each user account has its own AppData folder with its own contents. This <br>
+allows Windows programs to store multiple sets of settings if a computer is used by multiple people. <br>
+<br>
+The AppData folder was introduced on Windows Vista, and is still in use on Windows 10, 8, and 7 today.<br>
+This will target the directory: //C:\Users\UserName\AppData\Roaming\MyGame\<br>
+<b>This is the suggested way of storing files on Windows:</b><br>
+<br>
+<textarea rows="1" readonly>
+string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyGame");
+</textarea>	<br>
+<br>
+
+
+
+
+
+<br><br>
+You may need to store data for ALL users. In that case, you need to look into using CommonApplicationData:<br>
+This will target the directory: //C:\ProgramData\MyGame\<br>
+<br>
+<textarea rows="1" readonly>
+string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "MyGame");
+</textarea>	<br>
+<br>
+
+
+
+
+
+<br><br>
+You can also choose to store save data in LocalApplicationData:<br>
+This will target the directory: //C:\Users\UserName\AppData\Local\MyGame\<br>
+<br>
+<textarea rows="1" readonly>
+string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MyGame");
+</textarea>	<br>
+<br>
+
+
+
+<br><br>
+You may want to save game files to the MyDocuments folder. Alright, buckle up.<br>
+This will target the directory: //C:\Users\UserName\Documents\MyGame\<br>
+<br>
+<textarea rows="1" readonly>
+string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MyGame");
+</textarea>	<br>
+<br>
+Please note that on Windows 8.1, due to the addition of SkyDrive, this path will return <br>
+"C:\Users\Administrator\SkyDrive\Documents\MyGame\" - which is really great. Good job Microsoft.<br>
+Note that Skydrive was renamed to OneDrive, because Microsoft was sued by Sky.<br>
+Also note that Window's Updates will occasionally reset some random settings, which may alter this path further.<br>
+You having fun yet? No? Well, let's explore saving for Mac now.<br>
+
+
+
+
+<br><br><br>
+<h3>Saving Files For Mac</h3>
+Prepare yourself mentally. On Mac OSX, the save file path needs to look something like this:<br>
+<b>"/Users/bob/Library/Application Support/MyGame/"</b><br>
+Note that there is a space in Application Support. That's important. In order to get this path, use this code:<br>
+<br>
+<textarea rows="2" readonly>
+string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MyGame");
+</textarea>	<br>
+<br>
+
+
+
+
+<br><br>
+<h3>Saving Files For Linux</h3>
+First, reevaluate if you really need to support Linux. Are the majority of your players using Linux?<br>
+If you answered "yes" to that question, then continue. If you answered "no", do not continue further.<br>
+There are many possible configurations of Linux and supporting all of them may not be possible.<br>
+So, assuming you <b>absolutely must do this</b>, here's the path you'll (probably) need:<br>
+"/home/bob/.local/share/MyGame/"<br>
+Implementing this path is left up to the reader. Have fun.<br>
+
+
+
+
+<br><br><br>
+<h3>What about SDL_GetPrefPath?</h3>
+Monogame doesn't use SDL for the DirectX templates (as of 2021), so this isn't available for this project.<br>
+For the OpenGL template, sure, use SDL_GetPrefPath. Here's a link to what it will return: 
+<a target="_blank" href="https://wiki.libsdl.org/SDL_GetPrefPath">https://wiki.libsdl.org/SDL_GetPrefPath</a><br>
+<br>
+
+
+
+
+</p>
+
+<br><br><br>
+<br><br><br>
+</article>
+</body>
+</html>
