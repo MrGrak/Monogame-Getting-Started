@@ -15,10 +15,8 @@
 <h1>Making The Game Fullscreen</h1>
 <p>
 There are several options for making your game fullscreen.<br>
-The implementation of these options depends on your platform.<br>
-DirectX will be different than OpenGL, which will be different for Uwp, etc..<br>
-Now we will explore the various options for making the game fullscreen.<br>
-Each option has it's own set of pros and cons, discussed below.<br>
+Hardware fullscreen is an option. It's probably not the best option, however.<br>
+Borderless fullscreen is the modern option. Let's discuss them both.<br>
 <b>Note</b>: these code examples refer to Game1.Initialize().<br>
 </p>
 
@@ -28,9 +26,8 @@ Each option has it's own set of pros and cons, discussed below.<br>
 
 
 
-<h3>Option 1 - Match the User's Display</h3>
+<h3>Option 1 - Borderless Fullscreen</h3>
 <textarea rows="15" readonly>
-//for directX, in Game1.cs file
 protected override void Initialize()
 {
 	base.Initialize();
@@ -47,61 +44,14 @@ protected override void Initialize()
 </textarea>
 
 
-<br><br><br>
-
-<textarea rows="50" readonly>
-//for uwp, in App.xaml.cs
-protected override void OnLaunched(LaunchActivatedEventArgs e)
-{
-	ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
-	Frame rootFrame = Window.Current.Content as Frame;
-
-	if (rootFrame == null)
-	{
-		rootFrame = new Frame();
-
-		//get screen resolution, accounting for scaling of pixels
-		var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-		var scaleFactor = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-		var size = new Size(bounds.Width * scaleFactor, bounds.Height * scaleFactor);
-		
-		//set rootframe and appframe sizes
-		rootFrame.Width = size.Width; 
-		rootFrame.Height = size.Height;
-		ApplicationView.PreferredLaunchViewSize = size;
-		ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-		ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-		
-		//make title bar transparent (hides window title bkg)
-		ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-		formattableTitleBar.ButtonBackgroundColor = Windows.UI.Colors.Transparent;
-		CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-		coreTitleBar.ExtendViewIntoTitleBar = true;
-		
-		rootFrame.NavigationFailed += OnNavigationFailed;
-		if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) { }
-		Window.Current.Content = rootFrame;
-	}
-
-	if (rootFrame.Content == null)
-	{
-		rootFrame.Navigate(typeof(GamePage), e.Arguments);
-	}
-	
-	//one last full screen call, post activate
-	Window.Current.Activate();
-	ApplicationView appView = ApplicationView.GetForCurrentView();
-	ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-}
-</textarea>
-
+<br>
 
 <br>
 <p>
 <b>Pros</b><br>
 <ul>
   <li>The game starts fullscreen, without any border or title bar.</li>
-  <li>The best option. You <b>must</b> provide a way to exit the game.</li>
+  <li>The best option. You <b>should</b> provide a way to exit the game.</li>
 </ul> 
 <br>
 
@@ -125,7 +75,7 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 
 
 <br><br>
-<h3>Option 2 - Use graphics.ToggleFullScreen()</h3>
+<h3>Option 2 - Hardware Fullscreen</h3>
 <textarea rows="8" readonly>
 protected override void Initialize()
 {
@@ -146,6 +96,8 @@ protected override void Initialize()
 <ul>
   <li>If the ratio of your game window doesn't match the user's display ratio, your game will appear distorted.</li>
   <li>You don't have control over how your game will be displayed across different resolutions.</li>
+  <li>Alt-Tabbing to different programs <a target="_blank" href="https://gaming.stackexchange.com/questions/107028/is-there-a-difference-between-running-games-in-windowed-or-fullscreen-mode">
+may cause problems.</a></li>
   <li>Textures and Fonts will be stretched as well, usually with blurry results.</li>
   <li>By default the game window's titlebar will be hidden.</li>
 </ul> 
