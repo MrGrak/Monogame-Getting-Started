@@ -97,17 +97,16 @@ string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFold
 </textarea>	<br>
 <br>
 Please note that on Windows 8.1, due to the addition of SkyDrive, this path will return <br>
-"C:\Users\Administrator\SkyDrive\Documents\MyGame\" - which is really great. Good job Microsoft.<br>
-Note that Skydrive was renamed to OneDrive, because Microsoft was sued by Sky.<br>
-Also note that Window's Updates will occasionally reset some random settings, which may alter this path further.<br>
-You having fun yet? No? Well, let's explore saving for Mac now.<br>
+"C:\Users\Administrator\SkyDrive\Documents\MyGame\" - fascinating.<br>
+Also note that Window's Updates will occasionally reset some random settings, which may alter this path.<br>
+
 
 
 
 
 <br><br><br>
 <h3>Saving Files For Mac</h3>
-Prepare yourself mentally. On Mac OSX, the save file path needs to look something like this:<br>
+On Mac OSX, the save file path needs to look something like this:<br>
 <b>"/Users/bob/Library/Application Support/MyGame/"</b><br>
 Note that there is a space in Application Support. That's important. In order to get this path, use this code:<br>
 <br>
@@ -121,12 +120,10 @@ string SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFold
 
 <br><br>
 <h3>Saving Files For Linux</h3>
-First, reevaluate if you really need to support Linux. Are the majority of your players using Linux?<br>
-If you answered "yes" to that question, then continue. If you answered "no", do not continue further.<br>
 There are many possible configurations of Linux and supporting all of them may not be possible.<br>
 So, assuming you <b>absolutely must do this</b>, here's the path you'll (probably) need:<br>
 "/home/bob/.local/share/MyGame/"<br>
-Implementing this path is left up to the reader. Here's a starting point: "~/.local/share/MyGame"<br>
+Implementing this path is left up to you. Here's a starting point: "~/.local/share/MyGame"<br>
 Have fun.<br>
 
 
